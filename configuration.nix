@@ -96,7 +96,7 @@
     openssh
     input-leap
     home-manager
-    
+    kde-gruvbox    
  #  wget
   ];
 

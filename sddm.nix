@@ -6,6 +6,7 @@
 
       ForceHideCompletePassword = true;
     };
+    embeddedTheme = "japanese_aesthetic";
   };
 in {
   services.displayManager.sddm = {
