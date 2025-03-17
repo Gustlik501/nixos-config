@@ -8,7 +8,8 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./sddm.nix
+      ./modules/sddm/default.nix
+      ./modules/hyprland/default.nix
     ];
 
   # Bootloader.
