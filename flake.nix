@@ -20,22 +20,18 @@
           inherit system;
           modules = [
             ./hosts/laptop
-            ./modules/common.nix
-            ./modules/gui.nix
-            ./modules/dev.nix
-            ./modules/hyprland
-            ./modules/sddm
+            ./modules/system/common.nix
+            ./modules/system/gui.nix
+            ./modules/system/sddm
           ];
         };
         desktop = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
             ./hosts/desktop
-            ./modules/common.nix
-            ./modules/gui.nix
-            ./modules/dev.nix
-            ./modules/hyprland
-            ./modules/sddm
+            ./modules/system/common.nix
+            ./modules/system/gui.nix
+            ./modules/system/sddm
           ];
         };
       };

@@ -1,10 +1,17 @@
 { config, pkgs, ...}: {
+
+  imports = [
+#    ../modules/home/hyprland.nix
+ #   ../modules/home/plasma.nix
+  ];
+
   home = {
     username = "gustl";
     homeDirectory = "/home/gustl";
     stateVersion = "23.11"; 
 
     packages = with pkgs; [
+      tree
       git
       lazygit
       openssh

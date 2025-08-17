@@ -47,7 +47,10 @@
   environment.systemPackages = with pkgs; [
     vim
     home-manager
+    steam
   ];
 
+  programs.steam.enable = true;
+  
   system.stateVersion = "24.11";
 }
