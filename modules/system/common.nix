@@ -7,6 +7,13 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
+
   time.timeZone = "Europe/Ljubljana";
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -40,6 +47,7 @@
     description = "Gregor Sevcnikar";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
+    shell = pkgs.zsh;
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -53,6 +61,7 @@
   #home-manager.backupFileExtension = "backup";
 
   programs.steam.enable = true;
+  programs.zsh.enable = true;
   
   system.stateVersion = "24.11";
 }

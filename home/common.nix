@@ -26,6 +26,7 @@
       vlc
       gemini-cli
       ripgrep
+      vesktop
     ];
   };
 
