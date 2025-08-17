@@ -53,4 +53,6 @@
    userName = "Gustlik501";
   };
 
+  wlogout.enable = true;
+
 }
