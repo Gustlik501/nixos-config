@@ -4,5 +4,7 @@
     git
     lazygit
     openssh
+    curl
+    wget
   ];
 }

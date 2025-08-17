@@ -46,7 +46,6 @@
 
   environment.systemPackages = with pkgs; [
     vim
-    input-leap
     home-manager
   ];
 
