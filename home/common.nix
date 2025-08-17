@@ -2,7 +2,7 @@
 
   imports = [
 #    ../modules/home/hyprland.nix
- #   ../modules/home/plasma.nix
+    ../modules/home/plasma.nix
   ];
 
   home = {
