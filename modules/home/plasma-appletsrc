@@ -96,8 +96,7 @@ previews=false
 sortMode=-1
 
 [Containments][26][Wallpaper][org.kde.image][General]
-Image=/nix/store/l7zjzjg7cbn56qa82ykzyqasxp0l49c7-plasma-workspace-wallpapers-6.3.3/share/wallpapers/Path/
-SlidePaths=/nix/store/k9hghs3lq0nxxvrg02805h4pjpqxd996-breeze-6.2.5/share/wallpapers/,/run/current-system/sw/share/wallpapers/
+Image=file:///home/gustl/.local/share/wallpapers/dark.png
 
 [Containments][8]
 activityId=
