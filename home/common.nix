@@ -5,10 +5,18 @@
     stateVersion = "23.11"; 
 
     packages = with pkgs; [
+      git
+      lazygit
+      openssh
+      curl
+      wget
       neofetch
       htop
       runelite
-    ]; 
+      firefox
+      vlc
+      kde-gruvbox
+    ];
   };
 
   programs.bash = {
