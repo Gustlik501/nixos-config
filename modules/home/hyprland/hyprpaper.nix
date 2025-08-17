@@ -9,8 +9,8 @@
         "/home/gustl/nixos-config/wallpapers/light.png"
       ];
       wallpaper = [
-        # You might need to change eDP-1 to your monitor's name
-        "eDP-1,/home/gustl/nixos-config/wallpapers/dark.png"
+        # Apply to all monitors. Remove the monitor name to apply to all.
+        ",/home/gustl/nixos-config/wallpapers/dark.png"
       ];
     };
   };

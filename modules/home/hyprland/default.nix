@@ -1,7 +1,10 @@
 {
   imports = [
     ./hyprland.nix
-    ./keybinds.nix
     ./hyprpaper.nix
   ];
+
+  wayland.windowManager.hyprland.extraConfig = ''
+    source = /home/gustl/nixos-config/modules/home/hyprland/hyprland-keybinds.conf
+  '';
 }

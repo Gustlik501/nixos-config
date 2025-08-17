@@ -3,6 +3,8 @@
   imports = [
    ../modules/home/hyprland
    ../modules/home/plasma.nix
+   ../modules/home/kitty
+   ../modules/home/rofi
   ];
 
   home = {
@@ -25,10 +27,6 @@
       gemini-cli
       ripgrep
     ];
-  };
-
-  programs.kitty = {
-    enable = true;
   };
 
   programs.bash = {
