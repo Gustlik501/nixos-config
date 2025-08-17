@@ -97,10 +97,25 @@
     openssh
     input-leap
     home-manager
-    kde-gruvbox    
+    kde-gruvbox 
+    steam
+    vlc   
  #  wget
   ];
 
+  programs.steam.enable = true;
+
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs; [
+      # your Open GL, Vulkan and VAAPI drivers
+      #vpl-gpu-rt          # for newer GPUs on NixOS >24.05 or unstable
+      # onevpl-intel-gpu  # for newer GPUs on NixOS <= 24.05
+      intel-media-sdk   # for older GPUs
+    ];
+  };
+
+  hardware.graphics.extraPackages = with pkgs; [ vaapiIntel intel-media-driver ];
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
