@@ -5,6 +5,7 @@
    ../modules/home/plasma.nix
    ../modules/home/kitty
    ../modules/home/rofi
+   ../modules/home/wlogout
   ];
 
   home = {
