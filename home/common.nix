@@ -1,8 +1,8 @@
 { config, pkgs, ...}: {
 
   imports = [
-#    ../modules/home/hyprland.nix
-    ../modules/home/plasma.nix
+   ../modules/home/hyprland
+   ../modules/home/plasma.nix
   ];
 
   home = {
@@ -22,8 +22,13 @@
       runelite
       firefox
       vlc
-      kde-gruvbox
+      gemini-cli
+      ripgrep
     ];
+  };
+
+  programs.kitty = {
+    enable = true;
   };
 
   programs.bash = {
