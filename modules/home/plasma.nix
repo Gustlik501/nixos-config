@@ -1,31 +1,24 @@
 { pkgs, ... }:
 let repoWp = builtins.toString (../../wallpapers);
+repoTp = builtins.toString (../../themes);
 in {
-   xdg.configFile."kdeglobals".text = ''
-    [General]
-    ColorScheme=BreezeDark
-    [KDE]
-    LookAndFeelPackage=org.kde.breezedark.desktop
-  '';
+    
+    xdg.dataFile."color-schemes/Gruvbox.colors".source = "${repoTp}/Gruvbox.colors";
 
-  # ensure the tools exist
-  home.packages = [
-    pkgs.kdePackages.plasma-workspace
-    pkgs.kdePackages.breeze-gtk
-  ];
+    programs.plasma = {
+      enable = true;
+      workspace = {
+        # If you have a Gruvbox color scheme installed:
+        colorScheme = "Gruvbox";      # or "GruvboxDark" depending on file name
+        wallpaper   = "${repoWp}/dark.png";
+        iconTheme   = "Papirus-Dark"; # optional, fits Gruvbox nicely
+      };
+    };
 
-  # (optional) make GTK apps dark too
-  gtk.enable = true;
-  gtk.theme.name = "Breeze-Dark";
-  xdg.configFile."gtk-3.0/settings.ini".text = ''
-    [Settings]
-    gtk-application-prefer-dark-theme=1
-  '';
+    home.packages = with pkgs; [
+      kdePackages.breeze
+      kdePackages.breeze-gtk
+      papirus-icon-theme
+    ];
 
-  home.file.".local/share/wallpapers/dark.png".source = "${repoWp}/dark.png";
-
-  xdg.configFile."plasma-org.kde.plasma.desktop-appletsrc" = {
-    source = ./plasma-appletsrc;
-    force  = true;
-  };
 }

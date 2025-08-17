@@ -50,7 +50,7 @@
     steam
   ];
 
-  home-manager.backupFileExtension = "backup";
+  #home-manager.backupFileExtension = "backup";
 
   programs.steam.enable = true;
   
