@@ -80,4 +80,21 @@
       "ctrl+shift+f" = "send_text all clear\n cd `cdinteractive`\n";
     };
   };
+
+
+  #set kitty as TerminalEmulator
+  xdg.desktopEntries.kitty = {
+    name = "Kitty";
+    exec = "kitty";
+    terminal = false;
+    type = "Application";
+    icon = "kitty";
+    categories = [ "System" "TerminalEmulator" ];
+  };
+
+  # Set kitty as default of xfce
+  xdg.configFile."xfce4/helpers.rc".text = ''
+    TerminalEmulator=kitty
+  '';
+
 }

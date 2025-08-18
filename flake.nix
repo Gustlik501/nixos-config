@@ -43,8 +43,8 @@
       };
 
       homeConfigurations.gustl = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs; 
-        modules = [ 
+        inherit pkgs;
+        modules = [
           plasma-manager.homeManagerModules.plasma-manager
           ./home/common.nix
         ];

@@ -69,12 +69,15 @@
    userName = "Gustlik501";
   };
 
+  home.sessionVariables.TERMINAL = "kitty";
+
   # Make Thunar the default file manager
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
       "inode/directory" = [ "thunar.desktop" ];
       "application/x-directory" = [ "thunar.desktop" ];
+      "x-scheme-handler/terminal" = "kitty.desktop";
     };
   };
 
