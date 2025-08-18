@@ -9,6 +9,7 @@
    ../modules/home/hyprpanel
    ../modules/home/btop
    ../modules/home/zsh
+   ../modules/home/gtk
   ];
 
   home = {
@@ -37,6 +38,12 @@
       gtksourceview3
       libsoup_3
       libgtop
+
+      # Thunar + helpers
+      xfce.thunar
+      xfce.thunar-volman
+      xfce.thunar-archive-plugin
+      xfce.tumbler
     ];
   };
 
@@ -60,6 +67,15 @@
    enable = true;
    userEmail = "sevcnikar.gregor2@gmail.com";
    userName = "Gustlik501";
+  };
+
+  # Make Thunar the default file manager
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "inode/directory" = [ "thunar.desktop" ];
+      "application/x-directory" = [ "thunar.desktop" ];
+    };
   };
 
   wlogout.enable = true;

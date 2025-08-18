@@ -6,13 +6,14 @@
 
   networking.hostName = "laptop";
 
-#  hardware.opengl = {
-#    enable = true;
-#    extraPackages = with pkgs; [
-#      intel-media-sdk
-#    ];
-#  };
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      vaapiIntel
+    ];
+  };
 
-#  hardware.graphics.extraPackages = with pkgs; [ vaapiIntel intel-media-driver ];
+  boot.initrd.kernelModules = [ "i915" ];
 
 }

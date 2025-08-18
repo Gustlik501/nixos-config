@@ -1,45 +1,34 @@
-{ config, pkgs, ... }:
+# gruvbox-theme.nix
+{ pkgs, ... }:
 {
-  # Enable GTK theming
   gtk = {
     enable = true;
+
     theme = {
-      name = "Gruvbox";
       package = pkgs.gruvbox-gtk-theme;
+      name = "Gruvbox-Dark";  # or "Gruvbox-Light"
     };
+
     iconTheme = {
-      enable = true;
-      name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
+      name = "Papirus-Dark";
     };
+
     cursorTheme = {
-      enable = true;
-      name = "Bibata-Modern-Classic";
       package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Classic";
+      size = 24;
     };
   };
 
-  # Enable Qt apps to follow the GTK theme
   qt = {
     enable = true;
-    platformTheme = "gtk";
+    platformTheme.name = "gtk";
   };
 
-  # Optionally install a matching terminal theme for kitty
-  programs.kitty = {
-    enable = true;
-    settings = {
-      # Load colors from gruvbox theme automatically (needs out-path)
-      include = "${pkgs.gruvbox-gtk-theme}/share/themes/Gruvbox/gtk-3.0/kitty.conf";
-      # Fallback: explicit color definitions could go here if needed.
-    };
-  };
-
-  # Make sure the theme packages are available
   home.packages = with pkgs; [
     gruvbox-gtk-theme
     papirus-icon-theme
     bibata-cursors
-    kitty
   ];
 }
