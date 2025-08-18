@@ -2,8 +2,8 @@
   imports = [
     ./hyprland.nix
     ./hyprpaper.nix
-    ./../swaync # Add SwayNC module
-    ./../waybar # Add Waybar module
+    ../swaync # Add SwayNC module
+    ../waybar # Add Waybar module
   ];
 
   wayland.windowManager.hyprland.extraConfig = ''

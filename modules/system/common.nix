@@ -14,6 +14,14 @@
     pulse.enable = true;
   };
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-hyprland
+    ];
+  };
+
   time.timeZone = "Europe/Ljubljana";
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -57,8 +65,6 @@
     home-manager
     steam
   ];
-
-  #home-manager.backupFileExtension = "backup";
 
   programs.steam.enable = true;
   programs.zsh.enable = true;

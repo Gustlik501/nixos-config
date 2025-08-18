@@ -21,7 +21,7 @@
       curl
       wget
       neofetch
-      htop
+      btop
       runelite
       firefox
       vlc

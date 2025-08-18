@@ -5,6 +5,7 @@
     settings = {
       "exec-once" = [
         "hyprpaper"
+        "waybar" # Add waybar here
       ];
     };
   };
