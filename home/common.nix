@@ -7,6 +7,8 @@
    ../modules/home/rofi
    ../modules/home/wlogout
    ../modules/home/hyprpanel
+   ../modules/home/btop
+   ../modules/home/zsh
   ];
 
   home = {
