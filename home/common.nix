@@ -6,12 +6,14 @@
    ../modules/home/kitty
    ../modules/home/rofi
    ../modules/home/wlogout
+   ../modules/home/hyprpanel
   ];
 
   home = {
     username = "gustl";
     homeDirectory = "/home/gustl";
     stateVersion = "23.11"; 
+
 
     packages = with pkgs; [
       tree
@@ -28,6 +30,11 @@
       gemini-cli
       ripgrep
       vesktop
+      dart-sass
+      wl-clipboard
+      gtksourceview3
+      libsoup_3
+      libgtop
     ];
   };
 

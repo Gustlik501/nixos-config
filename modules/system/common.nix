@@ -4,13 +4,23 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.networkmanager.enable = true;
+
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
+
+
+
+  services = {
+    blueman.enable = true;
+    upower.enable = true;
+    gvfs.enable = true;
+  };
 
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
+    wireplumber.enable = true;
     pulse.enable = true;
   };
 
@@ -64,6 +74,8 @@
     vim
     home-manager
     steam
+    nerd-fonts.jetbrains-mono
+    bluez-tools
   ];
 
   programs.steam.enable = true;
