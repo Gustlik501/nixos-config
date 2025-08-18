@@ -8,6 +8,16 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
+  hardware.bluetooth.settings = {
+    General = {
+      ControllerMode = "dual";
+      JustWorksRepairing = "always";
+      PairableTimeout = 0;
+      DiscoverableTimeout = 0;
+      Agent = "KeyboardDisplay";
+    };
+  };
+
 
 
   services = {
