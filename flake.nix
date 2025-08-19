@@ -26,18 +26,18 @@
           inherit system;
           modules = [
             ./hosts/laptop
-            ./modules/system/common.nix
-            ./modules/system/gui.nix
-            ./modules/system/sddm
+            ./system/common.nix
+            ./system/gui.nix
+            ./system/sddm
           ];
         };
         desktop = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
             ./hosts/desktop
-            ./modules/system/common.nix
-            ./modules/system/gui.nix
-            ./modules/system/sddm
+            ./system/common.nix
+            ./system/gui.nix
+            ./system/sddm
           ];
         };
       };

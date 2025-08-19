@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 let
-  repoWp = builtins.toString (../../wallpapers);
-  repoTp = builtins.toString (../../themes);
+  repoWp = builtins.toString (../wallpapers);
+  repoTp = builtins.toString (../themes);
 in {
     
     xdg.dataFile."color-schemes/Gruvbox.colors".source = "${repoTp}/Gruvbox.colors";

@@ -1,15 +1,15 @@
 { config, pkgs, ...}: {
 
   imports = [
-   ../modules/home/hyprland
-   ../modules/home/plasma.nix
-   ../modules/home/kitty
-   ../modules/home/rofi
-   ../modules/home/wlogout
-   ../modules/home/hyprpanel
-   ../modules/home/btop
-   ../modules/home/zsh
-   ../modules/home/gtk
+   ./hyprland
+   ./plasma.nix
+   ./kitty
+   ./rofi
+   ./wlogout
+   ./hyprpanel
+   ./btop
+   ./zsh
+   ./gtk
   ];
 
   home = {

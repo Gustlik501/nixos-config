@@ -2,7 +2,7 @@
 # Script to display Hyprland keybinds using rofi
 
 # Define the keybinds config file
-keybinds_conf="$HOME/nixos-config/modules/home/hyprland/configs/UserKeybinds.conf"
+keybinds_conf="$HOME/nixos-config/home/hyprland/configs/UserKeybinds.conf"
 
 # Check if rofi is already running
 if pidof rofi > /dev/null; then
