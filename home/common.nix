@@ -1,23 +1,23 @@
-{ config, pkgs, ...}: {
+{ config, pkgs, ... }:
+{
 
   imports = [
-   ./hyprland
-   ./plasma.nix
-   ./kitty
-   ./rofi
-   ./wlogout
-   ./hyprpanel
-   ./btop
-   ./zsh
-   ./gtk
-   ./nvf
+    ./hyprland
+    ./plasma.nix
+    ./kitty
+    ./rofi
+    ./wlogout
+    ./hyprpanel
+    ./btop
+    ./zsh
+    ./gtk
+    ./nvf
   ];
 
   home = {
     username = "gustl";
     homeDirectory = "/home/gustl";
-    stateVersion = "23.11"; 
-
+    stateVersion = "23.11";
 
     packages = with pkgs; [
       tree
@@ -50,6 +50,10 @@
       gimp
       obsidian
       grimblast
+
+      lutris
+      wineWowPackages.stagingFull
+      winetricks
     ];
   };
 
@@ -60,20 +64,23 @@
     };
   };
 
- # programs.neovim = {
- #   enable = true;
- #   defaultEditor = true;
- #   plugins = with pkgs.vimPlugins; [
- #     gruvbox-material
- #     nerdtree
- #   ];
- # };
+  # programs.neovim = {
+  #   enable = true;
+  #   defaultEditor = true;
+  #   plugins = with pkgs.vimPlugins; [
+  #     gruvbox-material
+  #     nerdtree
+  #   ];
+  # };
 
   programs.git = {
-   enable = true;
-   userEmail = "sevcnikar.gregor2@gmail.com";
-   userName = "Gustlik501";
+    enable = true;
+    userEmail = "sevcnikar.gregor2@gmail.com";
+    userName = "Gustlik501";
   };
+
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
 
   home.sessionVariables.TERMINAL = "kitty";
 

@@ -18,8 +18,6 @@
     };
   };
 
-
-
   services = {
     blueman.enable = true;
     upower.enable = true;
@@ -68,13 +66,19 @@
     options = "--delete-older-than 30d";
   };
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   users.users.gustl = {
     isNormalUser = true;
     description = "Gregor Sevcnikar";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
+    packages = with pkgs; [ ];
     shell = pkgs.zsh;
   };
 
@@ -84,10 +88,12 @@
     steam
     nerd-fonts.jetbrains-mono
     bluez-tools
+    vulkan-tools
+    pciutils
   ];
 
   programs.steam.enable = true;
   programs.zsh.enable = true;
-  
+
   system.stateVersion = "24.11";
 }

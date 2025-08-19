@@ -20,19 +20,6 @@
 
         keymaps = [
           {
-            key = "<leader>ff";
-            mode = [ "n" ];
-            action = "<cmd>Telescope find_files<CR>";
-            silent = true;
-            desc = "Save file and quit";
-          }
-          {
-            mode = "n";
-            key = "<leader>fg";
-            action = "<cmd>Telescope live_grep<CR>";
-            desc = "Live grep with Telescope";
-          }
-          {
             mode = "n";
             key = "<C-s>";
             action = "<cmd>w<CR>";
@@ -40,7 +27,7 @@
           {
             mode = "i";
             key = "<C-s>";
-            action = "<Esc><cmd>w<CR>a";
+            action = "<Esc><cmd>w<CR>";
           }
           # Normal mode: copy (yank) current line
           {
@@ -118,6 +105,10 @@
         lsp.formatOnSave = true;
         languages.enableTreesitter = true;
         languages.nix.enable = true;
+        languages.python.enable = true;
+        languages.html.enable = true;
+        languages.ts.enable = true;
+        languages.markdown.enable = true;
 
       };
     };
