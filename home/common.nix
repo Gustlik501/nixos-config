@@ -44,6 +44,10 @@
       xfce.thunar-volman
       xfce.thunar-archive-plugin
       xfce.tumbler
+
+      deluge
+      gimp
+      obsidian
     ];
   };
 

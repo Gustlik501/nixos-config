@@ -23,7 +23,7 @@
     };
 
     # Extra init (optional): better completion UI, sane keybinds
-    initExtra = ''
+    initContent = ''
       # Use menu completion with navigation
       zmodload zsh/complist
       bindkey '^I' complete-word

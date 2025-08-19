@@ -78,8 +78,6 @@
     shell = pkgs.zsh;
   };
 
-  nixpkgs.config.allowUnfree = true;
-
   environment.systemPackages = with pkgs; [
     vim
     home-manager
