@@ -10,6 +10,7 @@
    ./btop
    ./zsh
    ./gtk
+   ./nvf
   ];
 
   home = {
@@ -25,7 +26,7 @@
       openssh
       curl
       wget
-      neofetch
+      fastfetch
       btop
       runelite
       firefox
@@ -48,6 +49,7 @@
       deluge
       gimp
       obsidian
+      grimblast
     ];
   };
 
@@ -58,14 +60,14 @@
     };
   };
 
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    plugins = with pkgs.vimPlugins; [
-      gruvbox-material
-      nerdtree
-    ];
-  };
+ # programs.neovim = {
+ #   enable = true;
+ #   defaultEditor = true;
+ #   plugins = with pkgs.vimPlugins; [
+ #     gruvbox-material
+ #     nerdtree
+ #   ];
+ # };
 
   programs.git = {
    enable = true;

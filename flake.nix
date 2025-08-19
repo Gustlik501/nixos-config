@@ -13,9 +13,11 @@
       url = "github:nix-community/plasma-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nvf.url = "github:notashelf/nvf";
   };
 
-  outputs = { self, nixpkgs, home-manager, plasma-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, plasma-manager, nvf, ... }:
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs {
@@ -57,6 +59,7 @@
       inherit pkgs;  # HM reuses the same pkgs (with allowUnfree)
       modules = [
         plasma-manager.homeManagerModules.plasma-manager
+        nvf.homeManagerModules.default
         ./home/common.nix
       ];
     };
