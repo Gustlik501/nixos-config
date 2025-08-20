@@ -16,9 +16,36 @@
         ui.smartcolumn.enable = true;
         ui.smartcolumn.setupOpts.colorcolumn = "80";
 
+        statusline.lualine.enable = true;
+        telescope.enable = true;
+        autocomplete.nvim-cmp.enable = true;
+        mini.files.enable = true;
+
+        lsp.enable = true;
+        lsp.formatOnSave = true;
+        languages.enableTreesitter = true;
+        languages.nix.enable = true;
+        languages.python.enable = true;
+        languages.html.enable = true;
+        languages.ts.enable = true;
+        languages.markdown.enable = true;
+
         globals.mapLeader = " ";
 
         keymaps = [
+          ##Open mini.files
+          {
+            mode = "n";
+            key = "<leader>e";
+            action = ''
+              function()
+                require("mini.files").open()
+              end
+            '';
+            lua = true;
+
+          }
+          ##Control save
           {
             mode = "n";
             key = "<C-s>";
@@ -96,19 +123,6 @@
 
           }
         ];
-
-        statusline.lualine.enable = true;
-        telescope.enable = true;
-        autocomplete.nvim-cmp.enable = true;
-
-        lsp.enable = true;
-        lsp.formatOnSave = true;
-        languages.enableTreesitter = true;
-        languages.nix.enable = true;
-        languages.python.enable = true;
-        languages.html.enable = true;
-        languages.ts.enable = true;
-        languages.markdown.enable = true;
 
       };
     };
