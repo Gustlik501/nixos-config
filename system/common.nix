@@ -87,9 +87,6 @@
     home-manager
     steam
     nerd-fonts.jetbrains-mono
-    bluez-tools
-    vulkan-tools
-    pciutils
   ];
 
   programs.steam.enable = true;

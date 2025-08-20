@@ -54,6 +54,11 @@
       lutris
       wineWowPackages.stagingFull
       winetricks
+
+      bluez-tools
+      vulkan-tools
+      pciutils
+      mesa-demos
     ];
   };
 
