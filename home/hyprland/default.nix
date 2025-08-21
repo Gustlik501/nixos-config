@@ -1,6 +1,7 @@
+{ pkgs, inputs, ... }:
 {
   imports = [
-    ./hyprland.nix
+    (import ./hyprland.nix { inherit pkgs inputs; })
     ./hyprpaper.nix
     ../waybar # Add Waybar module
     ../hyprpanel
@@ -11,5 +12,6 @@
     source = /home/gustl/nixos-config/home/hyprland/configs/WindowRules.conf
     source = /home/gustl/nixos-config/home/hyprland/configs/UserDecorations.conf
     source = /home/gustl/nixos-config/home/hyprland/configs/Monitors.conf
+    source = /home/gustl/nixos-config/home/hyprland/configs/default.conf
   '';
 }

@@ -15,9 +15,19 @@
     };
 
     nvf.url = "github:notashelf/nvf";
+
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, plasma-manager, nvf, ... }:
+  outputs = { self, nixpkgs, home-manager, plasma-manager, nvf, hyprland, hyprland-plugins, ... }@inputs:
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs {
@@ -57,6 +67,7 @@
 
     homeConfigurations.gustl = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;  # HM reuses the same pkgs (with allowUnfree)
+      extraSpecialArgs = { inherit inputs; };
       modules = [
         plasma-manager.homeManagerModules.plasma-manager
         nvf.homeManagerModules.default
