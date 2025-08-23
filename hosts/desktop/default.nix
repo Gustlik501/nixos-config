@@ -11,6 +11,11 @@
 
   networking.hostName = "desktop";
 
+  networking.firewall = {
+    allowedTCPPorts = [ 53317 ];
+    allowedUDPPorts = [ 53317 ];
+  };
+
   # Enable OpenGL
   hardware.graphics = {
     enable = true;
