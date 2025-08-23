@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 {
 
   imports = [
@@ -59,6 +64,8 @@
       vulkan-tools
       pciutils
       mesa-demos
+      foliate
+      localsend
     ];
   };
 
