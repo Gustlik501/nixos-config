@@ -29,6 +29,7 @@
         languages.html.enable = true;
         languages.ts.enable = true;
         languages.markdown.enable = true;
+        languages.go.enable = true;
 
         globals.mapLeader = " ";
 

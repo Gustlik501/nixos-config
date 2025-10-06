@@ -27,6 +27,7 @@
     packages = with pkgs; [
       tree
       git
+      git-lfs
       lazygit
       openssh
       curl
@@ -66,6 +67,15 @@
       mesa-demos
       foliate
       localsend
+      sqlitebrowser
+
+      #logitech mouse
+      solaar
+
+      telegram-desktop
+
+      devenv
+
     ];
   };
 
@@ -89,6 +99,7 @@
     enable = true;
     userEmail = "sevcnikar.gregor2@gmail.com";
     userName = "Gustlik501";
+    lfs.enable = true;
   };
 
   programs.direnv.enable = true;

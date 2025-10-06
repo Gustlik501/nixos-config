@@ -10,6 +10,7 @@
       "exec-once" = [
         "hyprpaper"
         "hyprpanel" # Add waybar here
+
       ];
       plugin = {
         csgo-vulkan-fix = {
