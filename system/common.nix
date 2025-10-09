@@ -1,7 +1,8 @@
 { config, pkgs, ... }:
 {
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+
+  #boot.loader.systemd-boot.enable = true;
+  #boot.loader.efi.canTouchEfiVariables = true;
 
   networking.networkmanager.enable = true;
 
@@ -85,12 +86,12 @@
   environment.systemPackages = with pkgs; [
     vim
     home-manager
-    steam
+    #steam
     nerd-fonts.jetbrains-mono
   ];
 
-  programs.steam.enable = true;
+  #programs.steam.enable = true;
   programs.zsh.enable = true;
 
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 }

@@ -8,10 +8,8 @@
 
   imports = [
     ./hyprland
-    ./plasma.nix
     ./kitty
     ./rofi
-    ./wlogout
     ./hyprpanel
     ./btop
     ./zsh
@@ -22,7 +20,7 @@
   home = {
     username = "gustl";
     homeDirectory = "/home/gustl";
-    stateVersion = "23.11";
+    stateVersion = "25.05";
 
     packages = with pkgs; [
       tree
@@ -57,7 +55,7 @@
       obsidian
       grimblast
 
-      lutris
+      #lutris
       wineWowPackages.stagingFull
       winetricks
 
@@ -116,7 +114,5 @@
       "x-scheme-handler/terminal" = "kitty.desktop";
     };
   };
-
-  wlogout.enable = true;
 
 }

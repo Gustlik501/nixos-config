@@ -2,7 +2,7 @@
 {
   imports = [
     (import ./hyprland.nix { inherit pkgs inputs; })
-    ./hyprpaper.nix
+    #./hyprpaper.nix
     ../waybar # Add Waybar module
     ../hyprpanel
   ];

@@ -82,13 +82,26 @@
             ./system/cuda.nix
           ];
         };
+
+        vm = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit inputs; };
+          modules = [
+            sharedPkgsModule
+            ./hosts/vm
+            ./system/common.nix
+            ./system/gui.nix
+            ./system/sddm
+            ./system/n8n.nix
+          ];
+        };
       };
 
       homeConfigurations.gustl = home-manager.lib.homeManagerConfiguration {
         inherit pkgs; # HM reuses the same pkgs (with allowUnfree)
         extraSpecialArgs = { inherit inputs; };
         modules = [
-          plasma-manager.homeManagerModules.plasma-manager
+          plasma-manager.homeModules.plasma-manager
           nvf.homeManagerModules.default
           ./home/common.nix
         ];

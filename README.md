@@ -37,3 +37,7 @@ Flake-based NixOS configuration for my machines.
    ```
 
 This will bring up the system using the configurations defined in this repository.
+
+## Credits
+
+https://github.com/kianblakley/niri-land - Rofi Config.
