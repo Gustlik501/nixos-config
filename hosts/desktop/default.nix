@@ -63,7 +63,7 @@
     enable = true;
     qemu = {
       package = pkgs.qemu_kvm;
-      ovmf.enable = true; # UEFI firmware
+      #ovmf.enable = true; # UEFI firmware
       swtpm.enable = true; # vTPM for Win11
       runAsRoot = false; # user session libvirt
     };
@@ -80,8 +80,11 @@
 
   # Handy tools/ISOs available on host
   environment.systemPackages = with pkgs; [
+    steam
     virtiofsd # (mainly for Linux guests)
     virtio-win # Windows VirtIO drivers ISO
     spice-gtk # SPICE client support
   ];
+
+  programs.steam.enable = true;
 }
