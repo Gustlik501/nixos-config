@@ -13,6 +13,8 @@
         "hyprpanel" # Add waybar here
         "swww-daemon"
         #"waybar"
+        "wl-paste --type text --watch cliphist store"
+        "wl-paste --type image --watch cliphist store"
       ];
       plugin = {
         csgo-vulkan-fix = {

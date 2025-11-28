@@ -53,6 +53,7 @@
       gimp
       obsidian
       grimblast
+      cliphist
 
       #lutris
       wineWowPackages.stagingFull
