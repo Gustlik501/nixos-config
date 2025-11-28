@@ -10,7 +10,6 @@
     ./hyprland
     ./kitty
     ./rofi
-    ./hyprpanel
     ./btop
     ./zsh
     ./gtk
@@ -71,8 +70,25 @@
       solaar
 
       telegram-desktop
-
       devenv
+
+      #music prod
+      ardour
+      sfizz
+      zynaddsubfx
+      helm
+      dragonfly-reverb
+      calf
+
+      #Job
+      freerdp
+      #rustdesk
+      input-leap
+      remmina
+      openconnect
+      dbeaver-bin
+      bitwarden-desktop
+      google-chrome
 
     ];
   };
@@ -95,8 +111,8 @@
 
   programs.git = {
     enable = true;
-    userEmail = "sevcnikar.gregor2@gmail.com";
-    userName = "Gustlik501";
+    settings.user.email = "sevcnikar.gregor2@gmail.com";
+    settings.user.name = "Gustlik501";
     lfs.enable = true;
   };
 

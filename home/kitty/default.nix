@@ -51,36 +51,37 @@
       selection_background = "#ebdbb2";
 
       # Palette
-      color0  = "#272727";
-      color8  = "#928373";
+      color0 = "#272727";
+      color8 = "#928373";
 
-      color1  = "#cc231c";
-      color9  = "#fb4833";
+      color1 = "#cc231c";
+      color9 = "#fb4833";
 
-      color2  = "#989719";
+      color2 = "#989719";
       color10 = "#b8ba25";
 
-      color3  = "#d79920";
+      color3 = "#d79920";
       color11 = "#fabc2e";
 
-      color4  = "#448488";
+      color4 = "#448488";
       color12 = "#83a597";
 
-      color5  = "#b16185";
+      color5 = "#b16185";
       color13 = "#d3859a";
 
-      color6  = "#689d69";
+      color6 = "#689d69";
       color14 = "#8ec07b";
 
-      color7  = "#a89983";
+      color7 = "#a89983";
       color15 = "#ebdbb2";
     };
 
     keybindings = {
       "ctrl+shift+f" = "send_text all clear\n cd `cdinteractive`\n";
+      "ctrl+c" = "copy_or_interrupt";
+      "ctrl+v" = "paste_from_clipboard";
     };
   };
-
 
   #set kitty as TerminalEmulator
   xdg.desktopEntries.kitty = {
@@ -89,7 +90,10 @@
     terminal = false;
     type = "Application";
     icon = "kitty";
-    categories = [ "System" "TerminalEmulator" ];
+    categories = [
+      "System"
+      "TerminalEmulator"
+    ];
   };
 
   # Set kitty as default of xfce

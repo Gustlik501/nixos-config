@@ -10,10 +10,17 @@
         position = "top";
         modules-center = [ "hyprland/workspaces" ];
         modules-left = [ "wireplumber" ];
-        modules-right = [ "network" "cpu" "memory" "battery" "clock" ];
+        modules-right = [
+          "bluetooth"
+          "network"
+          "cpu"
+          "memory"
+          "battery"
+          "clock"
+        ];
 
         "hyprland/workspaces" = {
-         format = "{icon}";
+          format = "{icon}";
           format-icons = {
             "1" = "󰎤";
             "2" = "󰎧";
@@ -31,7 +38,6 @@
           };
         };
 
-
         network = {
           tooltip = false;
           "format-wifi" = "  {essid}";
@@ -40,6 +46,12 @@
           "on-click" = "kitty -- nmtui";
         };
 
+        bluetooth = {
+          "format" = " 󰂯 ";
+          "tooltip" = true;
+          "tooltip-format" = "Bluetooth Settings";
+          "on-click" = "bluetuith";
+        };
 
         clock = {
           format = "{:%H:%M}";
@@ -58,7 +70,6 @@
           format = "  {}%";
           max-length = 10;
         };
-
 
         wireplumber = {
           format = "{volume}% {icon}";

@@ -5,6 +5,7 @@
   #boot.loader.efi.canTouchEfiVariables = true;
 
   networking.networkmanager.enable = true;
+  networking.networkmanager.plugins = [ pkgs.networkmanager-openconnect ];
 
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
@@ -31,6 +32,7 @@
     alsa.support32Bit = true;
     wireplumber.enable = true;
     pulse.enable = true;
+    jack.enable = true; # Optional, for JACK support
   };
 
   xdg.portal = {
@@ -57,14 +59,15 @@
   };
 
   services.xserver.xkb = {
-    layout = "us";
+    layout = "us,si";
     variant = "";
+    options = "grp:alt_shift_toggle";
   };
 
   nix.gc = {
     automatic = true;
     dates = "weekly";
-    options = "--delete-older-than 30d";
+    options = "--delete-older-than 14d";
   };
 
   nix.settings.experimental-features = [
@@ -78,16 +81,23 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "audio"
     ];
     packages = with pkgs; [ ];
     shell = pkgs.zsh;
   };
+
+  nix.settings.trusted-users = [
+    "root"
+    "gustl"
+  ];
 
   environment.systemPackages = with pkgs; [
     vim
     home-manager
     #steam
     nerd-fonts.jetbrains-mono
+    networkmanagerapplet
   ];
 
   #programs.steam.enable = true;

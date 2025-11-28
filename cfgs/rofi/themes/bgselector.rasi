@@ -12,7 +12,7 @@ window {
 // Main Box
 mainbox {
     children: [listview];
-    padding: 25% 36%;
+    padding: 25% 0; // 36%;
 }
 
 // Listview

@@ -7,10 +7,16 @@
         viAlias = false;
         vimAlias = true;
 
-        theme = {
-          enable = true;
-          name = "gruvbox";
-          style = "dark";
+        #theme = {
+        #enable = true;
+        #name = "gruvbox";
+        #style = "dark";
+        #};
+        extraPlugins = {
+          gruvbox-material = {
+            package = pkgs.vimPlugins.gruvbox-material;
+            setup = "vim.cmd.colorscheme('gruvbox-material')";
+          };
         };
 
         ui.smartcolumn.enable = true;
@@ -30,6 +36,8 @@
         languages.ts.enable = true;
         languages.markdown.enable = true;
         languages.go.enable = true;
+        languages.zig.enable = true;
+        languages.yaml.enable = true;
 
         globals.mapLeader = " ";
 
