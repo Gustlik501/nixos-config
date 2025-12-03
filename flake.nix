@@ -42,6 +42,10 @@
     }@inputs:
     let
       system = "x86_64-linux";
+      username = "gustl";
+      userFullName = "Gregor Sevcnikar";
+      userEmail = "sevcnikar.gregor2@gmail.com";
+      gitUsername = "Gustlik501";
       pkgs = import nixpkgs {
         inherit system;
         config = {
@@ -61,18 +65,32 @@
       nixosConfigurations = {
         laptop = nixpkgs.lib.nixosSystem {
           inherit system;
+          specialArgs = { inherit inputs username userFullName userEmail gitUsername; };
           modules = [
             sharedPkgsModule
             ./hosts/laptop
             ./system/common.nix
             ./system/gui.nix
             ./system/sddm
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit inputs username userFullName userEmail gitUsername; };
+              home-manager.users.${username} = {
+                imports = [
+                  plasma-manager.homeModules.plasma-manager
+                  nvf.homeManagerModules.default
+                  ./home/common.nix
+                ];
+              };
+            }
           ];
         };
 
         desktop = nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit inputs; };
+          specialArgs = { inherit inputs username userFullName userEmail gitUsername; };
           modules = [
             sharedPkgsModule
             ./hosts/desktop
@@ -81,12 +99,25 @@
             ./system/sddm
             ./system/n8n.nix
             ./system/cuda.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit inputs username userFullName userEmail gitUsername; };
+              home-manager.users.${username} = {
+                imports = [
+                  plasma-manager.homeModules.plasma-manager
+                  nvf.homeManagerModules.default
+                  ./home/common.nix
+                ];
+              };
+            }
           ];
         };
 
         vm = nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit inputs; };
+          specialArgs = { inherit inputs username userFullName userEmail gitUsername; };
           modules = [
             sharedPkgsModule
             ./hosts/vm
@@ -94,18 +125,21 @@
             ./system/gui.nix
             ./system/sddm
             ./system/n8n.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit inputs username userFullName userEmail gitUsername; };
+              home-manager.users.${username} = {
+                imports = [
+                  plasma-manager.homeModules.plasma-manager
+                  nvf.homeManagerModules.default
+                  ./home/common.nix
+                ];
+              };
+            }
           ];
         };
-      };
-
-      homeConfigurations.gustl = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs; # HM reuses the same pkgs (with allowUnfree)
-        extraSpecialArgs = { inherit inputs; };
-        modules = [
-          plasma-manager.homeModules.plasma-manager
-          nvf.homeManagerModules.default
-          ./home/common.nix
-        ];
       };
     };
 }

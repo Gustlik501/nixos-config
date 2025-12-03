@@ -2,6 +2,9 @@
   config,
   pkgs,
   inputs,
+  username,
+  userEmail,
+  gitUsername,
   ...
 }:
 {
@@ -17,8 +20,8 @@
   ];
 
   home = {
-    username = "gustl";
-    homeDirectory = "/home/gustl";
+    inherit username;
+    homeDirectory = "/home/${username}";
     stateVersion = "25.05";
 
     packages = with pkgs; [
@@ -115,8 +118,8 @@
 
   programs.git = {
     enable = true;
-    settings.user.email = "sevcnikar.gregor2@gmail.com";
-    settings.user.name = "Gustlik501";
+    settings.user.email = userEmail;
+    settings.user.name = gitUsername;
     lfs.enable = true;
   };
 

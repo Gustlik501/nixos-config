@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  username,
   ...
 }:
 {
@@ -73,7 +74,7 @@
   programs.virt-manager.enable = true;
 
   # Your user to groups
-  users.users.gustl.extraGroups = [
+  users.users.${username}.extraGroups = [
     "libvirtd"
     "kvm"
   ];

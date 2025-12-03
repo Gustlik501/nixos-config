@@ -30,14 +30,8 @@ Flake-based NixOS configuration for my machines.
      sudo nixos-rebuild switch --flake .#laptop
      ```
 
-4. **Activate the Home Manager profile** (replace `gustl` with your username if different):
-   
-   ```
-   home-manager switch --flake .#gustl
-   ```
-
-This will bring up the system using the configurations defined in this repository.
+   *Note: This command now automatically applies both system and user (Home Manager) configurations.*
 
 ## Credits
 
-https://github.com/kianblakley/niri-land - Rofi Config.
+[Rofi Config](https://github.com/kianblakley/niri-land)

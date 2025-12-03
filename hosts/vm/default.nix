@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -30,7 +30,7 @@
   };
 
   # Your user to groups
-  users.users.gustl.extraGroups = [
+  users.users.${username}.extraGroups = [
   ];
 
   # Handy tools/ISOs available on host

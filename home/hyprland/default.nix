@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, config, ... }:
 {
   imports = [
     (import ./hyprland.nix { inherit pkgs inputs; })
@@ -8,10 +8,10 @@
   ];
 
   wayland.windowManager.hyprland.extraConfig = ''
-    source = /home/gustl/nixos-config/home/hyprland/configs/UserKeybinds.conf
-    source = /home/gustl/nixos-config/home/hyprland/configs/WindowRules.conf
-    source = /home/gustl/nixos-config/home/hyprland/configs/UserDecorations.conf
-    source = /home/gustl/nixos-config/home/hyprland/configs/Monitors.conf
-    source = /home/gustl/nixos-config/home/hyprland/configs/default.conf
+    source = ${config.home.homeDirectory}/nixos-config/home/hyprland/configs/UserKeybinds.conf
+    source = ${config.home.homeDirectory}/nixos-config/home/hyprland/configs/WindowRules.conf
+    source = ${config.home.homeDirectory}/nixos-config/home/hyprland/configs/UserDecorations.conf
+    source = ${config.home.homeDirectory}/nixos-config/home/hyprland/configs/Monitors.conf
+    source = ${config.home.homeDirectory}/nixos-config/home/hyprland/configs/default.conf
   '';
 }

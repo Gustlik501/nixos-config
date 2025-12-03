@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, username, userFullName, ... }:
 {
 
   #boot.loader.systemd-boot.enable = true;
@@ -75,9 +75,9 @@
     "flakes"
   ];
 
-  users.users.gustl = {
+  users.users.${username} = {
     isNormalUser = true;
-    description = "Gregor Sevcnikar";
+    description = userFullName;
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -89,7 +89,7 @@
 
   nix.settings.trusted-users = [
     "root"
-    "gustl"
+    username
   ];
 
   environment.systemPackages = with pkgs; [
