@@ -42,6 +42,7 @@
       gtksourceview3
       libsoup_3
       libgtop
+      bolt-launcher
 
       # Thunar + helpers
       xfce.thunar
@@ -90,6 +91,8 @@
       dbeaver-bin
       bitwarden-desktop
       google-chrome
+
+      bruno
 
     ];
   };
