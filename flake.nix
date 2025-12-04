@@ -27,6 +27,11 @@
       inputs.hyprland.follows = "hyprland";
     };
 
+    antigravity-nix = {
+      url = "github:jacopone/antigravity-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
