@@ -15,7 +15,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nvf.url = "github:notashelf/nvf/v0.8";
+    nvf.url = "github:notashelf/nvf";
 
     hyprland = {
       url = "github:hyprwm/Hyprland";
@@ -80,7 +80,15 @@
       nixosConfigurations = {
         laptop = nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit inputs username userFullName userEmail gitUsername; };
+          specialArgs = {
+            inherit
+              inputs
+              username
+              userFullName
+              userEmail
+              gitUsername
+              ;
+          };
           modules = [
             sharedPkgsModule
             ./hosts/laptop
@@ -91,7 +99,15 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = { inherit inputs username userFullName userEmail gitUsername; };
+              home-manager.extraSpecialArgs = {
+                inherit
+                  inputs
+                  username
+                  userFullName
+                  userEmail
+                  gitUsername
+                  ;
+              };
               home-manager.users.${username} = {
                 imports = [
                   plasma-manager.homeModules.plasma-manager
@@ -105,20 +121,36 @@
 
         desktop = nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit inputs username userFullName userEmail gitUsername; };
+          specialArgs = {
+            inherit
+              inputs
+              username
+              userFullName
+              userEmail
+              gitUsername
+              ;
+          };
           modules = [
             sharedPkgsModule
             ./hosts/desktop
             ./system/common.nix
             ./system/gui.nix
             ./system/sddm
-            ./system/n8n.nix
+            #./system/n8n.nix
             ./system/cuda.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = { inherit inputs username userFullName userEmail gitUsername; };
+              home-manager.extraSpecialArgs = {
+                inherit
+                  inputs
+                  username
+                  userFullName
+                  userEmail
+                  gitUsername
+                  ;
+              };
               home-manager.users.${username} = {
                 imports = [
                   plasma-manager.homeModules.plasma-manager
@@ -132,7 +164,15 @@
 
         vm = nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit inputs username userFullName userEmail gitUsername; };
+          specialArgs = {
+            inherit
+              inputs
+              username
+              userFullName
+              userEmail
+              gitUsername
+              ;
+          };
           modules = [
             sharedPkgsModule
             ./hosts/vm
@@ -144,7 +184,15 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = { inherit inputs username userFullName userEmail gitUsername; };
+              home-manager.extraSpecialArgs = {
+                inherit
+                  inputs
+                  username
+                  userFullName
+                  userEmail
+                  gitUsername
+                  ;
+              };
               home-manager.users.${username} = {
                 imports = [
                   plasma-manager.homeModules.plasma-manager
