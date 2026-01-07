@@ -32,6 +32,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    prismlauncher-cracked = {
+      url = "github:Diegiwg/PrismLauncher-Cracked";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    cinecli = {
+      url = "github:eyeblech/cinecli";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =

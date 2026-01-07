@@ -1,4 +1,10 @@
-{ config, pkgs, username, userFullName, ... }:
+{
+  config,
+  pkgs,
+  username,
+  userFullName,
+  ...
+}:
 {
 
   #boot.loader.systemd-boot.enable = true;
@@ -24,6 +30,16 @@
     blueman.enable = true;
     upower.enable = true;
     gvfs.enable = true;
+    udisks2.enable = true;
+    tumbler.enable = true;
+  };
+
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs.xfce; [
+      thunar-archive-plugin
+      thunar-volman
+    ];
   };
 
   services.pipewire = {
@@ -98,6 +114,8 @@
     #steam
     nerd-fonts.jetbrains-mono
     networkmanagerapplet
+    #gparted
+    kdePackages.partitionmanager
   ];
 
   #programs.steam.enable = true;
