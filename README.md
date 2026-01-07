@@ -17,20 +17,21 @@ Flake-based NixOS configuration for my machines.
    cd ~/nixos-config
    ```
 
-3. **Apply a host configuration**. Replace `laptop` with the desired host (`laptop` or `desktop`):
+3. **Apply a host configuration**.
    
-   - For a fresh install:
-     
-     ```
-     sudo nixos-install --flake .#laptop
-     ```
-   - For an already installed system:
-     
+   - **Workstations:** Replace `laptop` with the desired host (`laptop` or `desktop`):
      ```
      sudo nixos-rebuild switch --flake .#laptop
      ```
+   - **Server (Frodo):** See [hosts/frodo/README.md](hosts/frodo/README.md) for special instructions on its independent sub-flake.
 
    *Note: This command now automatically applies both system and user (Home Manager) configurations.*
+
+## Hosts
+- `desktop`: Main workstation (Nvidia, libvirt).
+- `laptop`: Portable machine (Intel).
+- `frodo`: Headless home server (ZFS, Sub-flake). See its dedicated [README](hosts/frodo/README.md).
+- `vm`: Virtual machine testing environment.
 
 ## Credits
 

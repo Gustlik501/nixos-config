@@ -6,16 +6,14 @@
   ...
 }:
 {
+  imports = [ ./core.nix ];
 
-  #boot.loader.systemd-boot.enable = true;
-  #boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.networkmanager.enable = true;
+  # Desktop/Laptop Networking Extras
   networking.networkmanager.plugins = [ pkgs.networkmanager-openconnect ];
 
+  # Bluetooth
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
-
   hardware.bluetooth.settings = {
     General = {
       ControllerMode = "dual";
@@ -25,15 +23,15 @@
       Agent = "KeyboardDisplay";
     };
   };
+  services.blueman.enable = true;
 
-  services = {
-    blueman.enable = true;
-    upower.enable = true;
-    gvfs.enable = true;
-    udisks2.enable = true;
-    tumbler.enable = true;
-  };
+  # Power & Storage Services
+  services.upower.enable = true;
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
+  services.tumbler.enable = true;
 
+  # File Manager
   programs.thunar = {
     enable = true;
     plugins = with pkgs; [
@@ -42,15 +40,17 @@
     ];
   };
 
+  # Audio
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     wireplumber.enable = true;
     pulse.enable = true;
-    jack.enable = true; # Optional, for JACK support
+    jack.enable = true;
   };
 
+  # Portals
   xdg.portal = {
     enable = true;
     extraPortals = [
@@ -59,67 +59,22 @@
     ];
   };
 
-  time.timeZone = "Europe/Ljubljana";
-
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "sl_SI.UTF-8";
-    LC_IDENTIFICATION = "sl_SI.UTF-8";
-    LC_MEASUREMENT = "sl_SI.UTF-8";
-    LC_MONETARY = "sl_SI.UTF-8";
-    LC_NAME = "sl_SI.UTF-8";
-    LC_NUMERIC = "sl_SI.UTF-8";
-    LC_PAPER = "sl_SI.UTF-8";
-    LC_TELEPHONE = "sl_SI.UTF-8";
-    LC_TIME = "sl_SI.UTF-8";
-  };
-
+  # Keyboard Layout (X11/Wayland)
   services.xserver.xkb = {
     layout = "us,si";
     variant = "";
     options = "grp:alt_shift_toggle";
   };
 
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 14d";
-  };
+  # Desktop User Extras
+  users.users.${username}.extraGroups = [ "audio" ];
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-
-  users.users.${username} = {
-    isNormalUser = true;
-    description = userFullName;
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "audio"
-    ];
-    packages = with pkgs; [ ];
-    shell = pkgs.zsh;
-  };
-
-  nix.settings.trusted-users = [
-    "root"
-    username
-  ];
-
+  # Desktop Packages
   environment.systemPackages = with pkgs; [
-    vim
-    home-manager
-    #steam
     nerd-fonts.jetbrains-mono
     networkmanagerapplet
-    #gparted
     kdePackages.partitionmanager
   ];
 
-  #programs.steam.enable = true;
-  programs.zsh.enable = true;
-
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 }
