@@ -12,7 +12,7 @@ let
     WG_DIR="/etc/wireguard"
     CONF_FILE="$WG_DIR/wg0.conf"
     SUBNET="${vpnSubnet}"
-    PORT="${vpnPort}"
+    PORT="${toString vpnPort}"
     
     # Ensure root
     if [ "$EUID" -ne 0 ]; then
