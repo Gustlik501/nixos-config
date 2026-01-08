@@ -64,6 +64,7 @@
     curl
     pciutils
     glances
+    kitty.terminfo # Fixes "xterm-kitty" error when SSHing from Kitty
     # Add any other server-specific tools here (e.g., iotop, ncdu)
   ];
 
