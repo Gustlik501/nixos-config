@@ -76,6 +76,7 @@
     curl
     pciutils
     glances
+    lm_sensors
     kitty.terminfo # Fixes "xterm-kitty" error when SSHing from Kitty
     cudaPackages.cudatoolkit
     # Add any other server-specific tools here (e.g., iotop, ncdu)
