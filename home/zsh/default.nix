@@ -20,6 +20,9 @@
     # Your aliases
     shellAliases = {
       lg = "lazygit";
+      ls = "eza --icons --group-directories-first";
+      ll = "eza -lh --icons --grid --group-directories-first";
+      lt = "eza --tree --icons --group-directories-first";
     };
 
     # Extra init (optional): better completion UI, sane keybinds

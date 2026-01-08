@@ -85,6 +85,7 @@
     virtiofsd # (mainly for Linux guests)
     virtio-win # Windows VirtIO drivers ISO
     spice-gtk # SPICE client support
+    cudaPackages.cudatoolkit
   ];
 
   programs.steam.enable = true;

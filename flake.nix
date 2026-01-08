@@ -92,9 +92,7 @@
           modules = [
             sharedPkgsModule
             ./hosts/laptop
-            ./system/common.nix
-            ./system/gui.nix
-            ./system/sddm
+            ./profiles/workstation.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -134,11 +132,7 @@
           modules = [
             sharedPkgsModule
             ./hosts/desktop
-            ./system/common.nix
-            ./system/gui.nix
-            ./system/sddm
-            #./system/n8n.nix
-            ./system/cuda.nix
+            ./profiles/workstation.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -177,10 +171,8 @@
           modules = [
             sharedPkgsModule
             ./hosts/vm
-            ./system/common.nix
-            ./system/gui.nix
-            ./system/sddm
-            ./system/n8n.nix
+            ./profiles/workstation.nix
+            ./modules/services/n8n.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;

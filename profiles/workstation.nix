@@ -6,7 +6,11 @@
   ...
 }:
 {
-  imports = [ ./core.nix ];
+  imports = [ 
+    ./base.nix
+    ../modules/desktop/gui.nix
+    ../modules/desktop/sddm
+  ];
 
   # Desktop/Laptop Networking Extras
   networking.networkmanager.plugins = [ pkgs.networkmanager-openconnect ];

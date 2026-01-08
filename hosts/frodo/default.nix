@@ -1,8 +1,14 @@
-{ config, pkgs, username, ... }:
+{
+  config,
+  pkgs,
+  username,
+  ...
+}:
 {
   imports = [
     ./disk-config.nix
-    ../../system/core.nix
+    ../../profiles/base.nix
+    ../../modules/services/wireguard.nix
   ];
 
   networking.hostName = "frodo";
@@ -14,19 +20,25 @@
   fileSystems."/data" = {
     device = "dpool";
     fsType = "zfs";
-    options = [ "zfsutil" "nofail" ];
+    options = [
+      "zfsutil"
+      "nofail"
+    ];
   };
 
   fileSystems."/media" = {
     device = "mpool";
     fsType = "zfs";
-    options = [ "zfsutil" "nofail" ];
+    options = [
+      "zfsutil"
+      "nofail"
+    ];
   };
 
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  
+
   # ZFS Support
   boot.supportedFilesystems = [ "zfs" ];
   services.zfs.autoScrub.enable = true;
@@ -65,13 +77,18 @@
     pciutils
     glances
     kitty.terminfo # Fixes "xterm-kitty" error when SSHing from Kitty
+    cudaPackages.cudatoolkit
     # Add any other server-specific tools here (e.g., iotop, ncdu)
   ];
 
   # Firewall settings for common services
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 22 80 443 ]; # SSH, HTTP, HTTPS
+    allowedTCPPorts = [
+      22
+      80
+      443
+    ]; # SSH, HTTP, HTTPS
   };
 
   system.stateVersion = "25.11";
