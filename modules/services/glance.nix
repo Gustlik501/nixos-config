@@ -16,9 +16,23 @@
               size = "small";
               widgets = [
                 { type = "calendar"; }
+                { type = "server-stats"; }
                 {
-                  type = "weather";
-                  location = "Berlin, Germany";
+                  type = "monitor";
+                  title = "Status";
+                  cache = "1m";
+                  style = "compact";
+                  sites = [
+                    {
+                      title = "Router";
+                      url = "http://192.168.1.254";
+                      timeout = "10s";
+                    }
+                    {
+                      title = "Frodo";
+                      url = "http://192.168.1.64:8080";
+                    }
+                  ];
                 }
               ];
             }
@@ -30,41 +44,28 @@
                   search-engine = "google";
                 }
                 {
-                  type = "bookmarks";
-                  groups = [
+                  type = "videos";
+                  channels = [ "UCXuqSBlHAE6Xw-yeJA0Tunw" ]; # Linus Tech Tips
+                }
+                {
+                  type = "group";
+                  name = "Reddit";
+                  widgets = [
                     {
-                      title = "Media";
-                      links = [
-                        {
-                          title = "Jellyfin";
-                          url = "http://jellyfin.local";
-                        }
-                        {
-                          title = "Sonarr";
-                          url = "http://sonarr.local";
-                        }
-                        {
-                          title = "Radarr";
-                          url = "http://radarr.local";
-                        }
-                      ];
+                      type = "reddit";
+                      subreddit = "technology";
+                      show-thumbnails = true;
                     }
                     {
-                      title = "Social";
-                      links = [
-                        {
-                          title = "Reddit";
-                          url = "https://reddit.com";
-                        }
-                        {
-                          title = "GitHub";
-                          url = "https://github.com";
-                        }
-                        {
-                          title = "YouTube";
-                          url = "https://youtube.com";
-                        }
-                      ];
+                      type = "reddit";
+                      subreddit = "science";
+                      show-thumbnails = true;
+
+                    }
+                    {
+                      type = "reddit";
+                      subreddit = "games";
+                      show-thumbnails = true;
                     }
                   ];
                 }
@@ -74,10 +75,25 @@
               size = "small";
               widgets = [
                 {
-                  type = "rss";
-                  title = "Hacker News";
-                  limit = 5;
-                  url = "https://news.ycombinator.com/rss";
+                  type = "weather";
+                  location = "Dravograd, Slovenia";
+                }
+                {
+                  type = "markets";
+                  markets = [
+                    {
+                      name = "BTC";
+                      symbol = "BTC-USD";
+                    }
+                    {
+                      name = "ETH";
+                      symbol = "ETH-USD";
+                    }
+                    {
+                      name = "SP500";
+                      symbol = "^GSPC";
+                    }
+                  ];
                 }
               ];
             }
