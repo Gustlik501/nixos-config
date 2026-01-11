@@ -9,6 +9,7 @@
     ./disk-config.nix
     ../../profiles/base.nix
     ../../modules/services/wireguard.nix
+    ../../modules/services/glance.nix
   ];
 
   networking.hostName = "frodo";
