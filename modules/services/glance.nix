@@ -4,7 +4,10 @@
   services.glance = {
     enable = true;
     settings = {
-      server.port = 8080;
+      server = {
+        port = 8080;
+        host = "0.0.0.0";
+      };
       pages = [
         {
           name = "Homelab";
