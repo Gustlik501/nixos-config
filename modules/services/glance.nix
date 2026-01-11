@@ -15,9 +15,7 @@
             {
               size = "small";
               widgets = [
-                {
-                  type = "calendar";
-                }
+                { type = "calendar"; }
                 {
                   type = "weather";
                   location = "Berlin, Germany";
@@ -32,44 +30,41 @@
                   search-engine = "google";
                 }
                 {
-                  type = "group";
-                  name = "Media";
-                  widgets = [
+                  type = "bookmarks";
+                  groups = [
                     {
-                      type = "bookmark";
-                      title = "Jellyfin";
-                      url = "http://jellyfin.local";
+                      title = "Media";
+                      links = [
+                        {
+                          title = "Jellyfin";
+                          url = "http://jellyfin.local";
+                        }
+                        {
+                          title = "Sonarr";
+                          url = "http://sonarr.local";
+                        }
+                        {
+                          title = "Radarr";
+                          url = "http://radarr.local";
+                        }
+                      ];
                     }
                     {
-                      type = "bookmark";
-                      title = "Sonarr";
-                      url = "http://sonarr.local";
-                    }
-                    {
-                      type = "bookmark";
-                      title = "Radarr";
-                      url = "http://radarr.local";
-                    }
-                  ];
-                }
-                {
-                  type = "group";
-                  name = "Social";
-                  widgets = [
-                    {
-                      type = "bookmark";
-                      title = "Reddit";
-                      url = "https://reddit.com";
-                    }
-                    {
-                      type = "bookmark";
-                      title = "GitHub";
-                      url = "https://github.com";
-                    }
-                    {
-                      type = "bookmark";
-                      title = "YouTube";
-                      url = "https://youtube.com";
+                      title = "Social";
+                      links = [
+                        {
+                          title = "Reddit";
+                          url = "https://reddit.com";
+                        }
+                        {
+                          title = "GitHub";
+                          url = "https://github.com";
+                        }
+                        {
+                          title = "YouTube";
+                          url = "https://youtube.com";
+                        }
+                      ];
                     }
                   ];
                 }
