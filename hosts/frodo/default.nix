@@ -4,12 +4,28 @@
   username,
   ...
 }:
+let
+  profilarrCompose = pkgs.writeText "docker-compose.yml" ''
+    services:
+      profilarr:
+        image: santiagosayshey/profilarr:latest
+        container_name: profilarr
+        restart: unless-stopped
+        ports:
+          - "5678:6868"
+        volumes:
+          - /var/lib/profilarr:/config
+        environment:
+          - TZ=Europe/Ljubljana
+  '';
+in
 {
   imports = [
     ./disk-config.nix
     ../../profiles/base.nix
     ../../modules/services/wireguard.nix
     ../../modules/services/glance.nix
+    ../../modules/services/media.nix
   ];
 
   networking.hostName = "frodo";
@@ -71,6 +87,21 @@
   virtualisation.docker.enable = true;
   users.users.${username}.extraGroups = [ "docker" ];
 
+  # Profilarr Service
+  systemd.services.profilarr = {
+    description = "Profilarr Docker Compose Service";
+    after = [ "docker.service" ];
+    wants = [ "docker.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      # We don't need a WorkingDirectory since we pass the file explicitly
+      ExecStart = "${pkgs.docker-compose}/bin/docker-compose -f ${profilarrCompose} -p profilarr up -d";
+      ExecStop = "${pkgs.docker-compose}/bin/docker-compose -f ${profilarrCompose} -p profilarr down";
+    };
+  };
+
   # Basic Server Tools
   environment.systemPackages = with pkgs; [
     wget
@@ -80,6 +111,7 @@
     lm_sensors
     kitty.terminfo # Fixes "xterm-kitty" error when SSHing from Kitty
     cudaPackages.cudatoolkit
+    docker-compose # Ensure docker-compose binary is available
     # Add any other server-specific tools here (e.g., iotop, ncdu)
   ];
 
@@ -90,6 +122,7 @@
       22
       80
       443
+      5678 # Profilarr
     ]; # SSH, HTTP, HTTPS
   };
 
