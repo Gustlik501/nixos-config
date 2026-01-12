@@ -75,6 +75,16 @@
     UMask = "0002";
   };
 
+  services.bazarr = {
+    enable = true;
+    openFirewall = true;
+    group = "media";
+  };
+  systemd.services.bazarr.serviceConfig = {
+    BindPaths = [ "/media" ];
+    UMask = "0002";
+  };
+
   services.lidarr = {
     enable = true;
     openFirewall = true;
