@@ -20,6 +20,10 @@
         fontFixed = "JetBrainsMono Nerd Font";
       };
 
+      location = {
+        name = "Dravograd, Slovenia";
+      };
+
       wallpaper = {
         enabled = false;
       };
