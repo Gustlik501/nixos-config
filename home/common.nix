@@ -17,6 +17,7 @@
     ./zsh
     ./gtk
     ./nvf
+    ./noctalia
   ];
 
   home = {
@@ -25,6 +26,7 @@
     stateVersion = "25.05";
 
     packages = with pkgs; [
+      nodejs
       tree
       git
       git-lfs
@@ -79,6 +81,7 @@
       helm
       dragonfly-reverb
       calf
+      lmms
 
       #Job
       freerdp

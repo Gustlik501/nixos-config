@@ -14,7 +14,7 @@
       "exec-once" = [
         #"swww img /home/gustl/nixos-config/wallpapers/dark.png"
         "hyprpaper"
-        "hyprpanel" # Add waybar here
+        "noctalia-shell"
         "swww-daemon"
         #"waybar"
         "wl-paste --type text --watch cliphist store"
