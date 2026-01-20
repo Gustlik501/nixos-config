@@ -15,6 +15,11 @@
         backgroundOpacity = 0.0;
       };
       
+      ui = {
+        fontDefault = "JetBrainsMono Nerd Font";
+        fontFixed = "JetBrainsMono Nerd Font";
+      };
+
       wallpaper = {
         enabled = false;
       };
