@@ -10,12 +10,11 @@
       };
       pages = [
         {
-          name = "Home";
+          name = "Media";
           columns = [
             {
               size = "small";
               widgets = [
-                { type = "calendar"; }
                 { type = "server-stats"; }
                 {
                   type = "monitor";
@@ -40,72 +39,6 @@
               size = "full";
               widgets = [
                 {
-                  type = "search";
-                  search-engine = "google";
-                }
-                {
-                  type = "videos";
-                  channels = [ "UCXuqSBlHAE6Xw-yeJA0Tunw" ]; # Linus Tech Tips
-                }
-                {
-                  type = "group";
-                  name = "Reddit";
-                  widgets = [
-                    {
-                      type = "reddit";
-                      subreddit = "technology";
-                      show-thumbnails = true;
-                    }
-                    {
-                      type = "reddit";
-                      subreddit = "science";
-                      show-thumbnails = true;
-
-                    }
-                    {
-                      type = "reddit";
-                      subreddit = "games";
-                      show-thumbnails = true;
-                    }
-                  ];
-                }
-              ];
-            }
-            {
-              size = "small";
-              widgets = [
-                {
-                  type = "weather";
-                  location = "Dravograd, Slovenia";
-                }
-                {
-                  type = "markets";
-                  markets = [
-                    {
-                      name = "BTC";
-                      symbol = "BTC-USD";
-                    }
-                    {
-                      name = "ETH";
-                      symbol = "ETH-USD";
-                    }
-                    {
-                      name = "SP500";
-                      symbol = "^GSPC";
-                    }
-                  ];
-                }
-              ];
-            }
-          ];
-        }
-        {
-          name = "Media";
-          columns = [
-            {
-              size = "full";
-              widgets = [
-                {
                   type = "monitor";
                   title = "Services";
                   cache = "1m";
@@ -117,6 +50,7 @@
                     { title = "Bazarr"; url = "http://192.168.1.64:6767"; }
                     { title = "Lidarr"; url = "http://192.168.1.64:8686"; }
                     { title = "Prowlarr"; url = "http://192.168.1.64:9696"; }
+                    { title = "Profilarr"; url = "http://192.168.1.64:6868"; }
                     { title = "qBittorrent"; url = "http://192.168.1.64:8081"; }
                   ];
                 }
