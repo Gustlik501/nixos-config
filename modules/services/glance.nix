@@ -50,7 +50,7 @@
                     { title = "Bazarr"; url = "http://192.168.1.64:6767"; }
                     { title = "Lidarr"; url = "http://192.168.1.64:8686"; }
                     { title = "Prowlarr"; url = "http://192.168.1.64:9696"; }
-                    { title = "Profilarr"; url = "http://192.168.1.64:6868"; }
+                    { title = "Profilarr"; url = "http://192.168.1.64:5678"; }
                     { title = "qBittorrent"; url = "http://192.168.1.64:8081"; }
                   ];
                 }
