@@ -26,12 +26,13 @@ in
     ../../modules/services/wireguard.nix
     ../../modules/services/glance.nix
     ../../modules/services/media.nix
+    ../../modules/services/caddy.nix
+    ../../modules/services/adguard.nix
+    ../../modules/services/vaultwarden.nix
   ];
 
   networking.hostName = "frodo";
   networking.hostId = "8425e349"; # Required for ZFS
-
-  nixpkgs.config.allowUnfree = true;
 
   # ZFS: Add nofail so system doesn't panic if pools are slow
   fileSystems."/data" = {
@@ -125,6 +126,4 @@ in
       5678 # Profilarr
     ]; # SSH, HTTP, HTTPS
   };
-
-  system.stateVersion = "25.11";
 }

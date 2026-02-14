@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-frodo.url = "github:nixos/nixpkgs/nixos-unstable";
     #nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
 
     home-manager = {
@@ -42,11 +43,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    cinecli = {
-      url = "github:eyeblech/cinecli";
-      inputs.nixpkgs.follows = "nixpkgs";
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs-frodo";
     };
-
   };
 
   outputs =
@@ -58,6 +58,7 @@
       nvf,
       hyprland,
       hyprland-plugins,
+      disko,
       ...
     }@inputs:
     let
@@ -66,141 +67,170 @@
       userFullName = "Gregor Sevcnikar";
       userEmail = "sevcnikar.gregor2@gmail.com";
       gitUsername = "Gustlik501";
+      nixpkgsFrodo = inputs."nixpkgs-frodo";
       pkgs = import nixpkgs {
         inherit system;
         config = {
           allowUnfree = true;
           # permittedInsecurePackages = [];  # add if needed
         };
+        # overlays = [ ];
+      };
+      pkgsFrodo = import nixpkgsFrodo {
+        inherit system;
+        config = {
+          allowUnfree = true;
+        };
       };
 
-      # Tiny helper to ensure NixOS also uses the same pkgs
-      sharedPkgsModule =
+      commonSpecialArgs = {
+        inherit
+          inputs
+          username
+          userFullName
+          userEmail
+          gitUsername
+          ;
+      };
+
+      mkPkgsModule =
+        pkgs':
         { ... }:
         {
-          nixpkgs.pkgs = pkgs;
+          nixpkgs.pkgs = pkgs';
+        };
+
+      # Tiny helper to ensure NixOS also uses the same pkgs
+      sharedPkgsModule = mkPkgsModule pkgs;
+      frodoPkgsModule = mkPkgsModule pkgsFrodo;
+
+      mkApp = name: text: {
+        type = "app";
+        program = "${pkgs.writeShellScriptBin name text}/bin/${name}";
+      };
+
+      mkHost =
+        {
+          hostPath,
+          extraModules ? [ ],
+        }:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = commonSpecialArgs;
+          modules =
+            [
+              sharedPkgsModule
+              hostPath
+              ./profiles/workstation.nix
+            ]
+            ++ extraModules
+            ++ [
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.backupFileExtension = "backup";
+                home-manager.extraSpecialArgs = commonSpecialArgs;
+                home-manager.users.${username} = {
+                  imports = [
+                    plasma-manager.homeModules.plasma-manager
+                    nvf.homeManagerModules.default
+                    ./home/common.nix
+                  ];
+                };
+              }
+            ];
         };
     in
     {
       nixosConfigurations = {
-        laptop = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit
-              inputs
-              username
-              userFullName
-              userEmail
-              gitUsername
-              ;
-          };
-          modules = [
-            sharedPkgsModule
-            ./hosts/laptop
-            ./profiles/workstation.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = "backup";
-              home-manager.extraSpecialArgs = {
-                inherit
-                  inputs
-                  username
-                  userFullName
-                  userEmail
-                  gitUsername
-                  ;
-              };
-              home-manager.users.${username} = {
-                imports = [
-                  plasma-manager.homeModules.plasma-manager
-                  nvf.homeManagerModules.default
-                  ./home/common.nix
-                ];
-              };
-            }
-          ];
+        laptop = mkHost { hostPath = ./hosts/laptop; };
+
+        desktop = mkHost { hostPath = ./hosts/desktop; };
+
+        vm = mkHost {
+          hostPath = ./hosts/vm;
+          extraModules = [ ./modules/services/n8n.nix ];
         };
 
-        desktop = nixpkgs.lib.nixosSystem {
+        frodo = nixpkgsFrodo.lib.nixosSystem {
           inherit system;
-          specialArgs = {
-            inherit
-              inputs
-              username
-              userFullName
-              userEmail
-              gitUsername
-              ;
-          };
+          specialArgs = commonSpecialArgs;
           modules = [
-            sharedPkgsModule
-            ./hosts/desktop
-            ./profiles/workstation.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = {
-                inherit
-                  inputs
-                  username
-                  userFullName
-                  userEmail
-                  gitUsername
-                  ;
-              };
-              home-manager.users.${username} = {
-                imports = [
-                  plasma-manager.homeModules.plasma-manager
-                  nvf.homeManagerModules.default
-                  ./home/common.nix
-                ];
-              };
-            }
+            frodoPkgsModule
+            disko.nixosModules.disko
+            ./hosts/frodo/default.nix
           ];
         };
+      };
 
-        vm = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit
-              inputs
-              username
-              userFullName
-              userEmail
-              gitUsername
-              ;
-          };
-          modules = [
-            sharedPkgsModule
-            ./hosts/vm
-            ./profiles/workstation.nix
-            ./modules/services/n8n.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = {
-                inherit
-                  inputs
-                  username
-                  userFullName
-                  userEmail
-                  gitUsername
-                  ;
-              };
-              home-manager.users.${username} = {
-                imports = [
-                  plasma-manager.homeModules.plasma-manager
-                  nvf.homeManagerModules.default
-                  ./home/common.nix
-                ];
-              };
-            }
-          ];
-        };
+      apps.${system} = {
+        update-pc = mkApp "update-pc" ''
+          set -euo pipefail
+
+          root="$PWD"
+          if [ ! -f "$root/flake.nix" ]; then
+            echo "Run from repo root (flake.nix not found)." >&2
+            exit 1
+          fi
+
+          inputs=(
+            nixpkgs
+            home-manager
+            plasma-manager
+            nvf
+            hyprland
+            hyprland-plugins
+            antigravity-nix
+            noctalia
+            prismlauncher-cracked
+          )
+
+          nix flake update "''${inputs[@]}"
+        '';
+
+        update-frodo = mkApp "update-frodo" ''
+          set -euo pipefail
+
+          root="$PWD"
+          if [ ! -f "$root/flake.nix" ]; then
+            echo "Run from repo root (flake.nix not found)." >&2
+            exit 1
+          fi
+
+          nix flake update nixpkgs-frodo disko
+        '';
+
+        rebuild-pc = mkApp "rebuild-pc" ''
+          set -euo pipefail
+
+          root="$PWD"
+          if [ ! -f "$root/flake.nix" ]; then
+            echo "Run from repo root (flake.nix not found)." >&2
+            exit 1
+          fi
+
+          host="''${HOST_OVERRIDE:-$(uname -n)}"
+          sudo nixos-rebuild switch --flake "$root#''${host}" "$@"
+        '';
+
+        rebuild-frodo = mkApp "rebuild-frodo" ''
+          set -euo pipefail
+
+          root="$PWD"
+          if [ ! -f "$root/flake.nix" ]; then
+            echo "Run from repo root (flake.nix not found)." >&2
+            exit 1
+          fi
+
+          target="''${FRODO_HOST:-gustl@frodo.lan}"
+          nixos-rebuild switch \
+            --flake "$root#frodo" \
+            --target-host "$target" \
+            --sudo \
+            --ask-sudo-password \
+            "$@"
+        '';
       };
     };
 }

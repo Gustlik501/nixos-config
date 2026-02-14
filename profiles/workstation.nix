@@ -79,6 +79,4 @@
     networkmanagerapplet
     kdePackages.partitionmanager
   ];
-
-  system.stateVersion = "25.11";
 }

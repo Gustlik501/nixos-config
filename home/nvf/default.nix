@@ -32,11 +32,13 @@
         languages.enableTreesitter = true;
         languages.nix.enable = true;
         languages.python.enable = true;
-        languages.html.enable = true;
+        # Disabled: superhtml build tries to fetch Zig deps at build time (network blocked in Nix sandbox)
+        languages.html.enable = false;
         languages.ts.enable = true;
         languages.markdown.enable = true;
         languages.go.enable = true;
-        languages.zig.enable = true;
+        # Disabled: zls tries to fetch Zig deps at build time (network blocked in Nix sandbox)
+        languages.zig.enable = false;
         languages.yaml.enable = true;
 
         globals.mapLeader = " ";

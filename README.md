@@ -23,14 +23,21 @@ Flake-based NixOS configuration for my machines.
      ```
      sudo nixos-rebuild switch --flake .#laptop
      ```
-   - **Server (Frodo):** See [hosts/frodo/README.md](hosts/frodo/README.md) for special instructions on its independent sub-flake.
+   - **Server (Frodo):** See [hosts/frodo/README.md](hosts/frodo/README.md) for server-specific instructions.
 
    *Note: This command now automatically applies both system and user (Home Manager) configurations.*
+
+## Helper commands
+Run these from the repo root:
+- Update PC inputs: `nix run .#update-pc`
+- Update Frodo inputs: `nix run .#update-frodo`
+- Rebuild current host: `nix run .#rebuild-pc`
+- Rebuild Frodo via SSH: `nix run .#rebuild-frodo`
 
 ## Hosts
 - `desktop`: Main workstation (Nvidia, libvirt).
 - `laptop`: Portable machine (Intel).
-- `frodo`: Headless home server (ZFS, Sub-flake). See its dedicated [README](hosts/frodo/README.md).
+- `frodo`: Headless home server (ZFS). See its dedicated [README](hosts/frodo/README.md).
 - `vm`: Virtual machine testing environment.
 
 ## Credits

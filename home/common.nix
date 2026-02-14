@@ -49,6 +49,7 @@
       libsoup_3
       libgtop
       bolt-launcher
+      codex
 
       deluge
       gimp
@@ -57,7 +58,7 @@
       cliphist
 
       #lutris
-      wineWowPackages.stagingFull
+      wineWow64Packages.stagingFull
       winetricks
 
       bluez-tools
@@ -83,7 +84,6 @@
       calf
       lmms
 
-      #Job
       freerdp
       #rustdesk
       input-leap
@@ -94,6 +94,10 @@
       google-chrome
 
       bruno
+
+      bambu-studio
+      blender
+      hub
 
       inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];

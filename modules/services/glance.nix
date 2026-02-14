@@ -43,15 +43,50 @@
                   title = "Services";
                   cache = "1m";
                   sites = [
-                    { title = "Jellyseerr"; url = "http://192.168.1.64:5055"; }
-                    { title = "Jellyfin"; url = "http://192.168.1.64:8096"; }
-                    { title = "Sonarr"; url = "http://192.168.1.64:8989"; }
-                    { title = "Radarr"; url = "http://192.168.1.64:7878"; }
-                    { title = "Bazarr"; url = "http://192.168.1.64:6767"; }
-                    { title = "Lidarr"; url = "http://192.168.1.64:8686"; }
-                    { title = "Prowlarr"; url = "http://192.168.1.64:9696"; }
-                    { title = "Profilarr"; url = "http://192.168.1.64:5678"; }
-                    { title = "qBittorrent"; url = "http://192.168.1.64:8081"; }
+                    {
+                      title = "Jellyseerr";
+                      url = "http://192.168.1.64:5055";
+                    }
+                    {
+                      title = "Jellyfin";
+                      url = "http://192.168.1.64:8096";
+                    }
+                    {
+                      title = "Sonarr";
+                      url = "http://192.168.1.64:8989";
+                    }
+                    {
+                      title = "Radarr";
+                      url = "http://192.168.1.64:7878";
+                    }
+                    {
+                      title = "Bazarr";
+                      url = "http://192.168.1.64:6767";
+                    }
+                    {
+                      title = "Lidarr";
+                      url = "http://192.168.1.64:8686";
+                    }
+                    {
+                      title = "Prowlarr";
+                      url = "http://192.168.1.64:9696";
+                    }
+                    {
+                      title = "Profilarr";
+                      url = "http://192.168.1.64:5678";
+                    }
+                    {
+                      title = "qBittorrent";
+                      url = "http://192.168.1.64:8081";
+                    }
+                    {
+                      title = "VaultWarden";
+                      url = "https://vault.frodo.lan";
+                    }
+                    {
+                      title = "AdGuard";
+                      url = "http://192.168.1.64:3000";
+                    }
                   ];
                 }
               ];

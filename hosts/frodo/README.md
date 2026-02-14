@@ -1,6 +1,6 @@
 # Frodo: Home Server (HPE ProLiant ML30 Gen9)
 
-This host is configured as a headless home server using ZFS for storage and NixOS for reproducibility. It uses an independent sub-flake located in `hosts/frodo/` to decouple its updates from the desktop/laptop.
+This host is configured as a headless home server using ZFS for storage and NixOS for reproducibility. It lives in the main flake, but uses its own `nixpkgs-frodo` input so you can update it independently.
 
 ## Hardware Specs
 - **CPU:** Intel Xeon (Gen9)
@@ -33,12 +33,13 @@ This host is configured as a headless home server using ZFS for storage and NixO
 ### 3. Partitioning and Formatting (Disko)
 **WARNING:** This wipes all drives defined in `disk-config.nix`.
 ```bash
-cd ~/nixos-config/hosts/frodo
-sudo nix --extra-experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko ./disk-config.nix
+cd ~/nixos-config
+sudo nix --extra-experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko ./hosts/frodo/disk-config.nix
 ```
 
 ### 4. System Install
 ```bash
+cd ~/nixos-config
 sudo nixos-install --flake .#frodo
 reboot
 ```
@@ -46,13 +47,13 @@ reboot
 ## Maintenance
 To update Frodo, SSH into the server and run:
 ```bash
-cd ~/nixos-config/hosts/frodo
-sudo nixos-rebuild switch --flake .
+cd ~/nixos-config
+sudo nixos-rebuild switch --flake .#frodo
 ```
 
 To update the lock file (independently of the rest of the repo):
 ```bash
-nix flake update
+nix flake update nixpkgs-frodo disko
 ```
 
 ## Troubleshooting
