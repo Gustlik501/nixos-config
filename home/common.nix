@@ -141,6 +141,11 @@
       "inode/directory" = [ "thunar.desktop" ];
       "application/x-directory" = [ "thunar.desktop" ];
       "x-scheme-handler/terminal" = "kitty.desktop";
+      "text/html" = "firefox.desktop";
+      "x-scheme-handler/http" = "firefox.desktop";
+      "x-scheme-handler/https" = "firefox.desktop";
+      "x-scheme-handler/about" = "firefox.desktop";
+      "x-scheme-handler/unknown" = "firefox.desktop";
     };
   };
 
