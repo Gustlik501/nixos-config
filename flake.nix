@@ -38,11 +38,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    prismlauncher-cracked = {
-      url = "github:Diegiwg/PrismLauncher-Cracked";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs-frodo";
@@ -69,6 +64,7 @@
     }@inputs:
     let
       system = "x86_64-linux";
+      hmStateVersion = "26.05";
       username = "gustl";
       userFullName = "Gregor Sevcnikar";
       userEmail = "sevcnikar.gregor2@gmail.com";
@@ -115,10 +111,24 @@
         program = "${pkgs.writeShellScriptBin name text}/bin/${name}";
       };
 
+      mkHomeManagerModule =
+        hmImports:
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.backupFileExtension = "backup";
+          home-manager.extraSpecialArgs = commonSpecialArgs;
+          home-manager.users.${username} = {
+            imports = hmImports;
+            home.stateVersion = hmStateVersion;
+          };
+        };
+
       mkHost =
         {
           hostPath,
           extraModules ? [ ],
+          hmImports ? [ ],
         }:
         nixpkgs.lib.nixosSystem {
           inherit system;
@@ -133,27 +143,33 @@
             ++ extraModules
             ++ [
               home-manager.nixosModules.home-manager
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.backupFileExtension = "backup";
-                home-manager.extraSpecialArgs = commonSpecialArgs;
-                home-manager.users.${username} = {
-                  imports = [
-                    plasma-manager.homeModules.plasma-manager
-                    nvf.homeManagerModules.default
-                    ./home/common.nix
-                  ];
-                };
-              }
+              (mkHomeManagerModule hmImports)
             ];
         };
+
+      hmBaseImports = [
+        nvf.homeManagerModules.default
+        ./home/profiles/base.nix
+      ];
+
+      hmPcImports = [
+        plasma-manager.homeModules.plasma-manager
+        ./home/profiles/pc.nix
+      ];
+
+      hmWorkstationImports = [ ./home/profiles/workstation.nix ];
     in
     {
       nixosConfigurations = {
-        laptop = mkHost { hostPath = ./hosts/laptop; };
+        laptop = mkHost {
+          hostPath = ./hosts/laptop;
+          hmImports = hmBaseImports ++ hmPcImports;
+        };
 
-        desktop = mkHost { hostPath = ./hosts/desktop; };
+        desktop = mkHost {
+          hostPath = ./hosts/desktop;
+          hmImports = hmBaseImports ++ hmPcImports ++ hmWorkstationImports;
+        };
 
         frodo = nixpkgsFrodo.lib.nixosSystem {
           inherit system;
@@ -163,6 +179,8 @@
             sops-nix.nixosModules.sops
             disko.nixosModules.disko
             ./hosts/frodo/default.nix
+            home-manager.nixosModules.home-manager
+            (mkHomeManagerModule hmBaseImports)
           ];
         };
       };
@@ -186,7 +204,6 @@
             hyprland-plugins
             antigravity-nix
             noctalia
-            prismlauncher-cracked
           )
 
           nix flake update "''${inputs[@]}"

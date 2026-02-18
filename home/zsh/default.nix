@@ -42,6 +42,4 @@
     '';
   };
 
-  # Ensure lazygit is installed for the alias to work
-  home.packages = with pkgs; [ lazygit ];
 }
