@@ -8,7 +8,7 @@
 // Window
 window {
     fullscreen: true;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.65);
 }
 
 // Main Box
@@ -33,5 +33,5 @@ element-text {
     horizontal-align: 0.5;
 }
 element.selected {
-    background-color: rgba(32, 32, 32, 0.85);
+    background-color: rgba(32, 32, 32, 0.65);
 }

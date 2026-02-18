@@ -73,7 +73,14 @@
   # Desktop User Extras
   users.users.${username}.extraGroups = [ "audio" ];
 
+  # Allow Hyprlock to authenticate via PAM
+  security.pam.services.hyprlock = {};
+
   # Desktop Packages
+  fonts.packages = with pkgs; [
+    material-symbols
+  ];
+
   environment.systemPackages = with pkgs; [
     nerd-fonts.jetbrains-mono
     networkmanagerapplet

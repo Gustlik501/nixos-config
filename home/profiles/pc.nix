@@ -36,6 +36,7 @@
     obsidian
     grimblast
     cliphist
+    hyprlock
 
     #lutris
     wineWow64Packages.stagingFull
