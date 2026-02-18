@@ -1,0 +1,35 @@
+# Replace all `age1replace...` values with real age public recipients.
+# Recommended model:
+# - one admin recipient (your workstation)
+# - one runtime recipient per host
+keys:
+  - &admin age1replace_admin_recipient
+  - &frodo age1replace_frodo_recipient
+  - &desktop age1replace_desktop_recipient
+  - &laptop age1replace_laptop_recipient
+  - &vm age1replace_vm_recipient
+
+creation_rules:
+  - path_regex: secrets/frodo/.*\.ya?ml$
+    key_groups:
+      - age:
+          - *admin
+          - *frodo
+
+  - path_regex: secrets/desktop/.*\.ya?ml$
+    key_groups:
+      - age:
+          - *admin
+          - *desktop
+
+  - path_regex: secrets/laptop/.*\.ya?ml$
+    key_groups:
+      - age:
+          - *admin
+          - *laptop
+
+  - path_regex: secrets/vm/.*\.ya?ml$
+    key_groups:
+      - age:
+          - *admin
+          - *vm

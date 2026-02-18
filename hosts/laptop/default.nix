@@ -2,6 +2,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/security/ssh-user-key-sops.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -53,5 +54,12 @@
   ];
 
   programs.steam.enable = true;
+
+  # Flip to true after `secrets/laptop/ssh-user.yaml` is encrypted and runtime key exists.
+  my.security.sopsSshUserKey = {
+    enable = false;
+    sopsFile = ../../secrets/laptop/ssh-user.yaml;
+    ageKeyFile = "/var/lib/sops-nix/key.txt";
+  };
 
 }

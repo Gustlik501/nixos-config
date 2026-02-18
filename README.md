@@ -34,6 +34,13 @@ Run these from the repo root:
 - Rebuild current host: `nix run .#rebuild-pc`
 - Rebuild Frodo via SSH: `nix run .#rebuild-frodo`
 
+## Secrets (sops-nix)
+- `sops-nix` is wired into all hosts through `flake.nix`.
+- Secret files live under `secrets/`.
+- Bootstrap and key-management notes are in `secrets/README.md`.
+- Per-host SSH user private keys are managed by `modules/security/ssh-user-key-sops.nix`.
+- Public SSH keys are stored in `ssh/public-keys/` (not encrypted by design).
+
 ## Hosts
 - `desktop`: Main workstation (Nvidia, libvirt).
 - `laptop`: Portable machine (Intel).

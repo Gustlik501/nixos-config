@@ -71,6 +71,11 @@ in
     };
   };
 
+  users.users.${username}.openssh.authorizedKeys.keyFiles = [
+    ../../ssh/public-keys/laptop.pub
+    ../../ssh/public-keys/desktop.pub
+  ];
+
   # NVIDIA 1050ti configuration
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.graphics = {

@@ -41,6 +41,8 @@
     git
     home-manager
     btop
+    age
+    sops
   ];
 
   programs.zsh.enable = true;

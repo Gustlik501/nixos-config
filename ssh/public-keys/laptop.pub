@@ -1,0 +1,2 @@
+# Replace with laptop public key (single line):
+# ssh-ed25519 AAAA... laptop

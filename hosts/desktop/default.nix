@@ -8,6 +8,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/security/ssh-user-key-sops.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -16,8 +17,30 @@
   networking.hostName = "desktop";
 
   networking.firewall = {
-    allowedTCPPorts = [ 53317 ];
+    allowedTCPPorts = [
+      22
+      53317
+    ];
     allowedUDPPorts = [ 53317 ];
+  };
+
+  services.openssh = {
+    enable = true;
+    settings = {
+      PermitRootLogin = "no";
+      PasswordAuthentication = true; # Keep true until key auth is fully tested
+    };
+  };
+
+  users.users.${username}.openssh.authorizedKeys.keyFiles = [
+    ../../ssh/public-keys/laptop.pub
+  ];
+
+  # Flip to true after `secrets/desktop/ssh-user.yaml` is encrypted and runtime key exists.
+  my.security.sopsSshUserKey = {
+    enable = false;
+    sopsFile = ../../secrets/desktop/ssh-user.yaml;
+    ageKeyFile = "/var/lib/sops-nix/key.txt";
   };
 
   # Enable OpenGL

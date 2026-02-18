@@ -47,6 +47,11 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs-frodo";
     };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -59,6 +64,7 @@
       hyprland,
       hyprland-plugins,
       disko,
+      sops-nix,
       ...
     }@inputs:
     let
@@ -120,6 +126,7 @@
           modules =
             [
               sharedPkgsModule
+              sops-nix.nixosModules.sops
               hostPath
               ./profiles/workstation.nix
             ]
@@ -158,6 +165,7 @@
           specialArgs = commonSpecialArgs;
           modules = [
             frodoPkgsModule
+            sops-nix.nixosModules.sops
             disko.nixosModules.disko
             ./hosts/frodo/default.nix
           ];
