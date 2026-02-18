@@ -9,6 +9,7 @@
 {
   imports = [
     ../hyprland
+    ../hyprlock
     ../kitty
     ../rofi
     ../gtk
