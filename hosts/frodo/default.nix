@@ -67,14 +67,17 @@ in
     enable = true;
     settings = {
       PermitRootLogin = "no";
-      PasswordAuthentication = true; # Change to false once you've added your SSH key
+      PasswordAuthentication = false;
     };
   };
 
-  users.users.${username}.openssh.authorizedKeys.keyFiles = [
-    ../../ssh/public-keys/laptop.pub
-    ../../ssh/public-keys/desktop.pub
-  ];
+  users.users.${username} = {
+    openssh.authorizedKeys.keyFiles = [
+      ../../ssh/laptop.pub
+      ../../ssh/desktop.pub
+    ];
+    extraGroups = [ "docker" ];
+  };
 
   # NVIDIA 1050ti configuration
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -91,7 +94,6 @@ in
 
   # Enable Container/Docker support (useful for homelabs)
   virtualisation.docker.enable = true;
-  users.users.${username}.extraGroups = [ "docker" ];
 
   # Profilarr Service
   systemd.services.profilarr = {

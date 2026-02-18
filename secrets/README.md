@@ -4,9 +4,7 @@ Encrypted secrets for `sops-nix` live here.
 
 ## Layout
 
-- `secrets/frodo/*.yaml`
-- `secrets/desktop/*.yaml`
-- `secrets/laptop/*.yaml`
+- `secrets/<host>/secrets.yaml` (default per-host file)
 
 ## First bootstrap (admin machine)
 
@@ -16,8 +14,8 @@ Encrypted secrets for `sops-nix` live here.
    - `age-keygen -y ~/.config/sops/age/keys.txt`
 2. Update `.sops.yaml` recipients with real `age1...` public keys.
 3. Encrypt/edit a secret:
-   - `sops secrets/laptop/ssh-user.yaml`
-   - `sops secrets/desktop/ssh-user.yaml`
+   - `sops secrets/laptop/secrets.yaml`
+   - `sops secrets/desktop/secrets.yaml`
 
 ## Host runtime key
 
@@ -33,8 +31,8 @@ On each host (once):
 
 Templates:
 
-- `secrets/laptop/ssh-user.yaml`
-- `secrets/desktop/ssh-user.yaml`
+- `secrets/laptop/secrets.yaml`
+- `secrets/desktop/secrets.yaml`
 
 Each file must contain:
 
@@ -49,17 +47,14 @@ ssh_user_ed25519_key: |
   -----END OPENSSH PRIVATE KEY-----
 ```
 
-Then flip these toggles:
-
-- `hosts/laptop/default.nix`: `my.security.sopsSshUserKey.enable = true;`
-- `hosts/desktop/default.nix`: `my.security.sopsSshUserKey.enable = true;`
+The base profile already declares `ssh_user_ed25519_key` for the main user in `profiles/base.nix`.
 
 ## Public keys (plaintext)
 
 Public keys are intentionally stored in git:
 
-- `ssh/public-keys/laptop.pub`
-- `ssh/public-keys/desktop.pub`
+- `ssh/laptop.pub`
+- `ssh/desktop.pub`
 
 Authorization matrix:
 

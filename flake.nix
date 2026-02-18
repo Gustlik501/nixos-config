@@ -226,7 +226,7 @@
             exit 1
           fi
 
-          target="''${FRODO_HOST:-gustl@frodo.lan}"
+          target="''${FRODO_HOST:-gustl@frodo.local}"
           nixos-rebuild switch \
             --flake "$root#frodo" \
             --target-host "$target" \

@@ -81,7 +81,7 @@
                     }
                     {
                       title = "VaultWarden";
-                      url = "https://vault.frodo.lan";
+                      url = "https://vault.frodo.local";
                     }
                     {
                       title = "AdGuard";

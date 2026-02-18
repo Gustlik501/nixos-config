@@ -1,12 +1,8 @@
-# Replace all `age1replace...` values with real age public recipients.
-# Recommended model:
-# - one admin recipient (your workstation)
-# - one runtime recipient per host
 keys:
-  - &admin age1replace_admin_recipient
-  - &frodo age1replace_frodo_recipient
-  - &desktop age1replace_desktop_recipient
-  - &laptop age1replace_laptop_recipient
+  - &admin age1wns55gvydp66g7np49c8hpyu8av7n5s6wzv5ne5kcym7tuz6w5yqunmtuy
+  - &frodo age1cfczkshvd05atdrvcfr44vptef20xryrl7p8x2j3zavx26y5g44qrc7qa9
+  - &desktop age1jp69fmp2ftp920wl3c5x5y0p6lnp2yn4hlrxsj54ljh9q6qz4fus9hxgyw
+  - &laptop age1umswnkqad9xswtfm3t8fmt9expdkwteza6uncx89huvrmgy5evnstwylpv
 
 creation_rules:
   - path_regex: secrets/frodo/.*\.ya?ml$

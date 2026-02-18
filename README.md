@@ -37,9 +37,10 @@ Run these from the repo root:
 ## Secrets (sops-nix)
 - `sops-nix` is wired into all hosts through `flake.nix`.
 - Secret files live under `secrets/`.
+- Default per-host secrets file: `secrets/<host>/secrets.yaml`.
 - Bootstrap and key-management notes are in `secrets/README.md`.
-- Per-host SSH user private keys are managed by `modules/security/ssh-user-key-sops.nix`.
-- Public SSH keys are stored in `ssh/public-keys/` (not encrypted by design).
+- SSH user private keys are declared in `profiles/base.nix`.
+- Public SSH keys are stored in `ssh/` (not encrypted by design).
 
 ## Hosts
 - `desktop`: Main workstation (Nvidia, libvirt).
