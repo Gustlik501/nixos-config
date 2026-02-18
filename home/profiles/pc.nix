@@ -9,6 +9,7 @@
 {
   imports = [
     ../hyprland
+    ../hyprlock
     ../kitty
     ../rofi
     ../gtk
@@ -36,7 +37,6 @@
     obsidian
     grimblast
     cliphist
-    hyprlock
 
     #lutris
     wineWow64Packages.stagingFull
