@@ -7,7 +7,6 @@ Encrypted secrets for `sops-nix` live here.
 - `secrets/frodo/*.yaml`
 - `secrets/desktop/*.yaml`
 - `secrets/laptop/*.yaml`
-- `secrets/vm/*.yaml`
 
 ## First bootstrap (admin machine)
 

@@ -45,7 +45,6 @@ Run these from the repo root:
 - `desktop`: Main workstation (Nvidia, libvirt).
 - `laptop`: Portable machine (Intel).
 - `frodo`: Headless home server (ZFS). See its dedicated [README](hosts/frodo/README.md).
-- `vm`: Virtual machine testing environment.
 
 ## Credits
 

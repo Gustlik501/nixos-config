@@ -155,11 +155,6 @@
 
         desktop = mkHost { hostPath = ./hosts/desktop; };
 
-        vm = mkHost {
-          hostPath = ./hosts/vm;
-          extraModules = [ ./modules/services/n8n.nix ];
-        };
-
         frodo = nixpkgsFrodo.lib.nixosSystem {
           inherit system;
           specialArgs = commonSpecialArgs;

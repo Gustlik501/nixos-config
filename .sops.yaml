@@ -7,7 +7,6 @@ keys:
   - &frodo age1replace_frodo_recipient
   - &desktop age1replace_desktop_recipient
   - &laptop age1replace_laptop_recipient
-  - &vm age1replace_vm_recipient
 
 creation_rules:
   - path_regex: secrets/frodo/.*\.ya?ml$
@@ -27,9 +26,3 @@ creation_rules:
       - age:
           - *admin
           - *laptop
-
-  - path_regex: secrets/vm/.*\.ya?ml$
-    key_groups:
-      - age:
-          - *admin
-          - *vm
