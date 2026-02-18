@@ -1,0 +1,24 @@
+keys:
+  - &admin age1wns55gvydp66g7np49c8hpyu8av7n5s6wzv5ne5kcym7tuz6w5yqunmtuy
+  - &frodo age1cfczkshvd05atdrvcfr44vptef20xryrl7p8x2j3zavx26y5g44qrc7qa9
+  - &desktop age1jp69fmp2ftp920wl3c5x5y0p6lnp2yn4hlrxsj54ljh9q6qz4fus9hxgyw
+  - &laptop age1umswnkqad9xswtfm3t8fmt9expdkwteza6uncx89huvrmgy5evnstwylpv
+
+creation_rules:
+  - path_regex: secrets/frodo/.*\.ya?ml$
+    key_groups:
+      - age:
+          - *admin
+          - *frodo
+
+  - path_regex: secrets/desktop/.*\.ya?ml$
+    key_groups:
+      - age:
+          - *admin
+          - *desktop
+
+  - path_regex: secrets/laptop/.*\.ya?ml$
+    key_groups:
+      - age:
+          - *admin
+          - *laptop

@@ -1,4 +1,12 @@
-{ config, pkgs, username, userFullName, ... }:
+{
+  config,
+  inputs,
+  lib,
+  pkgs,
+  username,
+  userFullName,
+  ...
+}:
 {
   # Core Network Manager
   networking.networkmanager.enable = true;
@@ -24,14 +32,40 @@
     dates = "weekly";
     options = "--delete-older-than 14d";
   };
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.settings.trusted-users = [ "root" username ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+  nix.settings.trusted-users = [
+    "root"
+    username
+  ];
+
+  sops = {
+    age.keyFile = "/var/lib/sops-nix/key.txt";
+    defaultSopsFile = lib.mkDefault (
+      inputs.self + "/secrets/${config.networking.hostName}/secrets.yaml"
+    );
+    defaultSopsFormat = lib.mkDefault "yaml";
+    secrets.ssh_user_ed25519_key = {
+      path = "/home/${username}/.ssh/id_ed25519";
+      owner = username;
+      group = username;
+      mode = "0600";
+    };
+  };
+  systemd.tmpfiles.rules = [
+    "d /home/${username}/.ssh 0700 ${username} ${username} -"
+  ];
 
   # User Configuration
   users.users.${username} = {
     isNormalUser = true;
     description = userFullName;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     shell = pkgs.zsh;
   };
 
@@ -41,6 +75,8 @@
     git
     home-manager
     btop
+    age
+    sops
   ];
 
   programs.zsh.enable = true;

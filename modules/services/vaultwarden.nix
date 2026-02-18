@@ -4,7 +4,7 @@
   services.vaultwarden = {
     enable = true;
     config = {
-      DOMAIN = "https://vault.frodo.lan";
+      DOMAIN = "https://vault.frodo.local";
       ROCKET_ADDRESS = "127.0.0.1";
       ROCKET_PORT = 8222;
       SIGNUPS_ALLOWED = true;

@@ -47,6 +47,11 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs-frodo";
     };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -59,6 +64,7 @@
       hyprland,
       hyprland-plugins,
       disko,
+      sops-nix,
       ...
     }@inputs:
     let
@@ -120,6 +126,7 @@
           modules =
             [
               sharedPkgsModule
+              sops-nix.nixosModules.sops
               hostPath
               ./profiles/workstation.nix
             ]
@@ -148,16 +155,12 @@
 
         desktop = mkHost { hostPath = ./hosts/desktop; };
 
-        vm = mkHost {
-          hostPath = ./hosts/vm;
-          extraModules = [ ./modules/services/n8n.nix ];
-        };
-
         frodo = nixpkgsFrodo.lib.nixosSystem {
           inherit system;
           specialArgs = commonSpecialArgs;
           modules = [
             frodoPkgsModule
+            sops-nix.nixosModules.sops
             disko.nixosModules.disko
             ./hosts/frodo/default.nix
           ];
@@ -223,7 +226,7 @@
             exit 1
           fi
 
-          target="''${FRODO_HOST:-gustl@frodo.lan}"
+          target="''${FRODO_HOST:-gustl@frodo.local}"
           nixos-rebuild switch \
             --flake "$root#frodo" \
             --target-host "$target" \

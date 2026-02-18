@@ -7,7 +7,7 @@
 
     virtualHosts = {
       # CASE A: The Root Domain -> Port 8080 (e.g. Glance)
-      "frodo.lan" = {
+      "frodo.local" = {
         extraConfig = ''
           tls internal
           reverse_proxy :8080
@@ -15,7 +15,7 @@
       };
 
       # CASE B: The Subdomain -> Port 8222 (Vaultwarden)
-      "vault.frodo.lan" = {
+      "vault.frodo.local" = {
         extraConfig = ''
           tls internal
           encode zstd gzip

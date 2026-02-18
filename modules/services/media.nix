@@ -39,7 +39,7 @@
   
   systemd.services.qbittorrent.serviceConfig = {
     BindPaths = [ "/media" ];
-    UMask = "0002";
+    UMask = lib.mkForce "0002";
     StateDirectory = "qbittorrent";
     WorkingDirectory = "/var/lib/qbittorrent";
     Environment = "HOME=/var/lib/qbittorrent";
@@ -62,7 +62,7 @@
   };
   systemd.services.sonarr.serviceConfig = {
     BindPaths = [ "/media" ];
-    UMask = "0002";
+    UMask = lib.mkForce "0002";
   };
 
   services.radarr = {
@@ -72,7 +72,7 @@
   };
   systemd.services.radarr.serviceConfig = {
     BindPaths = [ "/media" ];
-    UMask = "0002";
+    UMask = lib.mkForce "0002";
   };
 
   services.bazarr = {
@@ -82,7 +82,7 @@
   };
   systemd.services.bazarr.serviceConfig = {
     BindPaths = [ "/media" ];
-    UMask = "0002";
+    UMask = lib.mkForce "0002";
   };
 
   services.lidarr = {
@@ -92,7 +92,7 @@
   };
   systemd.services.lidarr.serviceConfig = {
     BindPaths = [ "/media" ];
-    UMask = "0002";
+    UMask = lib.mkForce "0002";
   };
 
   services.jellyfin = {

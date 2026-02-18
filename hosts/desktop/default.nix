@@ -16,8 +16,29 @@
   networking.hostName = "desktop";
 
   networking.firewall = {
-    allowedTCPPorts = [ 53317 ];
+    allowedTCPPorts = [
+      22
+      53317
+    ];
     allowedUDPPorts = [ 53317 ];
+  };
+
+  services.openssh = {
+    enable = true;
+    settings = {
+      PermitRootLogin = "no";
+      PasswordAuthentication = true; # Keep true until key auth is fully tested
+    };
+  };
+
+  users.users.${username} = {
+    openssh.authorizedKeys.keyFiles = [
+      ../../ssh/laptop.pub
+    ];
+    extraGroups = [
+      "libvirtd"
+      "kvm"
+    ];
   };
 
   # Enable OpenGL
@@ -72,12 +93,6 @@
   };
 
   programs.virt-manager.enable = true;
-
-  # Your user to groups
-  users.users.${username}.extraGroups = [
-    "libvirtd"
-    "kvm"
-  ];
 
   # Handy tools/ISOs available on host
   environment.systemPackages = with pkgs; [

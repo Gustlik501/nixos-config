@@ -34,11 +34,18 @@ Run these from the repo root:
 - Rebuild current host: `nix run .#rebuild-pc`
 - Rebuild Frodo via SSH: `nix run .#rebuild-frodo`
 
+## Secrets (sops-nix)
+- `sops-nix` is wired into all hosts through `flake.nix`.
+- Secret files live under `secrets/`.
+- Default per-host secrets file: `secrets/<host>/secrets.yaml`.
+- Bootstrap and key-management notes are in `secrets/README.md`.
+- SSH user private keys are declared in `profiles/base.nix`.
+- Public SSH keys are stored in `ssh/` (not encrypted by design).
+
 ## Hosts
 - `desktop`: Main workstation (Nvidia, libvirt).
 - `laptop`: Portable machine (Intel).
 - `frodo`: Headless home server (ZFS). See its dedicated [README](hosts/frodo/README.md).
-- `vm`: Virtual machine testing environment.
 
 ## Credits
 
