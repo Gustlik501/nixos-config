@@ -53,6 +53,6 @@ home-manager switch --flake .#gustl
 ## Development Conventions
 
 *   **Modularity**: The configuration is heavily modularized. `default.nix` files are used to aggregate imports in directories.
-*   **Shared Configuration**: Common settings are extracted into `system/common.nix` (system-wide) and `home/common.nix` (user-level) to maximize code reuse across hosts.
+*   **Shared Configuration**: Common settings are extracted into `system/common.nix` (system-wide) and Home Manager profiles in `home/profiles/` (user-level) to maximize code reuse across hosts.
 *   **Flake Inputs**: Dependencies are pinned in `flake.lock` to ensure reproducibility.
 *   **Hyprland Config**: The Hyprland configuration is split into multiple `.conf` files within `home/hyprland/configs/` and sourced by the main Nix module.
