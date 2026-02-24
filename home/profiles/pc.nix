@@ -6,6 +6,9 @@
   gitUsername,
   ...
 }:
+let
+  llmAgents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
+in
 {
   imports = [
     ../hyprland
@@ -22,7 +25,7 @@
     runelite
     firefox
     vlc
-    gemini-cli
+    llmAgents.gemini-cli
     vesktop
     dart-sass
     wl-clipboard
@@ -30,7 +33,7 @@
     libsoup_3
     libgtop
     bolt-launcher
-    codex
+    llmAgents.codex
 
     deluge
     gimp

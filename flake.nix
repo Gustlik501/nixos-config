@@ -47,6 +47,10 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+    };
   };
 
   outputs =
@@ -204,6 +208,7 @@
             hyprland-plugins
             antigravity-nix
             noctalia
+            llm-agents
           )
 
           nix flake update "''${inputs[@]}"
