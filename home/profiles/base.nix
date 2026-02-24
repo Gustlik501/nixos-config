@@ -1,8 +1,12 @@
 {
   pkgs,
+  inputs,
   username,
   ...
 }:
+let
+  llmAgents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
+in
 {
   imports = [
     ../zsh
@@ -26,6 +30,9 @@
     btop
     ripgrep
     fastfetch
+    python3
+    llmAgents.codex
+    llmAgents.gemini-cli
   ];
 
   programs.bash = {

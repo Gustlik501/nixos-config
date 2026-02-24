@@ -1,14 +1,10 @@
 {
   config,
   pkgs,
-  inputs,
   userEmail,
   gitUsername,
   ...
 }:
-let
-  llmAgents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
-in
 {
   imports = [
     ../hyprland
@@ -25,7 +21,6 @@ in
     runelite
     firefox
     vlc
-    llmAgents.gemini-cli
     vesktop
     dart-sass
     wl-clipboard
@@ -33,7 +28,6 @@ in
     libsoup_3
     libgtop
     bolt-launcher
-    llmAgents.codex
 
     deluge
     gimp
@@ -72,7 +66,7 @@ in
     bambu-studio
     hub
 
-    inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
+    #inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   programs.git = {
