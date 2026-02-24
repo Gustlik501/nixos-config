@@ -3,5 +3,6 @@ JaKooLit-dots/
 # Local/decrypted secret artifacts
 secrets/**/*.dec
 secrets/**/*.decrypted
+*_unencrypted
 *.agekey
 age-keys.txt

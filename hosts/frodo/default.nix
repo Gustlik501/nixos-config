@@ -75,6 +75,8 @@ in
     openssh.authorizedKeys.keyFiles = [
       ../../ssh/laptop.pub
       ../../ssh/desktop.pub
+      ../../ssh/phone.pub
+      ../../ssh/work.pub
     ];
     extraGroups = [ "docker" ];
   };

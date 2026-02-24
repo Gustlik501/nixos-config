@@ -34,6 +34,7 @@
   users.users.${username} = {
     openssh.authorizedKeys.keyFiles = [
       ../../ssh/laptop.pub
+      ../../ssh/phone.pub
     ];
     extraGroups = [
       "libvirtd"

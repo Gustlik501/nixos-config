@@ -50,7 +50,7 @@
     secrets.ssh_user_ed25519_key = {
       path = "/home/${username}/.ssh/id_ed25519";
       owner = username;
-      group = username;
+      #group = username;
       mode = "0600";
     };
   };
