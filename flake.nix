@@ -74,19 +74,25 @@
       userEmail = "sevcnikar.gregor2@gmail.com";
       gitUsername = "Gustlik501";
       nixpkgsFrodo = inputs."nixpkgs-frodo";
+      overlays = [
+        (final: prev: {
+          gogcli = prev.callPackage ./pkgs/gogcli.nix { };
+        })
+      ];
       pkgs = import nixpkgs {
         inherit system;
         config = {
           allowUnfree = true;
           # permittedInsecurePackages = [];  # add if needed
         };
-        # overlays = [ ];
+        inherit overlays;
       };
       pkgsFrodo = import nixpkgsFrodo {
         inherit system;
         config = {
           allowUnfree = true;
         };
+        inherit overlays;
       };
 
       commonSpecialArgs = {
@@ -164,6 +170,8 @@
       hmWorkstationImports = [ ./home/profiles/workstation.nix ];
     in
     {
+      overlays.default = builtins.head overlays;
+
       nixosConfigurations = {
         laptop = mkHost {
           hostPath = ./hosts/laptop;
