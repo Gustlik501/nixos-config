@@ -14,6 +14,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "desktop";
+  networking.interfaces.enp34s0.wakeOnLan.enable = true;
 
   networking.firewall = {
     allowedTCPPorts = [

@@ -15,9 +15,20 @@ in {
 
     theme = "sddm-astronaut-theme";
     extraPackages = [sddm-astronaut];
+    settings.Theme = {
+      CursorTheme = "Bibata-Modern-Classic";
+      CursorSize = 24;
+    };
 
-    wayland.enable = true;
+    wayland = {
+      enable = true;
+      # Plasma previously set this implicitly; keep it explicit after removing Plasma.
+      compositor = "kwin";
+    };
   };
 
-  environment.systemPackages = [sddm-astronaut];
+  environment.systemPackages = [
+    sddm-astronaut
+    pkgs.bibata-cursors
+  ];
 }
