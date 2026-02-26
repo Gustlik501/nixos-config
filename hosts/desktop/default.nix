@@ -28,7 +28,7 @@
     enable = true;
     settings = {
       PermitRootLogin = "no";
-      PasswordAuthentication = true; # Keep true until key auth is fully tested
+      PasswordAuthentication = false;
     };
   };
 
@@ -36,6 +36,7 @@
     openssh.authorizedKeys.keyFiles = [
       ../../ssh/laptop.pub
       ../../ssh/phone.pub
+      ../../ssh/work.pub
     ];
     extraGroups = [
       "libvirtd"
