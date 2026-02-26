@@ -22,6 +22,7 @@ in
   home.packages = with pkgs; [
     lazygit
     git
+    gh
     git-lfs
     curl
     wget

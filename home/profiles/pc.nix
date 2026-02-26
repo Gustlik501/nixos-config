@@ -64,7 +64,6 @@
     bruno
 
     bambu-studio
-    hub
 
     #inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
