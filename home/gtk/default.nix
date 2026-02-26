@@ -2,9 +2,9 @@
 { pkgs, ... }:
 {
   home.sessionVariables = {
-    XCURSOR_THEME = "Bibata-Modern-Classic";
+    XCURSOR_THEME = "breeze_cursors";
     XCURSOR_SIZE = "24";
-    HYPRCURSOR_THEME = "Bibata-Modern-Classic";
+    HYPRCURSOR_THEME = "breeze_cursors";
     HYPRCURSOR_SIZE = "24";
   };
 
@@ -22,8 +22,8 @@
     };
 
     cursorTheme = {
-      package = pkgs.bibata-cursors;
-      name = "Bibata-Modern-Classic";
+      package = pkgs.kdePackages.breeze;
+      name = "breeze_cursors";
       size = 24;
     };
   };
@@ -36,6 +36,6 @@
   home.packages = with pkgs; [
     gruvbox-gtk-theme
     papirus-icon-theme
-    bibata-cursors
+    kdePackages.breeze
   ];
 }

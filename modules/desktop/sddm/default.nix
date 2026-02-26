@@ -16,7 +16,7 @@ in {
     theme = "sddm-astronaut-theme";
     extraPackages = [sddm-astronaut];
     settings.Theme = {
-      CursorTheme = "Bibata-Modern-Classic";
+      CursorTheme = "breeze_cursors";
       CursorSize = 24;
     };
 
@@ -29,6 +29,6 @@ in {
 
   environment.systemPackages = [
     sddm-astronaut
-    pkgs.bibata-cursors
+    pkgs.kdePackages.breeze
   ];
 }
