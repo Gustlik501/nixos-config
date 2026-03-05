@@ -32,7 +32,6 @@ in
     ripgrep
     fastfetch
     python3
-    gogcli
     llmAgents.codex
     llmAgents.gemini-cli
   ];

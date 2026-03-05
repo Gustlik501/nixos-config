@@ -51,6 +51,11 @@
     llm-agents = {
       url = "github:numtide/llm-agents.nix";
     };
+
+    cwal-nvim = {
+      url = "github:nitinbhat972/cwal.nvim";
+      flake = false;
+    };
   };
 
   outputs =
@@ -76,7 +81,7 @@
       nixpkgsFrodo = inputs."nixpkgs-frodo";
       overlays = [
         (final: prev: {
-          gogcli = prev.callPackage ./pkgs/gogcli.nix { };
+          cwal = prev.callPackage ./pkgs/cwal.nix { };
         })
       ];
       pkgs = import nixpkgs {
@@ -217,6 +222,7 @@
             antigravity-nix
             noctalia
             llm-agents
+            cwal-nvim
           )
 
           nix flake update "''${inputs[@]}"

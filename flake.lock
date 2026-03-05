@@ -76,6 +76,22 @@
         "type": "github"
       }
     },
+    "cwal-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1772561778,
+        "narHash": "sha256-BT1k0pz8nkQiC+sNG8LSU3OBKWt1VLFwnnKdPH0MA+Y=",
+        "owner": "nitinbhat972",
+        "repo": "cwal.nvim",
+        "rev": "ff6ac0f1dfd62ae9793e4c29c18a1672c4d50383",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nitinbhat972",
+        "repo": "cwal.nvim",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -814,6 +830,7 @@
     "root": {
       "inputs": {
         "antigravity-nix": "antigravity-nix",
+        "cwal-nvim": "cwal-nvim",
         "disko": "disko",
         "home-manager": "home-manager",
         "hyprland": "hyprland",

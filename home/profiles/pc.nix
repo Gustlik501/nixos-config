@@ -11,17 +11,18 @@
     ../hyprlock
     ../kitty
     ../rofi
+    ../firefox
+    ../vesktop
     ../gtk
     ../noctalia
+    ../cwal
   ];
 
   home.packages = with pkgs; [
     nodejs
     openssh
     runelite
-    firefox
     vlc
-    vesktop
     dart-sass
     wl-clipboard
     gtksourceview3

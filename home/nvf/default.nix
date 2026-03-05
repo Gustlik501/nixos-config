@@ -1,4 +1,11 @@
-{ config, pkgs, ... }:
+{ pkgs, inputs, ... }:
+let
+  cwalNvim = pkgs.vimUtils.buildVimPlugin {
+    pname = "cwal.nvim";
+    version = "1.0.0";
+    src = inputs.cwal-nvim;
+  };
+in
 {
   programs.nvf = {
     enable = true;
@@ -13,9 +20,9 @@
         #style = "dark";
         #};
         extraPlugins = {
-          gruvbox-material = {
-            package = pkgs.vimPlugins.gruvbox-material;
-            setup = "vim.cmd.colorscheme('gruvbox-material')";
+          cwal = {
+            package = cwalNvim;
+            setup = "vim.cmd.colorscheme('cwal')";
           };
         };
 

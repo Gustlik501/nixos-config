@@ -10,7 +10,6 @@ in
   imports = [
     (import ./hyprland.nix { inherit pkgs inputs; })
     #./hyprpaper.nix
-    #../waybar # Add Waybar module
     ../noctalia
   ];
 
