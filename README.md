@@ -4,18 +4,13 @@ Flake-based NixOS configuration for my machines.
 
 ## Getting started
 
-1. **Install Nix/NixOS** with the `nix-command` and `flakes` features enabled. On NixOS you can add the following to `/etc/nix/nix.conf`:
+1. **Install Nix/NixOS** with the `nix-command` and `flakes` features enabled. On NixOS you can add the following to `/etc/nixos/configuration.nix`:
    
    ```
-   experimental-features = nix-command flakes
+   nix.settings.experimental-features = ["nix-command" "flakes"];
    ```
 
-2. **Clone this repository**:
-   
-   ```
-   git clone <REPO_URL> ~/nixos-config
-   cd ~/nixos-config
-   ```
+2. **Clone this repository**
 
 3. **Apply a host configuration**.
    
