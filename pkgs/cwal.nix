@@ -8,15 +8,16 @@
   libimagequant,
   lua,
 }:
-stdenv.mkDerivation rec {
+
+stdenv.mkDerivation (finalAttrs: {
   pname = "cwal";
-  version = "0.4.1";
+  version = "0.5.0";
 
   src = fetchFromGitHub {
     owner = "nitinbhat972";
     repo = "cwal";
-    rev = "v${version}";
-    hash = "sha256-H7liUw/KUT8U0KxBbUFvfu+L1vD7CbGw0cjbwjwwKrY=";
+    rev = "v${finalAttrs.version}";
+    hash = "sha256-ky7ng6yxa8aMKRjjSHzWU6UC4QfeOdS+/rQ3eA/wRPE=";
   };
 
   strictDeps = true;
@@ -32,11 +33,12 @@ stdenv.mkDerivation rec {
     lua
   ];
 
-  meta = with lib; {
+  meta = {
     description = "Blazing-fast pywal-like color palette generator written in C";
     homepage = "https://github.com/nitinbhat972/cwal";
-    license = licenses.gpl3Only;
+    license = lib.licenses.gpl3Only;
     mainProgram = "cwal";
-    platforms = platforms.linux;
+    platforms = lib.platforms.linux;
+    maintainers = with lib.maintainers; [ gustlik501 ];
   };
-}
+})

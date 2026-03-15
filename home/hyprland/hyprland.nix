@@ -4,7 +4,7 @@
     enable = true;
     #xwayland.enable = true;
     plugins = [
-      inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.csgo-vulkan-fix
+      # inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.csgo-vulkan-fix
     ];
     settings = {
       xwayland = {
@@ -20,9 +20,9 @@
         "wl-paste --type image --watch cliphist store"
       ];
       plugin = {
-        csgo-vulkan-fix = {
-          res = "1920x1080";
-        };
+        #csgo-vulkan-fix = {
+        #res = "1920x1080";
+        #};
       };
     };
   };
