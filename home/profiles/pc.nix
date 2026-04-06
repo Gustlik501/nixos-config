@@ -5,6 +5,18 @@
   gitUsername,
   ...
 }:
+let
+  quake3eWrapped = pkgs.symlinkJoin {
+    name = "quake3e-wrapped";
+    paths = [ pkgs.quake3e ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/quake3e \
+        --set SDL_VIDEODRIVER x11 \
+        --set SDL_VIDEO_FULLSCREEN_DISPLAY 0
+    '';
+  };
+in
 {
   imports = [
     ../hyprland
@@ -65,7 +77,8 @@
     bruno
 
     bambu-studio
-
+    cinny-desktop
+    quake3eWrapped
     #inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 

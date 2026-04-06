@@ -10,7 +10,19 @@
     ./hardware-configuration.nix
   ];
 
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable = false;
+  boot.loader.grub = {
+    enable = true;
+    efiSupport = true;
+    device = "nodev";
+    useOSProber = true;
+    theme = pkgs.fetchFromGitHub {
+      owner = "MTFTau-5";
+      repo = "Kayoko-Onikata-GRUB";
+      rev = "eaa22094e974ac80a06277af92e67080087cb7f4";
+      hash = "sha256-nBpkzAlvHlvkXImK6zJzmC4HcalCggE/4HOWeNqdxKA=";
+    };
+  };
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "desktop";

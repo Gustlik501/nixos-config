@@ -24,11 +24,6 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
-  fileSystems."/data/SSD1" =
-    { device = "/dev/disk/by-uuid/3b49cf0f-dc8a-4d07-b53c-d2338df484e5";
-      fsType = "ext4";
-    };
-
   fileSystems."/data/HDD1" =
     { device = "/dev/disk/by-uuid/5c6490ba-6e5d-464b-974d-207cbfe472df";
       fsType = "ext4";
@@ -40,7 +35,6 @@
     };
 
   systemd.tmpfiles.rules = [
-    "d /data/SSD1 0755 ${username} users -"
     "d /data/SSD2 0755 ${username} users -"
     "d /data/HDD1 0755 ${username} users -"
   ];
