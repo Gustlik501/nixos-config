@@ -30,7 +30,11 @@ if [ -f "$wallpaper_state" ]; then
 fi
 
 if [ -z "$wallpaper_path" ] || [ ! -f "$wallpaper_path" ]; then
-	wallpaper_path="$(swww query 2>/dev/null | sed -n 's/^[[:space:]]*image:[[:space:]]*//p' | head -n 1)"
+	if command -v awww >/dev/null 2>&1; then
+		wallpaper_path="$(awww query 2>/dev/null | sed -n 's/.*image:[[:space:]]*//p' | head -n 1)"
+	elif command -v swww >/dev/null 2>&1; then
+		wallpaper_path="$(swww query 2>/dev/null | sed -n 's/^[[:space:]]*image:[[:space:]]*//p' | head -n 1)"
+	fi
 fi
 
 if [ -z "$wallpaper_path" ] || [ ! -f "$wallpaper_path" ]; then

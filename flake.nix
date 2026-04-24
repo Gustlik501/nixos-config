@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-frodo.url = "github:nixos/nixpkgs/nixos-unstable";
     #nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
 
     home-manager = {
@@ -40,7 +39,7 @@
 
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs-frodo";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     sops-nix = {
@@ -78,7 +77,6 @@
       userFullName = "Gregor Sevcnikar";
       userEmail = "sevcnikar.gregor2@gmail.com";
       gitUsername = "Gustlik501";
-      nixpkgsFrodo = inputs."nixpkgs-frodo";
       overlays = [
         (final: prev: {
           cwal = prev.callPackage ./pkgs/cwal.nix { };
@@ -89,13 +87,6 @@
         config = {
           allowUnfree = true;
           # permittedInsecurePackages = [];  # add if needed
-        };
-        inherit overlays;
-      };
-      pkgsFrodo = import nixpkgsFrodo {
-        inherit system;
-        config = {
-          allowUnfree = true;
         };
         inherit overlays;
       };
@@ -119,7 +110,6 @@
 
       # Tiny helper to ensure NixOS also uses the same pkgs
       sharedPkgsModule = mkPkgsModule pkgs;
-      frodoPkgsModule = mkPkgsModule pkgsFrodo;
 
       mkApp = name: text: {
         type = "app";
@@ -188,11 +178,11 @@
           hmImports = hmBaseImports ++ hmPcImports ++ hmWorkstationImports;
         };
 
-        frodo = nixpkgsFrodo.lib.nixosSystem {
+        frodo = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = commonSpecialArgs;
           modules = [
-            frodoPkgsModule
+            sharedPkgsModule
             sops-nix.nixosModules.sops
             disko.nixosModules.disko
             ./hosts/frodo/default.nix
@@ -203,7 +193,7 @@
       };
 
       apps.${system} = {
-        update-pc = mkApp "update-pc" ''
+        update = mkApp "update" ''
           set -euo pipefail
 
           root="$PWD"
@@ -212,32 +202,7 @@
             exit 1
           fi
 
-          inputs=(
-            nixpkgs
-            home-manager
-            plasma-manager
-            nvf
-            hyprland
-            hyprland-plugins
-            antigravity-nix
-            noctalia
-            llm-agents
-            cwal-nvim
-          )
-
-          nix flake update "''${inputs[@]}"
-        '';
-
-        update-frodo = mkApp "update-frodo" ''
-          set -euo pipefail
-
-          root="$PWD"
-          if [ ! -f "$root/flake.nix" ]; then
-            echo "Run from repo root (flake.nix not found)." >&2
-            exit 1
-          fi
-
-          nix flake update nixpkgs-frodo disko
+          nix flake update
         '';
 
         rebuild-pc = mkApp "rebuild-pc" ''

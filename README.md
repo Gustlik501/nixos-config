@@ -24,8 +24,7 @@ Flake-based NixOS configuration for my machines.
 
 ## Helper commands
 Run these from the repo root:
-- Update PC inputs: `nix run .#update-pc`
-- Update Frodo inputs: `nix run .#update-frodo`
+- Update all inputs: `nix run .#update`
 - Rebuild current host: `nix run .#rebuild-pc`
 - Rebuild Frodo via SSH: `nix run .#rebuild-frodo`
 

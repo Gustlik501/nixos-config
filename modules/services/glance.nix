@@ -29,7 +29,8 @@
                     }
                     {
                       title = "Frodo";
-                      url = "http://192.168.1.64:8080";
+                      url = "https://frodo.local";
+                      check-url = "http://127.0.0.1:8080";
                     }
                   ];
                 }
@@ -45,47 +46,58 @@
                   sites = [
                     {
                       title = "Jellyseerr";
-                      url = "http://192.168.1.64:5055";
+                      url = "https://seerr.frodo.local";
+                      check-url = "http://127.0.0.1:5055";
                     }
                     {
                       title = "Jellyfin";
-                      url = "http://192.168.1.64:8096";
+                      url = "https://jelly.frodo.local";
+                      check-url = "http://127.0.0.1:8096";
                     }
                     {
                       title = "Sonarr";
-                      url = "http://192.168.1.64:8989";
+                      url = "https://sonarr.frodo.local";
+                      check-url = "http://127.0.0.1:8989";
                     }
                     {
                       title = "Radarr";
-                      url = "http://192.168.1.64:7878";
+                      url = "https://radarr.frodo.local";
+                      check-url = "http://127.0.0.1:7878";
                     }
                     {
                       title = "Bazarr";
-                      url = "http://192.168.1.64:6767";
+                      url = "https://bazarr.frodo.local";
+                      check-url = "http://127.0.0.1:6767";
                     }
                     {
                       title = "Lidarr";
-                      url = "http://192.168.1.64:8686";
+                      url = "https://lidarr.frodo.local";
+                      check-url = "http://127.0.0.1:8686";
                     }
                     {
                       title = "Prowlarr";
-                      url = "http://192.168.1.64:9696";
+                      url = "https://prowlarr.frodo.local";
+                      check-url = "http://127.0.0.1:9696";
                     }
                     {
                       title = "Profilarr";
-                      url = "http://192.168.1.64:5678";
+                      url = "https://profilarr.frodo.local";
+                      check-url = "http://127.0.0.1:5678";
                     }
                     {
                       title = "qBittorrent";
-                      url = "http://192.168.1.64:8081";
+                      url = "https://qbit.frodo.local";
+                      check-url = "http://127.0.0.1:8081";
                     }
                     {
                       title = "VaultWarden";
                       url = "https://vault.frodo.local";
+                      check-url = "http://127.0.0.1:8222";
                     }
                     {
                       title = "AdGuard";
-                      url = "http://192.168.1.64:3000";
+                      url = "https://adguard.frodo.local";
+                      check-url = "http://127.0.0.1:3000";
                     }
                   ];
                 }

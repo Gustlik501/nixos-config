@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-rofi_config="$HOME/nixos-config/cfgs/rofi/powermenu.rasi"
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+
+rofi_config="${NIXOS_ROFI_POWERMENU_CONFIG:-$XDG_CONFIG_HOME/rofi/nixos/powermenu.rasi}"
 
 # Toggle if rofi is already running
 if pidof rofi > /dev/null; then

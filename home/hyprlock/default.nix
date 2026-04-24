@@ -1,4 +1,7 @@
 { config, pkgs, ... }:
+let
+  defaultWallpaper = "${config.xdg.dataHome}/nixos/wallpapers/wallhaven-k83or7.jpg";
+in
 {
   home.packages = [ pkgs.hyprlock ];
 
@@ -10,7 +13,7 @@
 
     background {
       monitor =
-      path = ${config.home.homeDirectory}/nixos-config/wallpapers/dark.png
+      path = ${defaultWallpaper}
       blur_passes = 2
       blur_size = 6
     }

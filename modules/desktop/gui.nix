@@ -6,7 +6,7 @@
 
   environment.systemPackages = with pkgs; [
     hyprland
-    swww
+    awww
     imagemagick
   ];
 

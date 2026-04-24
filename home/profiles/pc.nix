@@ -30,6 +30,42 @@ in
     ../cwal
   ];
 
+  xdg.configFile = {
+    "hypr/nixos/UserKeybinds.conf".source = ../hyprland/configs/UserKeybinds.conf;
+    "hypr/nixos/WindowRules.conf".source = ../hyprland/configs/WindowRules.conf;
+    "hypr/nixos/UserDecorations.conf".source = ../hyprland/configs/UserDecorations.conf;
+    "hypr/nixos/Monitors.conf".source = ../hyprland/configs/Monitors.conf;
+    "hypr/nixos/Monitors.desktop.conf".source = ../hyprland/configs/Monitors.desktop.conf;
+    "hypr/nixos/Monitors.laptop.conf".source = ../hyprland/configs/Monitors.laptop.conf;
+    "hypr/nixos/default.conf".source = ../hyprland/configs/default.conf;
+    "rofi/nixos".source = ../../cfgs/rofi;
+  };
+
+  xdg.dataFile."nixos/wallpapers".source = ../../wallpapers;
+
+  home.file = {
+    ".local/bin/bgselector" = {
+      source = ../../scripts/bgselector.sh;
+      executable = true;
+    };
+    ".local/bin/clipboard" = {
+      source = ../../scripts/clipboard.sh;
+      executable = true;
+    };
+    ".local/bin/cwal-theme-selector" = {
+      source = ../../scripts/cwal-theme-selector.sh;
+      executable = true;
+    };
+    ".local/bin/display-keybinds" = {
+      source = ../../scripts/display-keybinds.sh;
+      executable = true;
+    };
+    ".local/bin/powermenu" = {
+      source = ../../scripts/powermenu.sh;
+      executable = true;
+    };
+  };
+
   home.packages = with pkgs; [
     nodejs
     openssh

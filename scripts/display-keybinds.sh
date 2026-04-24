@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 # Script to display Hyprland keybinds using rofi
 
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+
 # Define the keybinds config file
-keybinds_conf="$HOME/nixos-config/home/hyprland/configs/UserKeybinds.conf"
+keybinds_conf="${NIXOS_HYPR_KEYBINDS_CONFIG:-$XDG_CONFIG_HOME/hypr/nixos/UserKeybinds.conf}"
 
 # Check if rofi is already running
 if pidof rofi > /dev/null; then

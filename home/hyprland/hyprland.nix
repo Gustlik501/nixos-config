@@ -12,10 +12,9 @@
       };
 
       "exec-once" = [
-        #"swww img /home/gustl/nixos-config/wallpapers/dark.png"
         "hyprpaper"
         "noctalia-shell"
-        "swww-daemon"
+        "awww-daemon --quiet"
         "wl-paste --type text --watch cliphist store"
         "wl-paste --type image --watch cliphist store"
       ];

@@ -1,16 +1,18 @@
 { pkgs, config, ... }:
 
+let
+  defaultWallpaper = "${config.xdg.dataHome}/nixos/wallpapers/wallhaven-k83or7.jpg";
+in
 {
   services.hyprpaper = {
     enable = true;
     settings = {
       preload = [
-        "${config.home.homeDirectory}/nixos-config/wallpapers/dark.png"
-        "${config.home.homeDirectory}/nixos-config/wallpapers/light.png"
+        defaultWallpaper
       ];
       wallpaper = [
         # Apply to all monitors. Remove the monitor name to apply to all.
-        ",${config.home.homeDirectory}/nixos-config/wallpapers/dark.png"
+        ",${defaultWallpaper}"
       ];
     };
   };
