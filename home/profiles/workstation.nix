@@ -4,5 +4,6 @@
     blender
     lmms
     ppsspp
+    beekeeper-studio
   ];
 }

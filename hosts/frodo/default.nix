@@ -29,6 +29,7 @@ in
     ../../modules/services/caddy.nix
     ../../modules/services/adguard.nix
     ../../modules/services/vaultwarden.nix
+    ../../modules/services/postgresql.nix
   ];
 
   networking.hostName = "frodo";
