@@ -22,6 +22,18 @@
           install_url = "https://addons.mozilla.org/firefox/downloads/latest/pywalfox/latest.xpi";
           default_area = "navbar";
         };
+
+        "uBlock0@raymondhill.net" = {
+          installation_mode = "force_installed";
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+          default_area = "navbar";
+        };
+
+        "jid1-MnnxcxisBPnSXQ@jetpack" = {
+          installation_mode = "force_installed";
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/privacy-badger17/latest.xpi";
+          default_area = "navbar";
+        };
       };
     };
 

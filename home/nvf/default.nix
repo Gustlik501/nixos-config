@@ -30,7 +30,58 @@ in
         ui.smartcolumn.setupOpts.colorcolumn = "80";
 
         statusline.lualine.enable = true;
-        telescope.enable = true;
+
+        telescope = {
+          enable = true;
+
+          setupOpts.defaults = {
+            file_ignore_patterns = [
+              "^.git/"
+              "node_modules/"
+              "vendor/"
+              "%.zig%-cache/"
+              "dist/"
+              "build/"
+              "__pycache__/"
+              "%.lock"
+              "asset%-meta/"
+              "%.gif$"
+              "%.png$"
+              "%.jpg$"
+              "%.jpeg$"
+              "%.webp$"
+              "%.ico$"
+              "%.svg$"
+              "%.mp4$"
+              "%.webm$"
+              "%.woff2?$"
+              "%.ttf$"
+              "%.webp$"
+              "%.GIF$"
+              "%.bmp$"
+              "%.wzs$"
+              "public/skins/"
+            ];
+
+            vimgrep_arguments = [
+              "rg"
+              "--color=never"
+              "--no-heading"
+              "--with-filename"
+              "--line-number"
+              "--column"
+              "--ignore-case"
+              "--glob=!.git/**"
+              "--glob=!node_modules/**"
+              "--glob=!vendor/**"
+              "--glob=!.zig-cache/**"
+              "--glob=!dist/**"
+              "--glob=!build/**"
+              "--glob=!asset-meta/**"
+            ];
+          };
+        };
+
         autocomplete.nvim-cmp.enable = true;
         mini.files.enable = true;
 
@@ -40,7 +91,7 @@ in
         languages.nix.enable = true;
         languages.python.enable = true;
         # Disabled: superhtml build tries to fetch Zig deps at build time (network blocked in Nix sandbox)
-        languages.html.enable = false;
+        languages.html.enable = true;
         languages.typescript.enable = true;
         languages.markdown.enable = true;
         languages.go.enable = true;
