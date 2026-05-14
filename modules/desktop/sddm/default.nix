@@ -1,20 +1,21 @@
-{pkgs, ...}: let
-  sddm-astronaut = pkgs.sddm-astronaut.override {
-    themeConfig = {
-      AccentColor = "#746385";
-      FormPosition = "left";
-
-      ForceHideCompletePassword = true;
-    };
-    embeddedTheme = "japanese_aesthetic";
-  };
-in {
+{ pkgs, ... }:
+{
   services.displayManager.sddm = {
     enable = true;
-    #package = pkgs.kdePackages.sddm; # qt6 sddm version
+    package = pkgs.kdePackages.sddm;
 
-    theme = "sddm-astronaut-theme";
-    extraPackages = [sddm-astronaut];
+    theme = "dog-samurai";
+    extraPackages = with pkgs; [
+      qylockSddmDogSamuraiTheme
+      qt6.qt5compat
+      qt6.qtdeclarative
+      qt6.qtmultimedia
+      qt6.qtsvg
+      gst_all_1.gst-plugins-base
+      gst_all_1.gst-plugins-good
+      gst_all_1.gst-plugins-bad
+      gst_all_1.gst-plugins-ugly
+    ];
     settings.Theme = {
       CursorTheme = "breeze_cursors";
       CursorSize = 24;
@@ -27,8 +28,8 @@ in {
     };
   };
 
-  environment.systemPackages = [
-    sddm-astronaut
-    pkgs.kdePackages.breeze
+  environment.systemPackages = with pkgs; [
+    kdePackages.breeze
+    qylockSddmDogSamuraiTheme
   ];
 }

@@ -30,6 +30,7 @@
   services.blueman.enable = true;
 
   # Power & Storage Services
+  services.speechd.enable = false;
   services.upower.enable = true;
   services.gvfs.enable = true;
   services.udisks2.enable = true;
@@ -72,9 +73,6 @@
 
   # Desktop User Extras
   users.users.${username}.extraGroups = [ "audio" ];
-
-  # Allow Hyprlock to authenticate via PAM
-  security.pam.services.hyprlock = {};
 
   # Desktop Packages
   fonts.packages = with pkgs; [

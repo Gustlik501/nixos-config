@@ -23,8 +23,8 @@ choice=$(printf '%s\n%s\n%s\n%s\n' \
 
 case "$choice" in
   "$lock_icon")
-    if command -v hyprlock > /dev/null 2>&1; then
-      hyprlock
+    if command -v qylock-lock > /dev/null 2>&1; then
+      qylock-lock
     elif command -v swaylock > /dev/null 2>&1; then
       swaylock
     else

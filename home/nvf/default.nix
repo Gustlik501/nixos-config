@@ -5,6 +5,12 @@ let
     version = "1.0.0";
     src = inputs.cwal-nvim;
   };
+
+  zmplVim = pkgs.vimUtils.buildVimPlugin {
+    pname = "zmpl.vim";
+    version = "unstable";
+    src = inputs.zmpl-vim;
+  };
 in
 {
   programs.nvf = {
@@ -24,6 +30,11 @@ in
             package = cwalNvim;
             setup = "vim.cmd.colorscheme('cwal')";
           };
+
+          zmpl = {
+            package = zmplVim;
+          };
+
         };
 
         ui.smartcolumn.enable = true;
@@ -60,6 +71,9 @@ in
               "%.GIF$"
               "%.bmp$"
               "%.wzs$"
+              "%.xbm$"
+              "%.xpm$"
+
               "public/skins/"
             ];
 
@@ -96,7 +110,7 @@ in
         languages.markdown.enable = true;
         languages.go.enable = true;
         # Disabled: zls tries to fetch Zig deps at build time (network blocked in Nix sandbox)
-        languages.zig.enable = false;
+        languages.zig.enable = true;
         languages.yaml.enable = true;
 
         globals.mapLeader = " ";

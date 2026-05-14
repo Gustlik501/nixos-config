@@ -20,7 +20,7 @@ in
 {
   imports = [
     ../hyprland
-    ../hyprlock
+    ../qylock
     ../kitty
     ../rofi
     ../firefox

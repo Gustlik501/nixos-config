@@ -55,6 +55,11 @@
       url = "github:nitinbhat972/cwal.nvim";
       flake = false;
     };
+
+    zmpl-vim = {
+      url = "github:jetzig-framework/zmpl.vim";
+      flake = false;
+    };
   };
 
   outputs =
@@ -78,9 +83,17 @@
       userEmail = "sevcnikar.gregor2@gmail.com";
       gitUsername = "Gustlik501";
       overlays = [
-        (final: prev: {
-          cwal = prev.callPackage ./pkgs/cwal.nix { };
-        })
+        (
+          final: prev:
+          let
+            qylock = prev.callPackage ./pkgs/qylock.nix { };
+          in
+          {
+            cwal = prev.callPackage ./pkgs/cwal.nix { };
+            qylockAssets = qylock.assets;
+            qylockSddmDogSamuraiTheme = qylock.sddmDogSamuraiTheme;
+          }
+        )
       ];
       pkgs = import nixpkgs {
         inherit system;
@@ -116,18 +129,16 @@
         program = "${pkgs.writeShellScriptBin name text}/bin/${name}";
       };
 
-      mkHomeManagerModule =
-        hmImports:
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.backupFileExtension = "backup";
-          home-manager.extraSpecialArgs = commonSpecialArgs;
-          home-manager.users.${username} = {
-            imports = hmImports;
-            home.stateVersion = hmStateVersion;
-          };
+      mkHomeManagerModule = hmImports: {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.backupFileExtension = "backup";
+        home-manager.extraSpecialArgs = commonSpecialArgs;
+        home-manager.users.${username} = {
+          imports = hmImports;
+          home.stateVersion = hmStateVersion;
         };
+      };
 
       mkHost =
         {
@@ -138,18 +149,17 @@
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = commonSpecialArgs;
-          modules =
-            [
-              sharedPkgsModule
-              sops-nix.nixosModules.sops
-              hostPath
-              ./profiles/workstation.nix
-            ]
-            ++ extraModules
-            ++ [
-              home-manager.nixosModules.home-manager
-              (mkHomeManagerModule hmImports)
-            ];
+          modules = [
+            sharedPkgsModule
+            sops-nix.nixosModules.sops
+            hostPath
+            ./profiles/workstation.nix
+          ]
+          ++ extraModules
+          ++ [
+            home-manager.nixosModules.home-manager
+            (mkHomeManagerModule hmImports)
+          ];
         };
 
       hmBaseImports = [
