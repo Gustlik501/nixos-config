@@ -30,6 +30,7 @@ in
     ../../modules/services/adguard.nix
     ../../modules/services/vaultwarden.nix
     ../../modules/services/postgresql.nix
+    ../../modules/services/hermes-agent.nix
   ];
 
   networking.hostName = "frodo";

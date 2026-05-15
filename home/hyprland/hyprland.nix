@@ -2,6 +2,9 @@
 {
   wayland.windowManager.hyprland = {
     enable = true;
+    configType = "hyprlang";
+    package = null;
+    portalPackage = null;
     #xwayland.enable = true;
     plugins = [
       # inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.csgo-vulkan-fix
@@ -25,4 +28,6 @@
       };
     };
   };
+
+  xdg.configFile."hypr/hyprland.conf".force = true;
 }

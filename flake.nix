@@ -51,6 +51,10 @@
       url = "github:numtide/llm-agents.nix";
     };
 
+    hermes-agent = {
+      url = "github:NousResearch/hermes-agent";
+    };
+
     cwal-nvim = {
       url = "github:nitinbhat972/cwal.nvim";
       flake = false;
@@ -195,6 +199,7 @@
             sharedPkgsModule
             sops-nix.nixosModules.sops
             disko.nixosModules.disko
+            inputs.hermes-agent.nixosModules.default
             ./hosts/frodo/default.nix
             home-manager.nixosModules.home-manager
             (mkHomeManagerModule hmBaseImports)
@@ -239,6 +244,24 @@
 
           target="''${FRODO_HOST:-gustl@frodo.local}"
           nixos-rebuild switch \
+            --flake "$root#frodo" \
+            --target-host "$target" \
+            --sudo \
+            --ask-sudo-password \
+            "$@"
+        '';
+
+        rebuild-frodo-boot = mkApp "rebuild-frodo-boot" ''
+          set -euo pipefail
+
+          root="$PWD"
+          if [ ! -f "$root/flake.nix" ]; then
+            echo "Run from repo root (flake.nix not found)." >&2
+            exit 1
+          fi
+
+          target="''${FRODO_HOST:-gustl@frodo.local}"
+          nixos-rebuild boot \
             --flake "$root#frodo" \
             --target-host "$target" \
             --sudo \
