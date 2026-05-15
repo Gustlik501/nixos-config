@@ -94,7 +94,7 @@ in
     powerManagement.enable = false;
     open = false; # 1050ti is too old for the open kernel modules
     nvidiaPersistenced = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
   };
 
   # Headless compute: ensure NVIDIA modules are loaded even without X/Wayland.
