@@ -71,7 +71,7 @@ in
         enabled = true;
         provider = "local";
         local = {
-          model = "medium";
+          model = "small";
         };
       };
     };
