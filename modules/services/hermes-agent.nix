@@ -66,6 +66,14 @@ in
       agent = {
         reasoning_effort = "medium";
       };
+
+      stt = {
+        enabled = true;
+        provider = "local";
+        local = {
+          model = "medium";
+        };
+      };
     };
 
     extraPackages = with pkgs; [
