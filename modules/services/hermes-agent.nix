@@ -99,6 +99,7 @@ in
 
     extraDependencyGroups = [
       "messaging"
+      "voice"
     ];
   };
 }
