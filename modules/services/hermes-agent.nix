@@ -25,7 +25,7 @@ in
 
   services.hermes-agent = {
     enable = true;
-    addToSystemPackages = true;
+    addToSystemPackages = false;
     inherit stateDir workingDirectory;
 
     environmentFiles = [
@@ -35,6 +35,7 @@ in
     environment = {
       HERMES_HEADLESS = "1";
       HERMES_HOME = "${stateDir}/.hermes";
+      XDG_CACHE_HOME = "${stateDir}/.cache";
     };
 
     settings = {
@@ -68,6 +69,13 @@ in
     };
 
     extraPackages = with pkgs; [
+      (python3.withPackages (ps: with ps; [
+        google-api-python-client
+        google-auth-oauthlib
+        google-auth-httplib2
+        faster-whisper
+      ]))
+      ffmpeg
       curl
       fd
       git
