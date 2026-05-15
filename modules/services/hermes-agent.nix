@@ -80,7 +80,9 @@ in
       (python3.withPackages (
         ps:
         let
-          ctranslate2-cpp-cuda = pkgs.ctranslate2.override {
+          ctranslate2-cpp-cuda = pkgs.cudaPackages_12_6.callPackage (
+            "${pkgs.path}/pkgs/by-name/ct/ctranslate2/package.nix"
+          ) {
             withCUDA = true;
             withCuDNN = true;
           };
