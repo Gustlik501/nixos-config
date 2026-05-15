@@ -77,12 +77,27 @@ in
     };
 
     extraPackages = with pkgs; [
-      (python3.withPackages (ps: with ps; [
-        google-api-python-client
-        google-auth-oauthlib
-        google-auth-httplib2
-        faster-whisper
-      ]))
+      (python3.withPackages (
+        ps:
+        let
+          ctranslate2-cpp-cuda = pkgs.ctranslate2.override {
+            withCUDA = true;
+            withCuDNN = true;
+          };
+          ctranslate2-cuda = ps.ctranslate2.override {
+            ctranslate2-cpp = ctranslate2-cpp-cuda;
+          };
+          faster-whisper-cuda = ps.faster-whisper.override {
+            ctranslate2 = ctranslate2-cuda;
+          };
+        in
+        [
+          ps.google-api-python-client
+          ps.google-auth-oauthlib
+          ps.google-auth-httplib2
+          faster-whisper-cuda
+        ]
+      ))
       ffmpeg
       curl
       fd
