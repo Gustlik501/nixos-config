@@ -93,8 +93,17 @@ in
     modesetting.enable = true;
     powerManagement.enable = false;
     open = false; # 1050ti is too old for the open kernel modules
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    nvidiaPersistenced = true;
+    package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
   };
+
+  # Headless compute: ensure NVIDIA modules are loaded even without X/Wayland.
+  boot.kernelModules = [
+    "nvidia"
+    "nvidia_modeset"
+    "nvidia_uvm"
+    "nvidia_drm"
+  ];
 
   # Enable Container/Docker support (useful for homelabs)
   virtualisation.docker.enable = true;
