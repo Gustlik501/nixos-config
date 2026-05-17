@@ -16,6 +16,21 @@ in
     "z ${workingDirectory} 2770 hermes hermes -"
   ];
 
+  system.activationScripts.hermesStatePermissions = {
+    deps = [ "users" ];
+    text = ''
+      ${pkgs.coreutils}/bin/install -d -o hermes -g hermes -m 2770 \
+        ${stateDir} \
+        ${stateDir}/.hermes \
+        ${stateDir}/.cache \
+        ${workingDirectory}
+
+      ${pkgs.coreutils}/bin/chown -R hermes:hermes -- ${stateDir}
+      ${pkgs.coreutils}/bin/chmod -R ug+rwX,o-rwx -- ${stateDir}
+      ${pkgs.findutils}/bin/find ${stateDir} -type d -exec ${pkgs.coreutils}/bin/chmod g+s {} +
+    '';
+  };
+
   sops.secrets.hermes_env = {
     owner = "hermes";
     group = "hermes";
@@ -25,7 +40,7 @@ in
 
   services.hermes-agent = {
     enable = true;
-    addToSystemPackages = false;
+    addToSystemPackages = true;
     inherit stateDir workingDirectory;
 
     environmentFiles = [
