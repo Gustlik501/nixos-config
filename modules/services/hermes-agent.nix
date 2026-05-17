@@ -81,6 +81,14 @@ in
       agent = {
         reasoning_effort = "medium";
       };
+
+      stt = {
+        enabled = true;
+        provider = "local";
+        local = {
+          model = "small";
+        };
+      };
     };
 
     extraPackages = with pkgs; [
@@ -106,6 +114,7 @@ in
 
     extraDependencyGroups = [
       "messaging"
+      "voice"
     ];
   };
 }
