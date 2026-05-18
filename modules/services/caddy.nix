@@ -37,6 +37,7 @@ in
       "profilarr.frodo.local" = proxyHost 5678;
       "qbit.frodo.local" = proxyHost 8081;
       "adguard.frodo.local" = proxyHost 3000;
+      "hermes.frodo.local" = proxyHost 8644;
 
       # CASE B: The Subdomain -> Port 8222 (Vaultwarden)
       "vault.frodo.local" = {

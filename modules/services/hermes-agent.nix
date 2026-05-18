@@ -78,6 +78,14 @@ in
         auto_thread = true;
       };
 
+      platforms.webhook = {
+        enabled = true;
+        extra = {
+          host = "127.0.0.1";
+          port = 8644;
+        };
+      };
+
       agent = {
         reasoning_effort = "medium";
       };
