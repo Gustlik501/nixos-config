@@ -117,4 +117,12 @@ in
       "voice"
     ];
   };
+
+  # Keep secrets available in the systemd unit environment as well.
+  # Hermes Nix module already merges environmentFiles into $HERMES_HOME/.env,
+  # but explicit EnvironmentFile improves transparency and compatibility
+  # for subprocesses that expect process-level environment variables.
+  systemd.services.hermes-agent.serviceConfig.EnvironmentFile = [
+    config.sops.secrets.hermes_env.path
+  ];
 }
