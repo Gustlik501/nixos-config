@@ -97,7 +97,7 @@ in
     sqlitebrowser
 
     #logitech mouse
-    solaar
+    #solaar
 
     telegram-desktop
     devenv
@@ -112,10 +112,9 @@ in
 
     bruno
 
-    bambu-studio
+    #bambu-studio
     cinny-desktop
     quake3eWrapped
-    #inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   programs.git = {

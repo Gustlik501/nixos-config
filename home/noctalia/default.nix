@@ -5,31 +5,29 @@
     inputs.noctalia.homeModules.default
   ];
 
-  programs.noctalia-shell = {
+  programs.noctalia = {
     enable = true;
-    
+
     settings = {
-      bar = {
-        position = "top";
-        useSeparateOpacity = true;
-        backgroundOpacity = 0.0;
+      shell = {
+        font_family = "JetBrainsMono Nerd Font";
       };
-      
-      ui = {
-        fontDefault = "JetBrainsMono Nerd Font";
-        fontFixed = "JetBrainsMono Nerd Font";
+
+      bar.main = {
+        position = "top";
+        background_opacity = 0.0;
       };
 
       location = {
-        name = "Dravograd, Slovenia";
+        address = "Dravograd, Slovenia";
       };
 
       wallpaper = {
         enabled = false;
       };
 
-      colorSchemes = {
-        useWallpaperColors = true;
+      theme = {
+        source = "wallpaper";
       };
     };
   };

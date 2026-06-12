@@ -67,8 +67,8 @@ if [ -n "$wall_selection" ]; then
 		exit 1
 	fi
 	echo "$selected_wall" > "$wal_dir/current_wallpaper"
-	if command -v noctalia-shell >/dev/null 2>&1; then
-		noctalia-shell ipc call wallpaper set "$selected_wall" all >/dev/null 2>&1 || true
+	if command -v noctalia >/dev/null 2>&1; then
+		noctalia msg wallpaper-set "$selected_wall" >/dev/null 2>&1 || true
 	fi
 	sleep 0.2
 	if command -v cwal >/dev/null 2>&1; then

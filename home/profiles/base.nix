@@ -34,6 +34,7 @@ in
     python3
     llmAgents.codex
     llmAgents.gemini-cli
+    llmAgents.claude-code
   ];
 
   programs.bash = {

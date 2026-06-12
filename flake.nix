@@ -27,11 +27,6 @@
       inputs.hyprland.follows = "hyprland";
     };
 
-    antigravity-nix = {
-      url = "github:jacopone/antigravity-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -103,7 +98,9 @@
         inherit system;
         config = {
           allowUnfree = true;
-          # permittedInsecurePackages = [];  # add if needed
+          permittedInsecurePackages = [
+            "electron-39.8.10"
+          ];
         };
         inherit overlays;
       };

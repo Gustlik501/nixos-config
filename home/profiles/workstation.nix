@@ -5,5 +5,6 @@
     lmms
     ppsspp
     beekeeper-studio
+    onlyoffice-desktopeditors
   ];
 }

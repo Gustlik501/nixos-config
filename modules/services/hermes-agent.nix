@@ -56,7 +56,7 @@ in
     settings = {
       model = {
         provider = "openai-codex";
-        default = "gpt-5.3-codex";
+        default = "gpt-5.5";
       };
 
       toolsets = [ "all" ];
@@ -92,12 +92,14 @@ in
     };
 
     extraPackages = with pkgs; [
-      (python3.withPackages (ps: with ps; [
-        google-api-python-client
-        google-auth-oauthlib
-        google-auth-httplib2
-        faster-whisper
-      ]))
+      (python3.withPackages (
+        ps: with ps; [
+          google-api-python-client
+          google-auth-oauthlib
+          google-auth-httplib2
+          faster-whisper
+        ]
+      ))
       ffmpeg
       curl
       fd
