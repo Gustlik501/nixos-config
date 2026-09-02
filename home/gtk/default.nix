@@ -12,8 +12,8 @@
     enable = true;
 
     theme = {
-      package = pkgs.gruvbox-gtk-theme;
-      name = "Gruvbox-Dark";  # or "Gruvbox-Light"
+      package = pkgs.gruvbox-dark-gtk;
+      name = "gruvbox-dark-gtk";
     };
 
     iconTheme = {
@@ -34,7 +34,7 @@
   };
 
   home.packages = with pkgs; [
-    gruvbox-gtk-theme
+    gruvbox-dark-gtk
     papirus-icon-theme
     kdePackages.breeze
   ];

@@ -1,0 +1,95 @@
+[bar.main]
+background_opacity = 0.91999997943639755
+center = [ "workspaces" ]
+end = [ "group:g3", "group:g2" ]
+margin_edge = 1
+margin_ends = 5
+start = [ "group:g1", "audio_visualizer" ]
+
+    [[bar.main.capsule_group]]
+    fill = "surface_variant"
+    id = "g1"
+    members = [ "session", "clock" ]
+    opacity = 1.0
+    padding = 6.0
+
+    [[bar.main.capsule_group]]
+    fill = "surface_variant"
+    id = "g2"
+    members = [ "bluetooth", "volume" ]
+    opacity = 1.0
+    padding = 6.0
+
+    [[bar.main.capsule_group]]
+    fill = "surface_variant"
+    id = "g3"
+    members = [ "network", "battery" ]
+    opacity = 1.0
+    padding = 6.0
+
+[lockscreen_widgets]
+enabled = false
+schema_version = 2
+widget_order = [ "lockscreen-login-box@HDMI-A-1", "lockscreen-login-box@DP-1" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-1"]
+    box_height = 0.0
+    box_width = 0.0
+    cx = 960.0
+    cy = 957.0
+    output = "DP-1"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        input_opacity = 1.0
+        input_radius = 6.0
+        show_login_button = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1"]
+    box_height = 0.0
+    box_width = 0.0
+    cx = 960.0
+    cy = 957.0
+    output = "HDMI-A-1"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        input_opacity = 1.0
+        input_radius = 6.0
+        show_login_button = true
+
+[shell]
+clipboard_enabled = false
+
+    [shell.screenshot]
+    copy_to_clipboard = false
+    freeze_screen = false
+    save_to_file = false
+
+[theme]
+source = "wallpaper"
+
+[wallpaper.default]
+path = "/home/gustl/.local/share/nixos/wallpapers/wallhaven-1qj951.jpg"
+
+[wallpaper.last]
+path = "/home/gustl/.local/share/nixos/wallpapers/wallhaven-1qj951.jpg"
+
+[wallpaper.monitors.DP-1]
+path = "/home/gustl/.local/share/nixos/wallpapers/wallhaven-1qj951.jpg"
+
+[wallpaper.monitors.HDMI-A-1]
+path = "/home/gustl/.local/share/nixos/wallpapers/wallhaven-1qj951.jpg"
