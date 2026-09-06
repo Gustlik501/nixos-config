@@ -2,7 +2,7 @@
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    configType = "hyprlang";
+    configType = "lua";
     package = null;
     portalPackage = null;
     #xwayland.enable = true;
@@ -10,24 +10,13 @@
       # inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.csgo-vulkan-fix
     ];
     settings = {
-      xwayland = {
-        enabled = true;
-      };
-
-      "exec-once" = [
-        "hyprpaper"
-        "noctalia"
-        "awww-daemon --quiet"
-        "wl-paste --type text --watch cliphist store"
-        "wl-paste --type image --watch cliphist store"
-      ];
-      plugin = {
-        #csgo-vulkan-fix = {
-        #res = "1920x1080";
-        #};
+      config = {
+        xwayland = {
+          enabled = true;
+        };
       };
     };
   };
 
-  xdg.configFile."hypr/hyprland.conf".force = true;
+  xdg.configFile."hypr/hyprland.lua".force = true;
 }
