@@ -31,13 +31,7 @@ in
   ];
 
   xdg.configFile = {
-    "hypr/nixos/UserKeybinds.conf".source = ../hyprland/configs/UserKeybinds.conf;
-    "hypr/nixos/WindowRules.conf".source = ../hyprland/configs/WindowRules.conf;
-    "hypr/nixos/UserDecorations.conf".source = ../hyprland/configs/UserDecorations.conf;
-    "hypr/nixos/Monitors.conf".source = ../hyprland/configs/Monitors.conf;
-    "hypr/nixos/Monitors.desktop.conf".source = ../hyprland/configs/Monitors.desktop.conf;
-    "hypr/nixos/Monitors.laptop.conf".source = ../hyprland/configs/Monitors.laptop.conf;
-    "hypr/nixos/default.conf".source = ../hyprland/configs/default.conf;
+    # Hyprland's own config lives in home/hyprland (extraLuaFiles).
     "rofi/nixos".source = ../../cfgs/rofi;
   };
 
