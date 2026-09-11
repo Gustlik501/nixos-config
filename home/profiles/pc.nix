@@ -60,7 +60,6 @@ in
   };
 
   home.packages = with pkgs; [
-    nodejs
     openssh
     runelite
     vlc

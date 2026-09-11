@@ -12,6 +12,7 @@ in
     ../zsh
     ../btop
     ../nvf
+    ../pi
   ];
 
   home = {
