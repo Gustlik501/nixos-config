@@ -1,0 +1,10 @@
+{
+  "name": "pi-plugins",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@plannotator/pi-extension": "0.27.12",
+    "@tian.zuo/pi-usage": "0.2.0",
+    "pi-web-access": "0.28.0"
+  }
+}
