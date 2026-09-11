@@ -32,10 +32,4 @@
     enable = true;
     platformTheme.name = "gtk3";
   };
-
-  home.packages = with pkgs; [
-    gruvbox-dark-gtk
-    papirus-icon-theme
-    kdePackages.breeze
-  ];
 }

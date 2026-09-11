@@ -1,4 +1,4 @@
-{ pkgs, inputs, osConfig, ... }:
+{ osConfig, ... }:
 let
   hostName = osConfig.networking.hostName or "";
   monitorsFile =
@@ -8,8 +8,7 @@ let
 in
 {
   imports = [
-    (import ./hyprland.nix { inherit pkgs inputs; })
-    #./hyprpaper.nix
+    ./hyprland.nix
     ../noctalia
   ];
 

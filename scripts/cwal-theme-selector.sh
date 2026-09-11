@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
-themes_dir="$HOME/.config/cwal/themes"
-rofi_config="$HOME/.config/rofi/config.rasi"
-cwal_config="$HOME/.config/cwal/cwal.ini"
-wal_dir="$HOME/.cache/wal"
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+
+themes_dir="$XDG_CONFIG_HOME/cwal/themes"
+rofi_config="$XDG_CONFIG_HOME/rofi/config.rasi"
+cwal_config="$XDG_CONFIG_HOME/cwal/cwal.ini"
+wal_dir="$XDG_CACHE_HOME/wal"
 wallpaper_state="$wal_dir/current_wallpaper"
 
 # Build selectable list with random shortcuts plus all installed theme names.
@@ -24,25 +27,13 @@ if [ -z "$theme_selection" ]; then
 fi
 
 # Resolve current wallpaper path from reliable sources.
-wallpaper_path=""
-if [ -f "$wallpaper_state" ]; then
+wallpaper_path="$(noctalia msg wallpaper-get 2>/dev/null)"
+if { [ -z "$wallpaper_path" ] || [ ! -f "$wallpaper_path" ]; } && [ -f "$wallpaper_state" ]; then
 	wallpaper_path="$(head -n 1 "$wallpaper_state")"
 fi
 
 if [ -z "$wallpaper_path" ] || [ ! -f "$wallpaper_path" ]; then
-	if command -v awww >/dev/null 2>&1; then
-		wallpaper_path="$(awww query 2>/dev/null | sed -n 's/.*image:[[:space:]]*//p' | head -n 1)"
-	elif command -v swww >/dev/null 2>&1; then
-		wallpaper_path="$(swww query 2>/dev/null | sed -n 's/^[[:space:]]*image:[[:space:]]*//p' | head -n 1)"
-	fi
-fi
-
-if [ -z "$wallpaper_path" ] || [ ! -f "$wallpaper_path" ]; then
 	wallpaper_path="$(sed -n 's/^current_wallpaper[[:space:]]*=[[:space:]]*//p' "$cwal_config" | head -n 1)"
-fi
-
-if [ -z "$wallpaper_path" ] || [ ! -f "$wallpaper_path" ]; then
-	wallpaper_path="$(rg -o '\"[^\"]+\"' "$HOME/.cache/noctalia/wallpapers.json" 2>/dev/null | tr -d '"' | rg '^/.*\.(png|jpg|jpeg|webp)$' | head -n 1)"
 fi
 
 if [ -z "$wallpaper_path" ] || [ ! -f "$wallpaper_path" ]; then

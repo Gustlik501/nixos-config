@@ -46,7 +46,6 @@
 
   # Handy tools/ISOs available on host
   environment.systemPackages = with pkgs; [
-    steam
     virtiofsd # (mainly for Linux guests)
     virtio-win # Windows VirtIO drivers ISO
     spice-gtk # SPICE client support

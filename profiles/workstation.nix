@@ -24,7 +24,8 @@
       JustWorksRepairing = "always";
       PairableTimeout = 0;
       DiscoverableTimeout = 0;
-      Agent = "KeyboardDisplay";
+      # Noctalia registers its Bluetooth pairing agent over D-Bus.
+      # "Agent" is not a bluetoothd main.conf option.
     };
   };
   services.blueman.enable = true;

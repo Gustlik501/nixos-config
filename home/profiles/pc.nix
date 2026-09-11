@@ -26,7 +26,6 @@ in
     ../firefox
     ../vesktop
     ../gtk
-    ../noctalia
     ../cwal
   ];
 

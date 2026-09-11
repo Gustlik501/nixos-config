@@ -18,29 +18,7 @@ mkdir -p "$cache_dir" "$wal_dir"
 
 set_wallpaper() {
 	local image="$1"
-
-	if command -v awww >/dev/null 2>&1; then
-		if ! pgrep -x awww-daemon >/dev/null 2>&1; then
-			awww-daemon --quiet >/dev/null 2>&1 &
-			sleep 0.2
-		fi
-
-		awww img "$image" --transition-type grow --transition-duration 1 --transition-fps 75
-		return
-	fi
-
-	if command -v swww >/dev/null 2>&1; then
-		if ! pgrep -x swww-daemon >/dev/null 2>&1; then
-			swww-daemon >/dev/null 2>&1 &
-			sleep 0.2
-		fi
-
-		swww img "$image" -t grow --transition-duration 1 --transition-fps 75
-		return
-	fi
-
-	echo "Neither awww nor swww is installed." >&2
-	return 1
+	noctalia msg wallpaper-set "$image"
 }
 
 # Generate thumbnails
@@ -67,9 +45,6 @@ if [ -n "$wall_selection" ]; then
 		exit 1
 	fi
 	echo "$selected_wall" > "$wal_dir/current_wallpaper"
-	if command -v noctalia >/dev/null 2>&1; then
-		noctalia msg wallpaper-set "$selected_wall" >/dev/null 2>&1 || true
-	fi
 	sleep 0.2
 	if command -v cwal >/dev/null 2>&1; then
 		cwal --img "$selected_wall" --out-dir "$wal_dir" --quiet || true

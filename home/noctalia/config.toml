@@ -73,6 +73,7 @@ widget_order = [ "lockscreen-login-box@HDMI-A-1", "lockscreen-login-box@DP-1" ]
 
 [shell]
 clipboard_enabled = false
+polkit_agent = true
 
     [shell.screenshot]
     copy_to_clipboard = false

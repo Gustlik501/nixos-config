@@ -19,7 +19,7 @@ choice=$(printf '%s\n%s\n%s\n%s\n' \
   "$lock_icon" \
   "$logout_icon" \
   "$reboot_icon" \
-  "$poweroff_icon" | rofi -dmenu -config "$rofi_config")
+  "$poweroff_icon" | rofi -dmenu -no-custom -config "$rofi_config") || exit 0
 
 case "$choice" in
   "$lock_icon")
@@ -33,7 +33,7 @@ case "$choice" in
     ;;
   "$logout_icon")
     if command -v hyprctl > /dev/null 2>&1; then
-      hyprctl dispatch exit
+      hyprctl eval 'hl.dispatch(hl.dsp.exit())'
     else
       loginctl terminate-user "$USER"
     fi

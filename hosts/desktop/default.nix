@@ -65,6 +65,11 @@
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = [ "nvidia" ];
 
+  # Work around first-login display offsets when SDDM's KWin greeter hands
+  # the NVIDIA outputs to Hyprland. Only the greeter uses X11; Hyprland stays Wayland.
+  services.xserver.enable = true;
+  services.displayManager.sddm.wayland.enable = lib.mkForce false;
+
   hardware.nvidia = {
 
     # Modesetting is required.
@@ -111,7 +116,6 @@
 
   # Handy tools/ISOs available on host
   environment.systemPackages = with pkgs; [
-    steam
     virtiofsd # (mainly for Linux guests)
     virtio-win # Windows VirtIO drivers ISO
     spice-gtk # SPICE client support

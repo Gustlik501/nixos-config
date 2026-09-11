@@ -1,31 +1,24 @@
 {
   description = "My system configuration";
 
+  # llm-agents.nix publishes its packages here. Input flake settings are not
+  # inherited automatically, so declare the cache on the top-level flake.
+  nixConfig = {
+    extra-substituters = [ "https://cache.numtide.com" ];
+    extra-trusted-public-keys = [
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+    ];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    #nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
 
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    plasma-manager = {
-      url = "github:nix-community/plasma-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nvf.url = "github:notashelf/nvf";
-
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
-      inputs.hyprland.follows = "hyprland";
-    };
 
     noctalia = {
       url = "github:noctalia-dev/noctalia";
@@ -66,10 +59,7 @@
       self,
       nixpkgs,
       home-manager,
-      plasma-manager,
       nvf,
-      hyprland,
-      hyprland-plugins,
       disko,
       sops-nix,
       ...
@@ -169,7 +159,6 @@
       ];
 
       hmPcImports = [
-        plasma-manager.homeModules.plasma-manager
         ./home/profiles/pc.nix
       ];
 
