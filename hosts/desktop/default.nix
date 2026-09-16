@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   username,
@@ -8,21 +9,21 @@
 {
   imports = [
     ./hardware-configuration.nix
+    inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
-  boot.loader.systemd-boot.enable = false;
-  boot.loader.grub = {
-    enable = true;
-    efiSupport = true;
-    device = "nodev";
-    useOSProber = true;
-    theme = pkgs.fetchFromGitHub {
-      owner = "MTFTau-5";
-      repo = "Kayoko-Onikata-GRUB";
-      rev = "eaa22094e974ac80a06277af92e67080087cb7f4";
-      hash = "sha256-nBpkzAlvHlvkXImK6zJzmC4HcalCggE/4HOWeNqdxKA=";
-    };
+  # Windows Boot Manager shares /boot's EFI partition and is auto-detected.
+  # Lanzaboote installs a signed systemd-boot and signed NixOS boot images.
+  boot.loader.systemd-boot = {
+    enable = lib.mkForce false;
+    configurationLimit = 10;
   };
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/var/lib/sbctl";
+  };
+  boot.loader.timeout = 10;
+  boot.loader.grub.enable = false;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "desktop";
@@ -116,6 +117,7 @@
 
   # Handy tools/ISOs available on host
   environment.systemPackages = with pkgs; [
+    sbctl # Inspect Secure Boot keys and verify signed boot images.
     virtiofsd # (mainly for Linux guests)
     virtio-win # Windows VirtIO drivers ISO
     spice-gtk # SPICE client support

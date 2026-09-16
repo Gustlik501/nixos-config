@@ -29,13 +29,14 @@
       fsType = "ext4";
     };
 
-  fileSystems."/data/SSD2" =
-    { device = "/dev/disk/by-uuid/c48fc144-8c31-4ddc-9d66-d13891b3c0a7";
+  fileSystems."/data/SSD1" =
+    { device = "/dev/disk/by-uuid/729a7c08-969d-4e8d-a012-40cf52af92d5";
       fsType = "ext4";
+      options = [ "nofail" "x-systemd.device-timeout=5s" ];
     };
 
   systemd.tmpfiles.rules = [
-    "d /data/SSD2 0755 ${username} users -"
+    "d /data/SSD1 0755 ${username} users -"
     "d /data/HDD1 0755 ${username} users -"
   ];
 
