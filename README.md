@@ -96,8 +96,9 @@ npm install --package-lock-only --ignore-scripts --legacy-peer-deps --no-audit -
 Commit both JSON files and rebuild. To update Pi, update the `llm-agents` flake
 input rather than using Pi's self-updater.
 
-Validate the plugin build and settings activation (creation, preservation,
-idempotence and invalid-JSON handling) without rebuilding a host:
+Validate the plugin build, settings activation (creation, preservation,
+idempotence and invalid-JSON handling), and offline startup of the pinned Pi
+runtime with all three extensions, without rebuilding a host or using credentials:
 
 ```sh
 nix build --impure --no-link --file tests/pi.nix

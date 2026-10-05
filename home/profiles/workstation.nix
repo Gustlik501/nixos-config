@@ -4,7 +4,9 @@
     blender
     lmms
     ppsspp
-    beekeeper-studio
+    # Disabled: nixpkgs marks Beekeeper 6.1.4 insecure (bundled EOL Electron 39).
+    # DBeaver remains available through the shared PC profile.
+    # beekeeper-studio
     onlyoffice-desktopeditors
   ];
 }

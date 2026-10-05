@@ -3,11 +3,12 @@ let
   flake = builtins.getFlake (toString ../.);
   pkgs = import flake.inputs.nixpkgs { system = "x86_64-linux"; };
   hm = flake.nixosConfigurations.laptop.config.home-manager.users.gustl;
+  pi = flake.inputs.llm-agents.packages.x86_64-linux.pi;
   activation = hm.home.activation.configurePi.data;
   keybindings = pkgs.writeText "pi-keybindings.json" hm.home.file.".pi/agent/keybindings.json".text;
 in
 assert hm.programs.kitty.keybindings."ctrl+v" == "paste_from_clipboard";
-pkgs.runCommand "pi-settings-check" { nativeBuildInputs = [ pkgs.jq ]; } ''
+pkgs.runCommand "pi-settings-check" { nativeBuildInputs = [ pkgs.jq pkgs.python3 ]; } ''
   export HOME="$TMPDIR/home"
   mkdir -p "$HOME/.pi/agent"
   # Home Manager links this declarative file before activation.
@@ -30,6 +31,34 @@ pkgs.runCommand "pi-settings-check" { nativeBuildInputs = [ pkgs.jq ]; } ''
   while IFS= read -r package; do
     test -f "$package/package.json"
   done < <(jq -r '.packages[]' "$settings")
+
+  # Load the actual pinned Pi runtime and all three extensions without user
+  # credentials, project resources, network access, or a model request.
+  export PI_CODING_AGENT_DIR="$HOME/.pi/agent"
+  export PI_OFFLINE=1
+  export PI_TEST_BINARY=${pi}/bin/pi
+  python3 - <<'PY'
+  import json
+  import os
+  import subprocess
+
+  result = subprocess.run(
+      [os.environ["PI_TEST_BINARY"], "--offline", "--mode", "rpc",
+       "--no-session", "--no-context-files", "--no-approve"],
+      cwd=os.environ["HOME"],
+      input='{"id":"state","type":"get_state"}\n'
+            '{"id":"commands","type":"get_commands"}\n',
+      text=True, capture_output=True, timeout=60, check=True,
+  )
+  print(result.stderr, end="")
+  records = [json.loads(line) for line in result.stdout.splitlines() if line]
+  assert not any(r.get("type") == "extension_error" for r in records), records
+  responses = {r["id"]: r for r in records if r.get("type") == "response"}
+  assert responses["state"]["success"], responses
+  assert responses["commands"]["success"], responses
+  commands = {c["name"] for c in responses["commands"]["data"]["commands"]}
+  assert {"usage", "websearch", "codex-fast"} <= commands, commands
+  PY
 
   # Re-activation removes Plannotator but preserves mutable state and auth,
   # including the speed mode saved by pi-codex-fast.
