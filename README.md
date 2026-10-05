@@ -32,11 +32,11 @@ Run these from the repo root:
 
 `home/pi` is included in the base Home Manager profile (laptop, desktop and
 Frodo). It installs Pi from the existing locked `llm-agents` input, plus the
-plugins installed on my Windows device:
+globally configured plugins:
 
 - `@tian.zuo/pi-usage` **0.2.0**
 - `pi-web-access` **0.28.0**
-- `@plannotator/pi-extension` **0.27.12** (including its bundled skill)
+- [`@calesennett/pi-codex-fast`](https://github.com/calesennett/pi-codex-fast) **0.1.11**
 
 The plugins and their transitive dependencies are pinned in
 `pkgs/pi-plugins/package-lock.json`, fetched with integrity hashes and installed
@@ -49,8 +49,8 @@ and are not copied by this module.
 After rebuilding, run `pi` and use `/login` to authenticate. No credentials,
 provider keys, sessions, trust decisions or Windows-specific paths are committed.
 Web search can reuse the Codex login; other providers need their own local setup.
-Browser-based plugin UIs on headless Frodo require SSH forwarding and local
-browser access as described in each plugin's documentation.
+Use `/codex-fast` or `/codex-ultrafast` to toggle faster service tiers for supported
+OpenAI models. Fast mode is off by default; toggles persist in global settings.
 
 Home activation merges the declared dark theme, OpenAI Codex provider,
 `gpt-6-astra` model and plugin paths into `~/.pi/agent/settings.json`. The file

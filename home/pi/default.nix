@@ -14,7 +14,7 @@ let
     packages = map (name: "${plugins}/node_modules/${name}") [
       "@tian.zuo/pi-usage"
       "pi-web-access"
-      "@plannotator/pi-extension"
+      "@calesennett/pi-codex-fast"
     ];
   });
   configure = pkgs.writeShellApplication {
