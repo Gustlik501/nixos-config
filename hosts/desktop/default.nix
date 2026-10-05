@@ -9,6 +9,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/desktop/reboot-to-windows.nix
     inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
