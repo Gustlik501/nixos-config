@@ -36,9 +36,15 @@
     "nix-command"
     "flakes"
   ];
-  nix.settings.trusted-users = [
-    "root"
-    username
+  # Nix daemon trust is root-equivalent; ordinary builds do not need it.
+  nix.settings.trusted-users = [ "root" ];
+
+  # Approve this cache in the daemon configuration, rather than allowing users
+  # to supply privileged cache settings through a flake. NixOS also retains
+  # the official cache.nixos.org substituter and signing key.
+  nix.settings.substituters = [ "https://cache.numtide.com" ];
+  nix.settings.trusted-public-keys = [
+    "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
   ];
 
   sops = {

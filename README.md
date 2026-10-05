@@ -28,6 +28,24 @@ Run these from the repo root:
 - Rebuild current host: `nix run .#rebuild-pc`
 - Rebuild Frodo via SSH: `nix run .#rebuild-frodo`
 
+## Nix daemon trust and binary caches
+
+`profiles/base.nix` approves the Numtide binary cache (for `llm-agents.nix`)
+while retaining the official NixOS cache and signature verification. Only root
+is a trusted Nix daemon user; ordinary users can still build and use the
+approved caches. Administrative operations continue to use `sudo`.
+
+These settings take effect on each host after rebuilding and activating its
+configuration. On a fresh installation, the first build may compile packages
+not available from the official cache until an administrator configures Numtide.
+The flake no longer requests privileged cache settings itself.
+
+Validate this policy for all hosts:
+
+```sh
+nix eval --offline --impure --json --file tests/nix-security.nix
+```
+
 ## Pi coding agent
 
 `home/pi` is included in the base Home Manager profile (laptop, desktop and
@@ -45,6 +63,14 @@ Git, ripgrep, fd, xdg-utils, yt-dlp and FFmpeg are available for plugin features
 Pi itself follows `flake.lock` (currently **0.84.4**, versus **0.85.1** on Windows).
 Standalone skills in `~/.agents/skills` are not part of these three npm plugins
 and are not copied by this module.
+
+In Kitty, **Ctrl+V** keeps its usual terminal text paste behavior. Use **Alt+V**
+in Pi to paste a clipboard image (copy the actual image, not just its filename).
+Home Manager declares that shortcut in `~/.pi/agent/keybindings.json`; add any
+further Pi keybindings in `home/pi/default.nix`. Ctrl+V also remains a Pi shortcut
+in terminals that do not intercept it. After rebuilding, reload Kitty's config
+(or open a new Kitty process) and run `/reload` in Pi. Desktop clipboard support
+uses `wl-clipboard`.
 
 After rebuilding, run `pi` and use `/login` to authenticate. No credentials,
 provider keys, sessions, trust decisions or Windows-specific paths are committed.

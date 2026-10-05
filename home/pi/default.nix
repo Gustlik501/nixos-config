@@ -51,6 +51,12 @@ in
     pkgs.ffmpeg
   ];
 
+  # Kitty keeps Ctrl+V for terminal text paste. Alt+V reaches Pi directly;
+  # retain Ctrl+V as well for terminals that do not intercept it.
+  home.file.".pi/agent/keybindings.json".text = builtins.toJSON {
+    "app.clipboard.pasteImage" = [ "ctrl+v" "alt+v" ];
+  };
+
   # Do not symlink settings.json into the read-only store: Pi writes to it for
   # /settings, model selection and changelog state. Auth and sessions stay local.
   home.activation.configurePi = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

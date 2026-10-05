@@ -2,11 +2,17 @@
 let
   flake = builtins.getFlake (toString ../.);
   pkgs = import flake.inputs.nixpkgs { system = "x86_64-linux"; };
-  activation = flake.nixosConfigurations.laptop.config.home-manager.users.gustl.home.activation.configurePi.data;
+  hm = flake.nixosConfigurations.laptop.config.home-manager.users.gustl;
+  activation = hm.home.activation.configurePi.data;
+  keybindings = pkgs.writeText "pi-keybindings.json" hm.home.file.".pi/agent/keybindings.json".text;
 in
+assert hm.programs.kitty.keybindings."ctrl+v" == "paste_from_clipboard";
 pkgs.runCommand "pi-settings-check" { nativeBuildInputs = [ pkgs.jq ]; } ''
   export HOME="$TMPDIR/home"
-  mkdir -p "$HOME"
+  mkdir -p "$HOME/.pi/agent"
+  # Home Manager links this declarative file before activation.
+  ln -s ${keybindings} "$HOME/.pi/agent/keybindings.json"
+  jq -e '."app.clipboard.pasteImage" == ["ctrl+v", "alt+v"]' "$HOME/.pi/agent/keybindings.json"
   run() { "$@"; }
   activate() {
     ${activation}
@@ -43,6 +49,7 @@ pkgs.runCommand "pi-settings-check" { nativeBuildInputs = [ pkgs.jq ]; } ''
   cp "$settings" "$TMPDIR/expected.json"
   activate
   cmp "$settings" "$TMPDIR/expected.json"
+  cmp "$HOME/.pi/agent/keybindings.json" ${keybindings}
 
   # Invalid existing data must not be overwritten, nor leave temporary files.
   printf 'invalid JSON' > "$settings"

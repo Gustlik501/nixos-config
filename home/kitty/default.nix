@@ -38,6 +38,7 @@
     keybindings = {
       "ctrl+shift+f" = "send_text all clear\n cd `cdinteractive`\n";
       "ctrl+c" = "copy_or_interrupt";
+      # Keep normal terminal text paste; Pi uses Alt+V for clipboard images.
       "ctrl+v" = "paste_from_clipboard";
     };
   };

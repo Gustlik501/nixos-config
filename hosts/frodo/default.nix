@@ -61,6 +61,10 @@ in
 
   # ZFS Support
   boot.supportedFilesystems = [ "zfs" ];
+  # Both datasets are explicitly mounted by fileSystems above (with zfsutil).
+  # Do not also run `zfs mount -a`: it races data.mount/media.mount at boot.
+  # Revisit this if adding native ZFS datasets without fileSystems entries.
+  systemd.services.zfs-mount.enable = false;
   services.zfs.autoScrub.enable = true;
   services.zfs.trim.enable = true;
 
@@ -80,7 +84,8 @@ in
       ../../ssh/phone.pub
       ../../ssh/work.pub
     ];
-    extraGroups = [ "docker" ];
+    # Docker is managed by root-owned systemd units. Interactive access uses
+    # sudo; membership in the docker group would bypass sudo authentication.
   };
 
   # NVIDIA 1050ti configuration

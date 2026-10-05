@@ -1,15 +1,6 @@
 {
   description = "My system configuration";
 
-  # llm-agents.nix publishes its packages here. Input flake settings are not
-  # inherited automatically, so declare the cache on the top-level flake.
-  nixConfig = {
-    extra-substituters = [ "https://cache.numtide.com" ];
-    extra-trusted-public-keys = [
-      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
-    ];
-  };
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
@@ -234,8 +225,11 @@
           fi
 
           target="''${FRODO_HOST:-gustl@frodo.local}"
+          # Build on Frodo: untrusted SSH users cannot import unsigned local
+          # build outputs. Source/derivations are transferred instead.
           nixos-rebuild switch \
             --flake "$root#frodo" \
+            --build-host "$target" \
             --target-host "$target" \
             --sudo \
             --ask-sudo-password \
@@ -252,8 +246,11 @@
           fi
 
           target="''${FRODO_HOST:-gustl@frodo.local}"
+          # Keep build and target hosts identical to avoid unsigned closure
+          # imports; sudo is still required only for administrative activation.
           nixos-rebuild boot \
             --flake "$root#frodo" \
+            --build-host "$target" \
             --target-host "$target" \
             --sudo \
             --ask-sudo-password \
