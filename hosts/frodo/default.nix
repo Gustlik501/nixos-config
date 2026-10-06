@@ -1,5 +1,7 @@
 {
   config,
+  inputs,
+  lib,
   pkgs,
   username,
   ...
@@ -30,8 +32,15 @@ in
     ../../modules/services/adguard.nix
     ../../modules/services/vaultwarden.nix
     ../../modules/services/postgresql.nix
-    ../../modules/services/hermes-agent.nix
+    ../../modules/services/pi-web.nix
+    ../../modules/services/pi-web-frodo-storage.nix
   ];
+
+  services.pi-web = {
+    enable = true;
+    gateway.enable = true;
+    extraPackages = [ inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi ];
+  };
 
   networking.hostName = "frodo";
   networking.hostId = "8425e349"; # Required for ZFS
@@ -77,16 +86,24 @@ in
     };
   };
 
-  users.users.${username} = {
-    openssh.authorizedKeys.keyFiles = [
-      ../../ssh/laptop.pub
-      ../../ssh/desktop.pub
-      ../../ssh/phone.pub
-      ../../ssh/work.pub
-    ];
-    # Docker is managed by root-owned systemd units. Interactive access uses
-    # sudo; membership in the docker group would bypass sudo authentication.
-  };
+  users.users = lib.mkMerge [
+    {
+      ${username} = {
+        openssh.authorizedKeys.keyFiles = [
+          ../../ssh/laptop.pub
+          ../../ssh/desktop.pub
+          ../../ssh/phone.pub
+          ../../ssh/work.pub
+        ];
+        # Docker is managed by root-owned systemd units. Interactive access uses
+        # sudo; membership in the docker group would bypass sudo authentication.
+      };
+    }
+    (lib.mkIf config.services.pi-web.gateway.enable {
+      pi-web-desktop.openssh.authorizedKeys.keyFiles = [ ../../ssh/desktop.pub ];
+      pi-web-laptop.openssh.authorizedKeys.keyFiles = [ ../../ssh/laptop.pub ];
+    })
+  ];
 
   # NVIDIA 1050ti configuration
   services.xserver.videoDrivers = [ "nvidia" ];

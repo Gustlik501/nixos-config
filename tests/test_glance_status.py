@@ -26,7 +26,7 @@ class GlanceStatusTests(unittest.TestCase):
     def test_inventory_and_stopped_services(self):
         rows = [
             unit("postgresql.service"),
-            unit("hermes-agent.service", "inactive", "dead"),
+            unit("pi-web-sessiond.service", "inactive", "dead"),
             unit("qbittorrent.service", "inactive", "dead"),
             unit("wg-quick-wg0.service", "active", "exited"),
             unit("sshd.service"),
@@ -36,7 +36,7 @@ class GlanceStatusTests(unittest.TestCase):
         ]
         monitored = {
             "postgresql.service": "PostgreSQL",
-            "hermes-agent.service": "Hermes",
+            "pi-web-sessiond.service": "Pi Web agent sessions",
             "qbittorrent.service": "qBittorrent",
             "wg-quick-wg0.service": "WireGuard",
             "missing.service": "Missing service",
@@ -50,7 +50,7 @@ class GlanceStatusTests(unittest.TestCase):
         self.assertNotIn("shell", run.call_args.kwargs)
         services = {row["unit"]: row for row in result["services"]}
         self.assertEqual(set(services), set(monitored))
-        self.assertEqual(services["hermes-agent.service"]["active"], "inactive")
+        self.assertEqual(services["pi-web-sessiond.service"]["active"], "inactive")
         self.assertEqual(services["qbittorrent.service"]["active"], "inactive")
         self.assertEqual(services["wg-quick-wg0.service"]["sub"], "exited")
         self.assertEqual(services["missing.service"]["active"], "unknown")

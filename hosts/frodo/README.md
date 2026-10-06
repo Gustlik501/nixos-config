@@ -71,6 +71,23 @@ To update all flake inputs:
 nix run .#update
 ```
 
+## Pi Web gateway
+
+Frodo hosts the private Pi Web entry point at `https://pi.frodo.local`, running
+agents as a dedicated `pi-web` user with state under `/data/pi-web`. Startup sets
+only the mounted `/data` root to `root:root`, mode `0755`; its existing children
+and their permissions are not changed. Desktop and
+laptop run agents as `gustl` and connect through restricted SSH reverse tunnels.
+No new agent ports are exposed to the LAN or internet.
+
+The browser endpoint stays locked until its password is provisioned. Workstation
+links reuse their existing SSH keys, authorized declaratively through
+`ssh/desktop.pub` and `ssh/laptop.pub`. See the [fleet setup and
+update guide](../../docs/pi-web.md). Daemon upgrades require an explicit restart
+when sessions are idle; rebuilds do not automatically terminate agent work.
+Hermes is no longer configured or installed by this flake. Rebuilding removes its
+service and deployed env secret; existing `/data/hermes` files are not deleted.
+
 ## Docker administration
 
 Profilarr is the only Docker container declared here. Its root-owned systemd
@@ -89,7 +106,7 @@ the simplest way to ensure no old user processes retain Docker access. Verify
 Glance keeps its existing web-application checks and adds:
 
 - **System services:** all configured application services, plus PostgreSQL,
-  WireGuard, Hermes, SSH, Caddy, Docker and Glance. Stopped/missing services stay
+  WireGuard, Pi Web, SSH, Caddy, Docker and Glance. Stopped/missing services stay
   visible rather than silently disappearing.
 - **System infrastructure:** every other active/transitional/failed system
   service, discovered automatically (networking, Nix daemon, NVIDIA, ZFS, etc.).

@@ -34,10 +34,12 @@ pkgs.testers.runNixOSTest {
         machine.fail("su -s /bin/sh observer -c 'test -r /run/glance-status/status.json'")
         data = json.loads(machine.succeed("curl --fail -s http://127.0.0.1:8080/assets/status.json"))
         assert not data["error"]
-        assert any(row["unit"] == "hermes-agent.service" for row in data["services"])
+        assert any(row["unit"] == "pi-web-sessiond.service" for row in data["services"])
+        assert not any(row["unit"] == "hermes-agent.service" for row in data["services"])
         machine.succeed("curl --fail --location -s http://127.0.0.1:8080/api/pages/test/content > /tmp/page.html")
         page = machine.succeed("cat /tmp/page.html")
-        assert "Hermes Agent" in page, page
+        assert "Pi Web agent sessions" in page, page
+        assert "Hermes Agent" not in page, page
         assert "403 Forbidden" not in page, page
         assert "unavailable or stale" not in page, page
 

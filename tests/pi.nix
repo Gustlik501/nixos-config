@@ -6,11 +6,16 @@ let
   pi = flake.inputs.llm-agents.packages.x86_64-linux.pi;
   activation = hm.home.activation.configurePi.data;
   keybindings = pkgs.writeText "pi-keybindings.json" hm.home.file.".pi/agent/keybindings.json".text;
+  kittyConfig = pkgs.writeText "kitty-regression.conf" hm.xdg.configFile."kitty/kitty.conf".text;
 in
 assert hm.programs.kitty.keybindings."ctrl+v" == "paste_from_clipboard";
+assert !hm.programs.kitty.settings.remember_window_size;
 pkgs.runCommand "pi-settings-check" { nativeBuildInputs = [ pkgs.jq pkgs.python3 ]; } ''
   export HOME="$TMPDIR/home"
   mkdir -p "$HOME/.pi/agent"
+  # Parse the generated Kitty config without opening a graphical window. New
+  # launches must ignore cached maximize state; Ctrl+V remains normal text paste.
+  ${pkgs.kitty}/bin/kitty +runpy 'from kitty.config import load_config; errors = []; opts = load_config("${kittyConfig}", accumulate_bad_lines=errors); assert not errors, errors; assert not opts.remember_window_size'
   # Home Manager links this declarative file before activation.
   ln -s ${keybindings} "$HOME/.pi/agent/keybindings.json"
   jq -e '."app.clipboard.pasteImage" == ["ctrl+v", "alt+v"]' "$HOME/.pi/agent/keybindings.json"
@@ -31,6 +36,10 @@ pkgs.runCommand "pi-settings-check" { nativeBuildInputs = [ pkgs.jq pkgs.python3
   while IFS= read -r package; do
     test -f "$package/package.json"
   done < <(jq -r '.packages[]' "$settings")
+  web_access=$(jq -r '.packages[] | select(endswith("/pi-web-access"))' "$settings")
+  jq -e '.peerDependencies.typebox == "*" and (.dependencies | has("typebox") | not)' \
+    "$web_access/package.json"
+  test ! -e "$(dirname "$web_access")/typebox"
 
   # Load the actual pinned Pi runtime and all three extensions without user
   # credentials, project resources, network access, or a model request.
@@ -51,6 +60,7 @@ pkgs.runCommand "pi-settings-check" { nativeBuildInputs = [ pkgs.jq pkgs.python3
       text=True, capture_output=True, timeout=60, check=True,
   )
   print(result.stderr, end="")
+  assert "Host-provided extension packages" not in result.stderr, result.stderr
   records = [json.loads(line) for line in result.stdout.splitlines() if line]
   assert not any(r.get("type") == "extension_error" for r in records), records
   responses = {r["id"]: r for r in records if r.get("type") == "response"}
@@ -59,6 +69,10 @@ pkgs.runCommand "pi-settings-check" { nativeBuildInputs = [ pkgs.jq pkgs.python3
   commands = {c["name"] for c in responses["commands"]["data"]["commands"]}
   assert {"usage", "websearch", "codex-fast"} <= commands, commands
   PY
+
+  # Exercise real TUI input and PNG insertion with a synthetic clipboard, never
+  # the user's desktop clipboard, credentials, or a submitted model prompt.
+  python3 ${./pi_clipboard.py}
 
   # Re-activation removes Plannotator but preserves mutable state and auth,
   # including the speed mode saved by pi-codex-fast.

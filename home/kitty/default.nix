@@ -16,6 +16,9 @@
 
       window_padding_width = 25;
       confirm_os_window_close = 0;
+      # Hyprland controls the window layout. Kitty also remembers maximized
+      # state through this option, which would enlarge future Mod+Enter launches.
+      remember_window_size = false;
 
       detect_urls = "yes";
       url_style = "curly";

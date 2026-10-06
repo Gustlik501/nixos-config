@@ -10,9 +10,11 @@ let
     "caddy.service" = "Caddy (HTTPS proxy)";
     "docker.service" = "Docker daemon";
     "glance.service" = "Glance dashboard";
-    "hermes-agent.service" = "Hermes Agent";
     "jellyfin.service" = "Jellyfin";
     "lidarr.service" = "Lidarr";
+    "pi-web.service" = "Pi Web browser/API";
+    "pi-web-sessiond.service" = "Pi Web agent sessions";
+    "pi-web-auth.service" = "Pi Web browser login";
     "postgresql.service" = "PostgreSQL";
     "profilarr.service" = "Profilarr (Compose setup)";
     "prowlarr.service" = "Prowlarr";
@@ -102,6 +104,12 @@ in
                   title = "Services";
                   cache = "1m";
                   sites = [
+                    {
+                      title = "Pi Web";
+                      url = "https://pi.frodo.local";
+                      # Checks the local backend, not login or fleet health.
+                      check-url = "http://127.0.0.1:8504/api/pi-web/health";
+                    }
                     {
                       title = "Seerr";
                       url = "https://seerr.frodo.local";

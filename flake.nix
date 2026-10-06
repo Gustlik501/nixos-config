@@ -35,10 +35,6 @@
       url = "github:numtide/llm-agents.nix";
     };
 
-    hermes-agent = {
-      url = "github:NousResearch/hermes-agent";
-    };
-
     cwal-nvim = {
       url = "github:nitinbhat972/cwal.nvim";
       flake = false;
@@ -161,15 +157,18 @@
     in
     {
       overlays.default = builtins.head overlays;
+      packages.${system}.pi-web = pkgs.callPackage ./pkgs/pi-web.nix { };
 
       nixosConfigurations = {
         laptop = mkHost {
           hostPath = ./hosts/laptop;
+          extraModules = [ ./modules/services/pi-web-workstation.nix ];
           hmImports = hmBaseImports ++ hmPcImports;
         };
 
         desktop = mkHost {
           hostPath = ./hosts/desktop;
+          extraModules = [ ./modules/services/pi-web-workstation.nix ];
           hmImports = hmBaseImports ++ hmPcImports ++ hmWorkstationImports;
         };
 
@@ -180,7 +179,6 @@
             sharedPkgsModule
             sops-nix.nixosModules.sops
             disko.nixosModules.disko
-            inputs.hermes-agent.nixosModules.default
             ./hosts/frodo/default.nix
             home-manager.nixosModules.home-manager
             (mkHomeManagerModule hmBaseImports)

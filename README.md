@@ -60,7 +60,7 @@ The plugins and their transitive dependencies are pinned in
 `pkgs/pi-plugins/package-lock.json`, fetched with integrity hashes and installed
 in the Nix store, without lifecycle scripts or startup npm installs. Node.js 24,
 Git, ripgrep, fd, xdg-utils, yt-dlp and FFmpeg are available for plugin features.
-Pi itself follows `flake.lock` (currently **0.84.4**, versus **0.85.1** on Windows).
+Pi itself follows `flake.lock` (currently **1.0.2**).
 Standalone skills in `~/.agents/skills` are not part of these three npm plugins
 and are not copied by this module.
 
@@ -70,7 +70,10 @@ Home Manager declares that shortcut in `~/.pi/agent/keybindings.json`; add any
 further Pi keybindings in `home/pi/default.nix`. Ctrl+V also remains a Pi shortcut
 in terminals that do not intercept it. After rebuilding, reload Kitty's config
 (or open a new Kitty process) and run `/reload` in Pi. Desktop clipboard support
-uses `wl-clipboard`.
+uses `wl-clipboard`. **Super+S** copies a selected screenshot; Noctalia screenshots
+also copy to the clipboard. Pi 1.0 inserts a `/tmp/pi-clipboard-….png` path into the
+editor rather than an image badge—this is a successful image paste. To diagnose,
+`wl-paste --list-types` should include `image/png` after copying a screenshot.
 
 After rebuilding, run `pi` and use `/login` to authenticate. No credentials,
 provider keys, sessions, trust decisions or Windows-specific paths are committed.
@@ -98,11 +101,23 @@ input rather than using Pi's self-updater.
 
 Validate the plugin build, settings activation (creation, preservation,
 idempotence and invalid-JSON handling), and offline startup of the pinned Pi
-runtime with all three extensions, without rebuilding a host or using credentials:
+runtime with all three extensions, plus real TUI Alt+V PNG/text insertion using a
+synthetic clipboard, without rebuilding a host or using credentials:
 
 ```sh
 nix build --impure --no-link --file tests/pi.nix
 ```
+
+## Pi Web (LAN-only fleet)
+
+Frodo provides `https://pi.frodo.local`, with desktop/laptop linked through
+restricted SSH reverse tunnels. Workstation runtimes run as `gustl`; Frodo uses
+an isolated `pi-web` user. No public agent ports are opened. Fleet links reuse the
+existing SOPS-managed SSH identities and declaratively authorized public keys;
+only the browser password and Frodo's provider login need one-time setup.
+
+See [Pi Web setup, permissions, updates, and tests](docs/pi-web.md). Pi Web replaces
+the retired Hermes configuration; existing `/data/hermes` files are not deleted.
 
 ## Secrets (sops-nix)
 - `sops-nix` is wired into all hosts through `flake.nix`.

@@ -76,7 +76,7 @@ clipboard_enabled = false
 polkit_agent = true
 
     [shell.screenshot]
-    copy_to_clipboard = false
+    copy_to_clipboard = true
     freeze_screen = false
     save_to_file = false
 
