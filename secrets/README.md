@@ -60,6 +60,15 @@ Browser-password provisioning and the option to use a SOPS-decrypted bcrypt hash
 are described in [the Pi Web guide](../docs/pi-web.md). Model-provider credentials
 stay in each runtime user's local Pi profile and are not copied into this repo.
 
+## Cloudflare DDNS token
+
+Frodo declares `cloudflare_ddns_token` as a root-only runtime secret, next to
+`cloudflare_ddns_zone` and `wireguard_endpoint`: the domain names stay encrypted
+because the DNS-only VPN record would reveal the home IP to readers of this repo. Its initial
+value is empty, so the updater skips itself until you provision a zone-scoped
+API token with SOPS. See [the DDNS setup guide](../docs/cloudflare-ddns.md) for the
+exact permissions and activation steps. Never store the token as a Nix string.
+
 ## Public keys (plaintext)
 
 Public keys are intentionally stored in git:

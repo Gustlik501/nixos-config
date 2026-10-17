@@ -24,22 +24,30 @@ pkgs.runCommand "pi-settings-check" { nativeBuildInputs = [ pkgs.jq pkgs.python3
     ${activation}
   }
 
-  # First activation creates writable settings with all three store packages.
+  # First activation creates writable settings with all three plugins as pinned
+  # npm packages, each linked to its store copy at the installed version.
   activate
   settings="$HOME/.pi/agent/settings.json"
   test -w "$settings"
   test ! -L "$settings"
   jq -e '.theme == "dark" and .defaultProvider == "openai-codex"
     and .defaultModel == "gpt-6-astra" and (.packages | length == 3)
-    and (.packages | map(split("/node_modules/")[1]) ==
+    and (.packages | map(ltrimstr("npm:") | sub("@[^@]+$"; "")) ==
       ["@tian.zuo/pi-usage", "pi-web-access", "@calesennett/pi-codex-fast"])' "$settings"
-  while IFS= read -r package; do
-    test -f "$package/package.json"
-  done < <(jq -r '.packages[]' "$settings")
-  web_access=$(jq -r '.packages[] | select(endswith("/pi-web-access"))' "$settings")
+  modules="$HOME/.pi/agent/npm/node_modules"
+  store_modules=$(readlink "$modules")
+  case "$store_modules" in /nix/store/*) ;; *) exit 1 ;; esac
+  while IFS= read -r spec; do
+    test "$(jq -r .version "$modules/''${spec%@*}/package.json")" = "''${spec##*@}"
+  done < <(jq -r '.packages[] | ltrimstr("npm:")' "$settings")
   jq -e '.peerDependencies.typebox == "*" and (.dependencies | has("typebox") | not)' \
-    "$web_access/package.json"
-  test ! -e "$(dirname "$web_access")/typebox"
+    "$modules/pi-web-access/package.json"
+  test ! -e "$modules/typebox"
+  # A stale real npm install is replaced by the store link.
+  rm "$modules"
+  mkdir -p "$modules/pi-web-access"
+  activate
+  test "$(readlink "$modules")" = "$store_modules"
 
   # Load the actual pinned Pi runtime and all three extensions without user
   # credentials, project resources, network access, or a model request.
@@ -86,7 +94,7 @@ pkgs.runCommand "pi-settings-check" { nativeBuildInputs = [ pkgs.jq pkgs.python3
   jq -e '.theme == "dark" and .quietStartup == true
     and .lastChangelogVersion == "test"
     and ."pi-codex-fast" == {mode: "fast", enabled: true}
-    and (.packages | map(split("/node_modules/")[1]) ==
+    and (.packages | map(ltrimstr("npm:") | sub("@[^@]+$"; "")) ==
       ["@tian.zuo/pi-usage", "pi-web-access", "@calesennett/pi-codex-fast"])' "$settings"
   test "$(cat "$HOME/.pi/agent/auth.json")" = local-only
   cp "$settings" "$TMPDIR/expected.json"

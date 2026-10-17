@@ -88,6 +88,54 @@ when sessions are idle; rebuilds do not automatically terminate agent work.
 Hermes is no longer configured or installed by this flake. Rebuilding removes its
 service and deployed env secret; existing `/data/hermes` files are not deleted.
 
+## WireGuard via a DNS hostname
+
+The endpoint hostname is the SOPS secret `wireguard_endpoint`, read by `vpn add`
+at runtime; it is deliberately absent from this public repo. It must be a
+**DNS-only** Cloudflare A record pointing at the home public IPv4 address. DNS
+names the endpoint; it does not open a connection through the router. Remote
+access requires **UDP 51820 → 192.168.1.64:51820** at the router, a stable
+reservation for Frodo's LAN address, and a public WAN address (not CGNAT).
+No HTTP/HTTPS, SSH, DNS or application ports need forwarding. LAN access remains
+unchanged. Keep the DNS A record current if the ISP changes the WAN address;
+[Cloudflare DDNS](../../docs/cloudflare-ddns.md) is configured to update the apex
+and VPN A records about every five minutes after its SOPS API token is provisioned.
+
+Use a random label, never a guessable one like `vpn`: Cloudflare refuses zone
+transfers, so the label is all that stands between a subdomain scan and the home
+IP. Never issue a TLS certificate for it either, since certificate transparency
+logs are public.
+
+New `sudo vpn add <name>` profiles use:
+
+```ini
+DNS = 10.100.0.1
+Endpoint = <wireguard_endpoint>:51820
+```
+
+The first line uses Frodo's AdGuard DNS through WireGuard, including existing
+`*.frodo.local` rewrites; the second uses public DNS to find the VPN server.
+For an existing client, change just those two lines in its WireGuard app/profile.
+Keep its private/preshared keys, server public key and assigned address unchanged.
+No peer regeneration is needed. Do not paste complete profiles or QR codes into
+chat/Git: they contain private keys. `.local` may prefer mDNS on some clients;
+use `192.168.1.64` for diagnosis if a private name fails.
+
+Profiles retain the current **full-tunnel IPv4** setting `AllowedIPs = 0.0.0.0/0`.
+That is not an IPv6 privacy tunnel. For home-service-only split tunneling, clients
+can instead use `AllowedIPs = 10.100.0.0/24, 192.168.1.0/24`; overlapping networks
+or a work VPN may need additional routing decisions.
+
+Test from a phone with Wi-Fi **off**, since testing at home may depend on router
+NAT-loopback support. On Frodo, `sudo wg show wg0` reports handshakes and traffic
+without revealing private keys. A recent handshake is the useful connection
+check, not merely an endpoint entry. If it fails, compare the router's WAN IP
+with public DNS and check the UDP forwarding rule before changing any keys.
+
+The root-only helper still manages `/etc/wireguard/wg0.conf` outside Git.
+This change does not restart WireGuard or alter enrolled peers. Public web
+services and the postponed hardening work are separate from this VPN setup.
+
 ## Docker administration
 
 Profilarr is the only Docker container declared here. Its root-owned systemd
@@ -146,6 +194,17 @@ Add new source files to Git before using the Git-backed `.#rebuild-frodo` helper
 (in particular `modules/services/glance-status.py`); otherwise Nix excludes them
 from the flake source. After deployment, check `systemctl status glance-status.timer`
 and `curl http://127.0.0.1:8080/assets/status.json` on Frodo.
+
+## Connection statistics
+
+Glance has a private **Statistics** page: per-service web requests over retained
+24-hour history, source IP/network classification, current direct TCP connections,
+and WireGuard handshake/byte counters. It refreshes about every 30 seconds.
+The dashboard and its raw assets remain LAN/VPN-only because source IPs are
+private metadata. No credentials, request URLs or chat bodies are logged. See
+[metric definitions, privacy boundaries and deployment](../../docs/glance-statistics.md).
+This is Frodo-side telemetry, not Cloudflare edge request counts or desktop/laptop
+machine monitoring. Broader public-service hardening remains postponed.
 
 ## Troubleshooting
 - **NVIDIA driver/library mismatch after a switch:** Updating userspace does not

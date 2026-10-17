@@ -104,5 +104,7 @@ let
 in
 {
   security.polkit.enable = true;
+  # nixpkgs no longer installs the setuid pkexec wrapper by default.
+  security.polkit.enablePkexecWrapper = true;
   environment.systemPackages = [ command launcher ];
 }

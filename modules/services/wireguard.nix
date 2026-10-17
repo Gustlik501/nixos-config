@@ -9,6 +9,7 @@ let
   # The subnet we will use for the VPN
   vpnSubnet = "10.100.0";
   vpnPort = 51820;
+  cfg = config.services.frodo-vpn;
 
   # The helper script to manage WireGuard dynamically
   vpnScript = pkgs.writeShellScriptBin "vpn" ''
@@ -18,6 +19,7 @@ let
     CONF_FILE="$WG_DIR/wg0.conf"
     SUBNET="${vpnSubnet}"
     PORT="${toString vpnPort}"
+    ENDPOINT_FILE="${cfg.endpointFile}"
     
     # Ensure root
     if [ "$EUID" -ne 0 ]; then
@@ -71,6 +73,13 @@ EOF
     function cmd_add() {
         CLIENT_NAME=$1
         if [ -z "$CLIENT_NAME" ]; then echo "Usage: vpn add <client_name>"; exit 1; fi
+
+        # Read before touching the server config, so a missing secret adds no peer.
+        ENDPOINT=$(tr -d '[:space:]' 2>/dev/null < "$ENDPOINT_FILE" || true)
+        if [ -z "$ENDPOINT" ]; then
+            echo "Error: no VPN endpoint hostname in $ENDPOINT_FILE (provision the SOPS secret)."
+            exit 1
+        fi
         
         if [ ! -f "$CONF_FILE" ]; then cmd_init; fi
         
@@ -106,8 +115,6 @@ EOF
         
         # Generate Client Config
         SERVER_PUB=$(cat $WG_DIR/public.key)
-        # Try to detect public IP
-        PUBLIC_IP=$(curl -s ifconfig.me)
         
         echo ""
         echo "=== Client Config ($CLIENT_NAME) ==="
@@ -117,13 +124,13 @@ EOF
         CLIENT_CONF="[Interface]
 PrivateKey = $CLIENT_PRIV
 Address = $CLIENT_IP/24
-DNS = 1.1.1.1
+DNS = $SUBNET.1
 
 [Peer]
 PublicKey = $SERVER_PUB
 PresharedKey = $CLIENT_PSK
 AllowedIPs = 0.0.0.0/0
-Endpoint = $PUBLIC_IP:$PORT
+Endpoint = $ENDPOINT:$PORT
 PersistentKeepalive = 25
 "
         echo "$CLIENT_CONF" | qrencode -t ansiutf8
@@ -201,42 +208,54 @@ PersistentKeepalive = 25
 
 in
 {
-  environment.systemPackages = [
-    pkgs.wireguard-tools
-    pkgs.qrencode
-    pkgs.iptables
-    vpnScript
-  ];
-
-  # Enable NAT and Kernel Forwarding
-  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
-  networking.nat = {
-    enable = true;
-    externalInterface = "eno2"; # Ensure this matches your real interface
-    internalInterfaces = [ "wg0" ];
+  options.services.frodo-vpn.endpointFile = lib.mkOption {
+    type = lib.types.str;
+    description = ''
+      Runtime file holding the public hostname new client profiles dial. Kept out
+      of Git and the Nix store so the public repo never names the home endpoint.
+      Its A record must stay DNS-only in Cloudflare: the HTTP proxy cannot carry
+      ordinary WireGuard UDP traffic.
+    '';
   };
 
-  networking.firewall = {
-    allowedUDPPorts = [ vpnPort ];
-  };
-
-  # Custom systemd service to manage the interface from the mutable config
-  systemd.services.wg-quick-wg0 = {
-    description = "WireGuard Server (Mutable)";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
-    path = [
+  config = {
+    environment.systemPackages = [
       pkgs.wireguard-tools
+      pkgs.qrencode
       pkgs.iptables
+      vpnScript
     ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      # We just use wg-quick directly on the mutable file
-      ExecStart = "${pkgs.wireguard-tools}/bin/wg-quick up /etc/wireguard/wg0.conf";
-      ExecStop = "${pkgs.wireguard-tools}/bin/wg-quick down /etc/wireguard/wg0.conf";
-      Restart = "on-failure";
+
+    # Enable NAT and Kernel Forwarding
+    boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+    networking.nat = {
+      enable = true;
+      externalInterface = "eno2"; # Ensure this matches your real interface
+      internalInterfaces = [ "wg0" ];
+    };
+
+    networking.firewall = {
+      allowedUDPPorts = [ vpnPort ];
+    };
+
+    # Custom systemd service to manage the interface from the mutable config
+    systemd.services.wg-quick-wg0 = {
+      description = "WireGuard Server (Mutable)";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
+      path = [
+        pkgs.wireguard-tools
+        pkgs.iptables
+      ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        # We just use wg-quick directly on the mutable file
+        ExecStart = "${pkgs.wireguard-tools}/bin/wg-quick up /etc/wireguard/wg0.conf";
+        ExecStop = "${pkgs.wireguard-tools}/bin/wg-quick down /etc/wireguard/wg0.conf";
+        Restart = "on-failure";
+      };
     };
   };
 }

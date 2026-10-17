@@ -7,15 +7,21 @@
 let
   llmAgents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
   plugins = import ../../pkgs/pi-plugins { inherit pkgs; };
+  pluginVersions = (lib.importJSON ../../pkgs/pi-plugins/package.json).dependencies;
+  pluginNames = [
+    "@tian.zuo/pi-usage"
+    "pi-web-access"
+    "@calesennett/pi-codex-fast"
+  ];
+  # Declare the plugins as pinned npm packages, linked below to the Nix-built
+  # copies. Pi identifies npm packages by name, so a project that lists the
+  # same package replaces this one instead of loading it twice (which is a
+  # fatal tool conflict). Pinned versions are never updated by Pi.
   settings = pkgs.writeText "pi-settings.json" (builtins.toJSON {
     theme = "dark";
     defaultProvider = "openai-codex";
     defaultModel = "gpt-6-astra";
-    packages = map (name: "${plugins}/node_modules/${name}") [
-      "@tian.zuo/pi-usage"
-      "pi-web-access"
-      "@calesennett/pi-codex-fast"
-    ];
+    packages = map (name: "npm:${name}@${pluginVersions.${name}}") pluginNames;
   });
   configure = pkgs.writeShellApplication {
     name = "configure-pi";
@@ -35,6 +41,16 @@ let
       jq -s 'if (.[0] | type) != "object" then error("Pi settings must be an object")
         else .[0] * .[1] end' "$current" ${settings} > "$tmp"
       mv -f "$tmp" "$dir/settings.json"
+
+      # Pi loads user npm packages from its managed npm directory when the
+      # installed version matches. Link the whole directory to the Nix bundle
+      # so the plugins' own dependencies resolve too.
+      modules="$dir/npm/node_modules"
+      mkdir -p "$dir/npm"
+      if [ -e "$modules" ] && [ ! -L "$modules" ]; then
+        rm -rf "$modules"
+      fi
+      ln -sfn "${plugins}/node_modules" "$modules"
     '';
   };
 in

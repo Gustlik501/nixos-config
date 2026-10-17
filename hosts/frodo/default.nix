@@ -26,7 +26,9 @@ in
     ./disk-config.nix
     ../../profiles/base.nix
     ../../modules/services/wireguard.nix
+    ../../modules/services/cloudflare-ddns.nix
     ../../modules/services/glance.nix
+    ../../modules/services/glance-traffic.nix
     ../../modules/services/media.nix
     ../../modules/services/caddy.nix
     ../../modules/services/adguard.nix
@@ -36,10 +38,42 @@ in
     ../../modules/services/pi-web-frodo-storage.nix
   ];
 
+  services.glance-traffic.enable = true;
+
   services.pi-web = {
     enable = true;
     gateway.enable = true;
     extraPackages = [ inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi ];
+  };
+
+  # The domain names live only in SOPS: in this public repo they would name the
+  # DNS-only VPN record, and therefore the home IP.
+  sops.secrets.cloudflare_ddns_zone = { };
+  sops.secrets.wireguard_endpoint = { };
+  services.frodo-vpn.endpointFile = config.sops.secrets.wireguard_endpoint.path;
+
+  services.frodo-ddns = {
+    enable = true;
+    environmentFile = config.sops.templates."cloudflare-ddns.env".path;
+    tokenFile = config.sops.secrets.cloudflare_ddns_token.path;
+  };
+  # Updates the (proxied) apex and the DNS-only VPN record. When the future
+  # website moves elsewhere, drop the apex here first.
+  sops.templates."cloudflare-ddns.env" = {
+    content = ''
+      CF_DDNS_ZONE=${config.sops.placeholder.cloudflare_ddns_zone}
+      CF_DDNS_RECORDS='["${config.sops.placeholder.cloudflare_ddns_zone}","${config.sops.placeholder.wireguard_endpoint}"]'
+    '';
+    restartUnits = [ "cloudflare-ddns.service" ];
+  };
+  # Empty until provisioned by the operator; the timer skips an empty token.
+  sops.secrets.cloudflare_ddns_token = {
+    mode = "0400";
+    restartUnits = [ "cloudflare-ddns.service" ];
+  };
+  systemd.services.cloudflare-ddns = lib.mkIf config.sops.useSystemdActivation {
+    after = [ "sops-install-secrets.service" ];
+    requires = [ "sops-install-secrets.service" ];
   };
 
   networking.hostName = "frodo";
