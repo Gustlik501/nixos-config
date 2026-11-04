@@ -36,7 +36,11 @@
     };
 
     cwal-nvim = {
-      url = "github:nitinbhat972/cwal.nvim";
+      # Pinned to the last rev that reads colors-nvim.lua. Upstream 81a58e1
+      # switched to colors.lua to match cwal master (91c863f), which no cwal
+      # release ships yet (latest is 0.10.1). Unpin when bumping cwal to
+      # a release that renames the template.
+      url = "github:nitinbhat972/cwal.nvim/576574f2d189ff87d7b3b895315c98652b50c117";
       flake = false;
     };
 

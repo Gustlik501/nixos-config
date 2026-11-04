@@ -52,16 +52,17 @@
     "cwal-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1792573711,
-        "narHash": "sha256-JuLdHqRLzUqovgO0Nyp6RkKzfNO84sA/pHBlZG7BNpw=",
+        "lastModified": 1789334480,
+        "narHash": "sha256-BooQJhbhPIMLasqBMcOn3YCqlYKfhBvmkJI107z4gAc=",
         "owner": "nitinbhat972",
         "repo": "cwal.nvim",
-        "rev": "81a58e16fbfa33755705556cc1d82bd9572291d0",
+        "rev": "576574f2d189ff87d7b3b895315c98652b50c117",
         "type": "github"
       },
       "original": {
         "owner": "nitinbhat972",
         "repo": "cwal.nvim",
+        "rev": "576574f2d189ff87d7b3b895315c98652b50c117",
         "type": "github"
       }
     },
